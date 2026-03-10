@@ -1,15 +1,25 @@
-// src/server.ts
-import express from "express";
-
-const app = express();
-const PORT = 5000;
-
-// Simple route to test the server
-app.get("/", (req, res) => {
-  res.send("Server is running 🚀");
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+import app from './app';
+import { prisma } from './lib/prisma.js';
+import dotenv from 'dotenv';
+ 
+dotenv.config();
+ 
+const PORT = process.env.PORT || 5000;
+ 
+async function startServer() {
+  try {
+    // 1. Test Database Connection
+    await prisma.$connect();
+    console.log('✅ Database connected');
+ 
+    // 2. Start Listening
+    app.listen(PORT, () => {
+      console.log(`🚀 Backend running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1); // Exit if DB connection fails
+  }
+}
+ 
+startServer();

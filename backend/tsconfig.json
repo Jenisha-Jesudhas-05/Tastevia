@@ -1,10 +1,13 @@
 {
+  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    // File Layout
+    "rootDir": "./",
+    "outDir": "./dist",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "ES2023",
     "strict": true,
-    "esModuleInterop": true,
-    "ignoreDeprecations": "5.0"
+    "esModuleInterop": true
   }
 }
