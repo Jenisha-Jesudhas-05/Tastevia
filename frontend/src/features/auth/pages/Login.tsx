@@ -59,7 +59,7 @@ export default function LoginPage() {
     <div className="h-screen grid md:grid-cols-2 overflow-hidden">
 
       {/* LEFT SIDE */}
-      <div className="hidden md:flex flex-col items-center justify-center bg-gradient-to-br from-orange-100 via-orange-50 to-white relative">
+      <div className="hidden md:flex flex-col items-center justify-center bg-linear-to-br from-orange-100 via-orange-50 to-white relative">
 
         <div className="absolute w-72 h-72 bg-orange-300 rounded-full blur-3xl opacity-40 animate-pulse"></div>
         <div className="absolute w-96 h-96 bg-yellow-200 rounded-full blur-3xl opacity-30 animate-pulse top-20 left-20"></div>

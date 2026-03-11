@@ -20,7 +20,7 @@ export default function TestimonialsCarousel() {
   }, []);
 
   return (
-    <section className="relative py-24 bg-gradient-to-r from-orange-50 to-pink-50 text-center overflow-hidden">
+    <section className="relative py-24 bg-linear-to-r from-orange-50 to-pink-50 text-center overflow-hidden">
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-orange-200 rounded-full opacity-20 blur-3xl"></div>
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-pink-200 rounded-full opacity-20 blur-3xl"></div>
 

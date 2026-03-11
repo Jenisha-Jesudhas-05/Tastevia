@@ -11,7 +11,7 @@ export default function Home() {
     <div className="font-sans text-gray-900 overflow-x-hidden">
 
       {/* HERO SECTION */}
-      <section className="relative h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 bg-gradient-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
+      <section className="relative h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 bg-linear-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
         {/* Floating shapes */}
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-orange-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-pink-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
@@ -35,7 +35,7 @@ export default function Home() {
           <div className="flex gap-4">
             <Link
               to="/menu"
-              className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+              className="bg-linear-to-r from-orange-500 to-pink-500 text-white px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
             >
               Order Now
             </Link>
@@ -68,7 +68,7 @@ export default function Home() {
       </section>
 
       {/* FEATURES SECTION */}
-      <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative overflow-hidden">
+      <section className="py-24 bg-linear-to-b from-white via-orange-50 to-white text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 w-96 h-96 bg-yellow-200 rounded-full opacity-10 blur-3xl -translate-x-1/2 animate-spin-slow"></div>
         <h2 className="text-4xl font-bold text-gray-800 mb-16">Why Choose Tastevia?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
@@ -97,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white text-center relative overflow-hidden">
+      <section className="py-24 bg-linear-to-b from-gray-50 to-white text-center relative overflow-hidden">
         <h2 className="text-4xl font-bold mb-12">How It Works</h2>
         <div className="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
           {[
@@ -122,7 +122,7 @@ export default function Home() {
       </section>
 
       {/* POPULAR MEALS */}
-      <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative">
+      <section className="py-24 bg-linear-to-b from-white via-orange-50 to-white text-center relative">
         <h2 className="text-4xl font-bold mb-12">Popular Meals</h2>
         <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
           {[1, 2, 3, 4, 5, 6].map((meal) => (
@@ -140,7 +140,7 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">$ {8 + meal}.99</p>
                 <Link
                   to="/menu"
-                  className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition-transform duration-300"
+                  className="bg-linea-to-r from-orange-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition-transform duration-300"
                 >
                   Add to Cart
                 </Link>
@@ -154,7 +154,7 @@ export default function Home() {
       <TestimonialsCarousel />
 
       {/* FAQ */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white text-center">
+      <section className="py-24 bg-linear-to-b from-gray-50 to-white text-center">
         <h2 className="text-4xl font-bold mb-12">Frequently Asked Questions</h2>
         <div className="max-w-4xl mx-auto text-left space-y-4">
           {[
@@ -176,14 +176,14 @@ export default function Home() {
         <p className="text-gray-600 mb-6">Get the latest updates and offers directly in your inbox.</p>
         <div className="flex justify-center gap-4 max-w-md mx-auto">
           <input type="email" placeholder="Enter your email" className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-          <button className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-3 rounded-lg hover:scale-105 transition-transform duration-300">
+          <button className="bg-linear-to-r from-orange-500 to-pink-500 text-white px-6 py-3 rounded-lg hover:scale-105 transition-transform duration-300">
             Subscribe
           </button>
         </div>
       </section>
 
       {/* CALL-TO-ACTION */}
-      <section className="py-24 text-center bg-gradient-to-r from-orange-500 to-pink-500 text-white relative overflow-hidden">
+      <section className="py-24 text-center bg-linear-to-r from-orange-500 to-pink-500 text-white relative overflow-hidden">
         <motion.h2
           className="text-4xl md:text-5xl font-bold mb-6"
           initial={{ opacity: 0, y: 30 }}
