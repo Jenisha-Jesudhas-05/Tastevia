@@ -5,7 +5,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // 🔹 track if loading user from storage
+  const [loading, setLoading] = useState(true);
 
   // Load user from localStorage
   useEffect(() => {
@@ -35,8 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
-      {/* Only render children when loading is done to avoid flash */}
-      {!loading && children}
+      {!loading && children} {/* Avoid flash */}
     </AuthContext.Provider>
   );
 };
