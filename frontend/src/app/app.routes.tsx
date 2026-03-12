@@ -1,8 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-
-
 import Home from "@/pages/Home"
-import Menu from "@/pages/Menu"
 import Cart from "@/pages/Cart"
 import Orders from "@/pages/Orders"
 import AuthLayout from "@/components/layout/AuthLayout"
@@ -10,6 +7,7 @@ import SignupPage from "@/features/auth/pages/Signup"
 import LoginPage from "@/features/auth/pages/Login"
 import MainLayout from "@/components/layout/MainLayout"
 import ProtectedRoutes from "./ProtectedRoutes"
+import ProductPages from "@/features/products/pages/ProductPages"
 
 export default function AppRoutes() {
   return (
@@ -25,7 +23,7 @@ export default function AppRoutes() {
       {/* MAIN APP (WITH NAVBAR) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<Menu />} />
+        <Route path="/menu" element={<ProductPages />} />
       </Route>
 
       {/* PROTECTED ROUTES */}

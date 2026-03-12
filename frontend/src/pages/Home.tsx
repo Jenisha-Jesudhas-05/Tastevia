@@ -2,24 +2,42 @@ import { Link } from "react-router-dom";
 import { Pizza, IceCream, Coffee } from "lucide-react";
 import { motion } from "framer-motion";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
-import HeroCarousel from "../components/HeroCarousel"; // Hero carousel import
+import HeroCarousel from "../components/HeroCarousel";
 
 export default function Home() {
   const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
+
+  const features = [
+    { title: "Fast Delivery", desc: "Get your favorite meals delivered quickly.", icon: <Pizza size={48} className="text-red-500" /> },
+    { title: "Fresh Ingredients", desc: "High-quality fresh ingredients in every meal.", icon: <Coffee size={48} className="text-yellow-500" /> },
+    { title: "Variety of Meals", desc: "Choose from a wide variety of dishes.", icon: <IceCream size={48} className="text-pink-500" /> },
+    { title: "Healthy Options", desc: "Balanced and nutritious meals.", icon: <Pizza size={48} className="text-green-500" /> },
+    { title: "24/7 Support", desc: "Always here to help.", icon: <Coffee size={48} className="text-blue-500" /> },
+    { title: "Customizable Meals", desc: "Pick exactly what you want.", icon: <IceCream size={48} className="text-purple-500" /> },
+  ];
+
+  const steps = [
+    { title: "Order", desc: "Choose your favorite meals.", icon: <Pizza size={50} className="text-red-500 mx-auto mb-4" /> },
+    { title: "Cook", desc: "Meals prepared fresh by our chefs.", icon: <Coffee size={50} className="text-yellow-500 mx-auto mb-4" /> },
+    { title: "Deliver", desc: "Delivered hot at your doorstep.", icon: <IceCream size={50} className="text-pink-500 mx-auto mb-4" /> },
+  ];
+
+  const faqs = [
+    { q: "How fast is delivery?", a: "Delivery is typically under 30 minutes depending on your location." },
+    { q: "Can I customize my meal?", a: "Yes, you can select ingredients and portion sizes before ordering." },
+    { q: "Are there healthy options?", a: "We provide balanced meals suitable for all diets." },
+  ];
 
   return (
     <div className="font-sans text-gray-900 overflow-x-hidden">
 
       {/* HERO SECTION */}
-      <section className="relative h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 bg-linear-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
-        {/* Floating shapes */}
+      <section className="relative h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 bg-gradient-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-orange-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-pink-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
         <div className="absolute -top-10 -right-20 w-60 h-60 bg-yellow-200 rounded-full opacity-30 blur-2xl animate-bounce"></div>
 
-        {/* Left content */}
-        <motion.div
-          className="md:w-1/2 flex flex-col gap-6 z-10"
+        <motion.div className="md:w-1/2 flex flex-col gap-6 z-10"
           initial="hidden"
           animate="visible"
           variants={fadeUp}
@@ -31,23 +49,15 @@ export default function Home() {
           <p className="text-gray-600 text-lg md:text-xl">
             Fast, delicious, and reliable. Tastevia brings your favorite meals straight to you.
           </p>
-
           <div className="flex gap-4">
-            <Link
-              to="/menu"
-              className="bg-linear-to-r from-orange-500 to-pink-500 text-white px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
-            >
+            <Link to="/menu" className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
               Order Now
             </Link>
-            <Link
-              to="/signup"
-              className="border border-orange-500 text-orange-500 px-8 py-3 rounded-xl hover:bg-orange-50 transition"
-            >
+            <Link to="/signup" className="border border-orange-500 text-orange-500 px-8 py-3 rounded-xl hover:bg-orange-50 transition">
               Sign Up
             </Link>
           </div>
 
-          {/* Icons */}
           <div className="flex gap-6 mt-6 text-orange-400">
             <Pizza size={40} className="animate-bounce" />
             <IceCream size={36} className="animate-bounce delay-200" />
@@ -55,9 +65,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Right hero carousel */}
-        <motion.div
-          className="md:w-1/2 mt-10 md:mt-0 z-10 relative"
+        <motion.div className="md:w-1/2 mt-10 md:mt-0 z-10 relative"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
@@ -68,21 +76,12 @@ export default function Home() {
       </section>
 
       {/* FEATURES SECTION */}
-      <section className="py-24 bg-linear-to-b from-white via-orange-50 to-white text-center relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 w-96 h-96 bg-yellow-200 rounded-full opacity-10 blur-3xl -translate-x-1/2 animate-spin-slow"></div>
         <h2 className="text-4xl font-bold text-gray-800 mb-16">Why Choose Tastevia?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {[
-            { title: "Fast Delivery", desc: "Get your favorite meals delivered quickly.", icon: <Pizza size={48} className="text-red-500" /> },
-            { title: "Fresh Ingredients", desc: "High-quality fresh ingredients in every meal.", icon: <Coffee size={48} className="text-yellow-500" /> },
-            { title: "Variety of Meals", desc: "Choose from a wide variety of dishes.", icon: <IceCream size={48} className="text-pink-500" /> },
-            { title: "Healthy Options", desc: "Balanced and nutritious meals.", icon: <Pizza size={48} className="text-green-500" /> },
-            { title: "24/7 Support", desc: "Always here to help.", icon: <Coffee size={48} className="text-blue-500" /> },
-            { title: "Customizable Meals", desc: "Pick exactly what you want.", icon: <IceCream size={48} className="text-purple-500" /> },
-          ].map((feature, i) => (
-            <motion.div
-              key={i}
-              className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-lg flex flex-col items-center hover:scale-105 transition-transform duration-300"
+          {features.map((feature, i) => (
+            <motion.div key={i} className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-lg flex flex-col items-center hover:scale-105 transition-transform duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -97,17 +96,11 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-24 bg-linear-to-b from-gray-50 to-white text-center relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white text-center relative overflow-hidden">
         <h2 className="text-4xl font-bold mb-12">How It Works</h2>
         <div className="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
-          {[
-            { title: "Order", desc: "Choose your favorite meals.", icon: <Pizza size={50} className="text-red-500 mx-auto mb-4" /> },
-            { title: "Cook", desc: "Meals prepared fresh by our chefs.", icon: <Coffee size={50} className="text-yellow-500 mx-auto mb-4" /> },
-            { title: "Deliver", desc: "Delivered hot at your doorstep.", icon: <IceCream size={50} className="text-pink-500 mx-auto mb-4" /> },
-          ].map((step, i) => (
-            <motion.div
-              key={i}
-              className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-lg flex-1 hover:scale-105 transition-transform duration-300"
+          {steps.map((step, i) => (
+            <motion.div key={i} className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-lg flex-1 hover:scale-105 transition-transform duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -122,13 +115,12 @@ export default function Home() {
       </section>
 
       {/* POPULAR MEALS */}
-      <section className="py-24 bg-linear-to-b from-white via-orange-50 to-white text-center relative">
+      <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative">
         <h2 className="text-4xl font-bold mb-12">Popular Meals</h2>
         <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
+          {/* Replace with dynamic meals fetched from backend later */}
           {[1, 2, 3, 4, 5, 6].map((meal) => (
-            <motion.div
-              key={meal}
-              className="w-72 bg-white/70 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 relative"
+            <motion.div key={meal} className="w-72 bg-white/70 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 relative"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -138,10 +130,7 @@ export default function Home() {
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Delicious Meal {meal}</h3>
                 <p className="text-gray-600 mb-4">$ {8 + meal}.99</p>
-                <Link
-                  to="/menu"
-                  className="bg-linea-to-r from-orange-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition-transform duration-300"
-                >
+                <Link to="/menu" className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition-transform duration-300">
                   Add to Cart
                 </Link>
               </div>
@@ -150,18 +139,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS CAROUSEL */}
+      {/* TESTIMONIALS */}
       <TestimonialsCarousel />
 
       {/* FAQ */}
-      <section className="py-24 bg-linear-to-b from-gray-50 to-white text-center">
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white text-center">
         <h2 className="text-4xl font-bold mb-12">Frequently Asked Questions</h2>
         <div className="max-w-4xl mx-auto text-left space-y-4">
-          {[
-            { q: "How fast is delivery?", a: "Delivery is typically under 30 minutes depending on your location." },
-            { q: "Can I customize my meal?", a: "Yes, you can select ingredients and portion sizes before ordering." },
-            { q: "Are there healthy options?", a: "We provide balanced meals suitable for all diets." },
-          ].map((faq, i) => (
+          {faqs.map((faq, i) => (
             <details key={i} className="bg-white/70 backdrop-blur-md p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
               <summary className="font-semibold cursor-pointer">{faq.q}</summary>
               <p className="mt-2 text-gray-600">{faq.a}</p>
@@ -174,18 +159,17 @@ export default function Home() {
       <section className="py-24 bg-white text-center relative overflow-hidden">
         <h2 className="text-4xl font-bold mb-6">Join Our Newsletter</h2>
         <p className="text-gray-600 mb-6">Get the latest updates and offers directly in your inbox.</p>
-        <div className="flex justify-center gap-4 max-w-md mx-auto">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
           <input type="email" placeholder="Enter your email" className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-          <button className="bg-linear-to-r from-orange-500 to-pink-500 text-white px-6 py-3 rounded-lg hover:scale-105 transition-transform duration-300">
+          <button className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-3 rounded-lg hover:scale-105 transition-transform duration-300">
             Subscribe
           </button>
         </div>
       </section>
 
-      {/* CALL-TO-ACTION */}
-      <section className="py-24 text-center bg-linear-to-r from-orange-500 to-pink-500 text-white relative overflow-hidden">
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-6"
+      {/* CALL TO ACTION */}
+      <section className="py-24 text-center bg-gradient-to-r from-orange-500 to-pink-500 text-white relative overflow-hidden">
+        <motion.h2 className="text-4xl md:text-5xl font-bold mb-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -193,8 +177,7 @@ export default function Home() {
         >
           Ready to Taste the Best?
         </motion.h2>
-        <motion.p
-          className="mb-8"
+        <motion.p className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -202,22 +185,12 @@ export default function Home() {
         >
           Join thousands of happy users enjoying delicious food every day.
         </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          <Link
-            to="/menu"
-            className="bg-white text-orange-600 px-10 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform duration-300"
-          >
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
+          <Link to="/menu" className="bg-white text-orange-600 px-10 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform duration-300">
             Get Started
           </Link>
         </motion.div>
       </section>
-
-      
 
     </div>
   );
