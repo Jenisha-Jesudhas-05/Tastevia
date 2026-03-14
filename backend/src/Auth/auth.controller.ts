@@ -14,7 +14,9 @@ export class AuthController {
 
       setAuthCookies(res, accessToken, refreshToken);
 
-      res.status(201).json(successResponse({ user }, "User registered successfully"));
+      res.status(201).json(
+        successResponse({ user, accessToken }, "User registered successfully")
+      );
     } catch (error: any) {
       res.status(400).json(errorResponse(error.message));
     }
@@ -30,7 +32,7 @@ export class AuthController {
 
       setAuthCookies(res, accessToken, refreshToken);
 
-      res.json(successResponse({ user }, "Login successful"));
+      res.json(successResponse({ user, accessToken }, "Login successful"));
     } catch (error: any) {
       res.status(400).json(errorResponse(error.message));
     }

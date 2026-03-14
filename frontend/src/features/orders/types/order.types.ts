@@ -67,3 +67,12 @@ export interface CreateOrderPayload {
   paymentReference?: string;
   status?: string;
 }
+
+export interface CreatePaymentIntentPayload {
+  amount: number;
+  currency?: string;
+}
+
+export interface PaymentIntentResponse {
+  clientSecret: string;
+}
