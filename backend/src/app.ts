@@ -24,7 +24,10 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      const isVercelPreview =
+        typeof origin === "string" && /^https:\/\/.*\.vercel\.app$/.test(origin);
+
+      if (!origin || allowedOrigins.includes(origin) || isVercelPreview) {
         callback(null, true);
         return;
       }
