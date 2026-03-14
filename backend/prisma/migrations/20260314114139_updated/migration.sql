@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Order" ALTER COLUMN "customerName" DROP DEFAULT,
+ALTER COLUMN "customerEmail" DROP DEFAULT,
+ALTER COLUMN "shippingAddress" DROP DEFAULT,
+ALTER COLUMN "phone" DROP DEFAULT;

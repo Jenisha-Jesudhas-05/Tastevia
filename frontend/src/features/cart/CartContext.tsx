@@ -5,14 +5,9 @@ import {
   removeCartItemAPI,
   getCartAPI,
 } from "./cart.service";
+import type { CartProductItem } from "@/features/orders/types/order.types";
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
+type CartItem = CartProductItem;
 
 interface CartContextType {
   cart: CartItem[];
@@ -61,7 +56,15 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     if (!user?.id) return;
     try {
       const data = await getCartAPI(user.id);
-      setCart(data.items || []);
+      const normalizedItems =
+        data.items?.map((item: any) => ({
+          id: String(item.productId),
+          name: item.product.name,
+          price: item.product.price,
+          image: item.product.imageUrls?.[0] ?? "",
+          quantity: item.quantity,
+        })) || [];
+      setCart(normalizedItems);
     } catch (err) {
       console.error("Failed to fetch cart from backend", err);
     }

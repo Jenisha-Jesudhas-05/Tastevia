@@ -111,9 +111,12 @@ export default function Cart() {
           </p>
         </div>
 
-        <button className="bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition">
+        <Link
+          to="/checkout"
+          className="bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition"
+        >
           Checkout
-        </button>
+        </Link>
 
       </div>
 
