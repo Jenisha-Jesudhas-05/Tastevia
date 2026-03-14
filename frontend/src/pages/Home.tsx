@@ -1,132 +1,302 @@
 import { Link } from "react-router-dom";
-import { Pizza, IceCream, Coffee } from "lucide-react";
+import {
+  ArrowRight,
+  Bike,
+  Coffee,
+  IceCream,
+  Pizza,
+  ShieldCheck,
+  Sparkles,
+  Star,
+} from "lucide-react";
 import { motion } from "framer-motion";
-import TestimonialsCarousel from "../components/TestimonialsCarousel";
+
 import HeroCarousel from "../components/HeroCarousel";
+import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import { useProducts } from "@/features/products/hooks/useProducts";
 import ProductCard from "@/features/products/components/ProductCard";
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const features = [
+  {
+    title: "Chef-crafted taste",
+    desc: "Balanced flavors, rich textures, and plated meals that still feel premium on delivery.",
+    icon: Sparkles,
+    accent: "from-orange-400/20 to-yellow-300/20",
+  },
+  {
+    title: "Fast neighborhood delivery",
+    desc: "Smart routing keeps your order warm, crisp, and on time from kitchen to doorstep.",
+    icon: Bike,
+    accent: "from-amber-400/20 to-orange-300/20",
+  },
+  {
+    title: "Fresh ingredients daily",
+    desc: "We focus on quality produce, proteins, and pantry staples that taste clean and comforting.",
+    icon: ShieldCheck,
+    accent: "from-emerald-400/20 to-lime-300/20",
+  },
+];
+
+const categories = [
+  { label: "Wood-fired Pizza", caption: "Bold crusts and melty toppings", icon: Pizza },
+  { label: "Specialty Drinks", caption: "Coffee, shakes, and cool sips", icon: Coffee },
+  { label: "Dessert Fixes", caption: "Sweet finishes worth saving room for", icon: IceCream },
+];
+
+const steps = [
+  { title: "Pick your mood", desc: "Explore crowd favorites, comfort classics, and quick treats." },
+  { title: "Customize in seconds", desc: "Adjust portions, toppings, and extras without slowing down." },
+  { title: "Track to your door", desc: "Know when your meal is cooking, leaving, and arriving hot." },
+];
+
+const faqs = [
+  {
+    q: "How fast is delivery?",
+    a: "Most orders arrive in around 30 minutes, depending on your address and kitchen rush.",
+  },
+  {
+    q: "Can I customize my meal?",
+    a: "Yes. You can update ingredients, quantities, and add-ons during checkout.",
+  },
+  {
+    q: "Do you have lighter options?",
+    a: "Tastevia includes balanced picks alongside indulgent meals, so both cravings and goals are covered.",
+  },
+];
+
 export default function Home() {
-  const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
   const { products } = useProducts();
   const popularMeals = products.slice(0, 6);
 
-  const features = [
-    { title: "Fast Delivery", desc: "Get your favorite meals delivered quickly.", icon: <Pizza size={48} className="text-red-500" /> },
-    { title: "Fresh Ingredients", desc: "High-quality fresh ingredients in every meal.", icon: <Coffee size={48} className="text-yellow-500" /> },
-    { title: "Variety of Meals", desc: "Choose from a wide variety of dishes.", icon: <IceCream size={48} className="text-pink-500" /> },
-    { title: "Healthy Options", desc: "Balanced and nutritious meals.", icon: <Pizza size={48} className="text-green-500" /> },
-    { title: "24/7 Support", desc: "Always here to help.", icon: <Coffee size={48} className="text-blue-500" /> },
-    { title: "Customizable Meals", desc: "Pick exactly what you want.", icon: <IceCream size={48} className="text-purple-500" /> },
-  ];
-
-  const steps = [
-    { title: "Order", desc: "Choose your favorite meals.", icon: <Pizza size={50} className="text-red-500 mx-auto mb-4" /> },
-    { title: "Cook", desc: "Meals prepared fresh by our chefs.", icon: <Coffee size={50} className="text-yellow-500 mx-auto mb-4" /> },
-    { title: "Deliver", desc: "Delivered hot at your doorstep.", icon: <IceCream size={50} className="text-pink-500 mx-auto mb-4" /> },
-  ];
-
-  const faqs = [
-    { q: "How fast is delivery?", a: "Delivery is typically under 30 minutes depending on your location." },
-    { q: "Can I customize my meal?", a: "Yes, you can select ingredients and portion sizes before ordering." },
-    { q: "Are there healthy options?", a: "We provide balanced meals suitable for all diets." },
-  ];
-
   return (
-    <div className="font-sans text-gray-900 overflow-x-hidden">
+    <div className="overflow-x-hidden bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] text-slate-900">
+      <section className="relative isolate overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(251,146,60,0.24),_transparent_30%),radial-gradient(circle_at_85%_20%,_rgba(244,114,182,0.18),_transparent_24%),radial-gradient(circle_at_bottom_center,_rgba(253,224,71,0.18),_transparent_28%)]" />
+        <div className="absolute left-[-6rem] top-24 h-64 w-64 rounded-full bg-orange-300/20 blur-3xl" />
+        <div className="absolute bottom-0 right-[-5rem] h-72 w-72 rounded-full bg-rose-300/20 blur-3xl" />
 
-      {/* HERO SECTION */}
-      <section className="relative h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 bg-gradient-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-orange-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-pink-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
-        <div className="absolute -top-10 -right-20 w-60 h-60 bg-yellow-200 rounded-full opacity-30 blur-2xl animate-bounce"></div>
+        <div className="relative mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-14 px-6 py-16 md:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-20">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            transition={{ duration: 0.7 }}
+            className="space-y-8"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/75 px-4 py-2 text-sm text-orange-700 shadow-sm backdrop-blur">
+              <Sparkles className="h-4 w-4" />
+              Flavor-forward meals, delivered beautifully
+            </div>
 
-        <motion.div className="md:w-1/2 flex flex-col gap-6 z-10"
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight">
-            Fresh Meals Delivered <br /> To Your Doorstep
-          </h1>
-          <p className="text-gray-600 text-lg md:text-xl">
-            Fast, delicious, and reliable. Tastevia brings your favorite meals straight to you.
-          </p>
-          <div className="flex gap-4">
-            <Link to="/menu" className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-              Order Now
-            </Link>
-            <Link to="/signup" className="border border-orange-500 text-orange-500 px-8 py-3 rounded-xl hover:bg-orange-50 transition">
-              Sign Up
-            </Link>
-          </div>
+            <div className="space-y-5">
+              <h1 className="max-w-2xl text-5xl font-semibold leading-tight tracking-tight text-slate-900 md:text-6xl">
+                Tastevia turns everyday delivery into your favorite part of the day.
+              </h1>
+              <p className="max-w-xl text-base leading-8 text-slate-600 md:text-lg">
+                Warm comfort food, playful desserts, and quick drinks brought together in a landing experience that feels as fresh as the menu.
+              </p>
+            </div>
 
-          <div className="flex gap-6 mt-6 text-orange-400">
-            <Pizza size={40} className="animate-bounce" />
-            <IceCream size={36} className="animate-bounce delay-200" />
-            <Coffee size={34} className="animate-bounce delay-400" />
-          </div>
-        </motion.div>
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <Link
+                to="/menu"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-7 py-3.5 text-sm font-semibold text-white shadow-[0_18px_50px_-18px_rgba(15,23,42,0.7)] transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                Explore Menu
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-white/70 px-7 py-3.5 text-sm font-semibold text-orange-700 backdrop-blur transition-colors hover:bg-orange-50"
+              >
+                Create Account
+              </Link>
+            </div>
 
-        <motion.div className="md:w-1/2 mt-10 md:mt-0 z-10 relative"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <HeroCarousel />
-          <div className="absolute -bottom-10 left-1/4 w-40 h-40 bg-pink-300 rounded-full opacity-20 blur-2xl animate-pulse"></div>
-        </motion.div>
-      </section>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                { value: "30 min", label: "Average delivery window" },
+                { value: "4.8/5", label: "Loved by regulars" },
+                { value: "50+", label: "Comfort-first dishes" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-[0_20px_50px_-35px_rgba(249,115,22,0.7)] backdrop-blur"
+                >
+                  <p className="text-2xl font-semibold text-slate-900">{stat.value}</p>
+                  <p className="mt-1 text-sm text-slate-500">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
-      {/* FEATURES SECTION */}
-      <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 w-96 h-96 bg-yellow-200 rounded-full opacity-10 blur-3xl -translate-x-1/2 animate-spin-slow"></div>
-        <h2 className="text-4xl font-bold text-gray-800 mb-16">Why Choose Tastevia?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {features.map((feature, i) => (
-            <motion.div key={i} className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-lg flex flex-col items-center hover:scale-105 transition-transform duration-300"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.desc}</p>
-            </motion.div>
-          ))}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="relative"
+          >
+            <div className="absolute -left-6 top-8 hidden rounded-3xl border border-white/60 bg-white/80 p-4 shadow-xl backdrop-blur md:block">
+              <div className="flex items-center gap-3">
+                <div className="rounded-2xl bg-orange-100 p-3 text-orange-600">
+                  <Star className="h-5 w-5 fill-current" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">Customer favorite</p>
+                  <p className="text-xs text-slate-500">Fresh combos trending this week</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/60 bg-white/55 p-3 shadow-[0_30px_80px_-35px_rgba(249,115,22,0.65)] backdrop-blur-xl">
+              <HeroCarousel />
+            </div>
+
+            <div className="absolute -bottom-6 right-3 rounded-3xl bg-slate-950 px-5 py-4 text-white shadow-2xl">
+              <p className="text-xs uppercase tracking-[0.28em] text-orange-200">Live now</p>
+              <p className="mt-1 text-sm font-medium">Cravings are being delivered across the city.</p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white text-center relative overflow-hidden">
-        <h2 className="text-4xl font-bold mb-12">How It Works</h2>
-        <div className="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
-          {steps.map((step, i) => (
-            <motion.div key={i} className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-lg flex-1 hover:scale-105 transition-transform duration-300"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
-            >
-              {step.icon}
-              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-              <p className="text-gray-600">{step.desc}</p>
-            </motion.div>
-          ))}
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <div className="grid gap-6 md:grid-cols-3">
+          {categories.map((category, index) => {
+            const Icon = category.icon;
+
+            return (
+              <motion.div
+                key={category.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.12 }}
+                className="rounded-[2rem] border border-orange-100 bg-white/80 p-7 shadow-[0_25px_60px_-40px_rgba(15,23,42,0.45)] backdrop-blur"
+              >
+                <div className="mb-5 inline-flex rounded-2xl bg-orange-100 p-4 text-orange-600">
+                  <Icon className="h-7 w-7" />
+                </div>
+                <h2 className="text-xl font-semibold text-slate-900">{category.label}</h2>
+                <p className="mt-2 text-sm leading-7 text-slate-600">{category.caption}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
-      {/* POPULAR MEALS */}
-      <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative">
-        <h2 className="text-4xl font-bold mb-12">Popular Meals</h2>
-        <div className="grid grid-cols-1 gap-8 px-4 md:grid-cols-2 xl:grid-cols-3 max-w-6xl mx-auto">
+      <section className="relative overflow-hidden py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
+                Why Tastevia
+              </p>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900">
+                Built for modern food cravings, not generic delivery screens.
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-7 text-slate-600">
+              Tastevia blends warm visuals, confident motion, and clear messaging to make ordering feel inviting from the very first scroll.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+
+              return (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 36 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.12 }}
+                  className="group rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_30px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur"
+                >
+                  <div className={`mb-6 inline-flex rounded-2xl bg-gradient-to-br ${feature.accent} p-4 text-slate-900`}>
+                    <Icon className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">{feature.desc}</p>
+                  <div className="mt-6 h-1.5 w-20 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 transition-all duration-300 group-hover:w-28" />
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <div className="grid gap-8 rounded-[2rem] bg-slate-950 px-8 py-10 text-white shadow-[0_35px_90px_-45px_rgba(15,23,42,0.9)] lg:grid-cols-[0.95fr_1.05fr] lg:px-12 lg:py-14">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-200">
+              How It Works
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight">
+              A smoother order flow from craving to checkout.
+            </h2>
+            <p className="mt-4 max-w-lg text-sm leading-7 text-slate-300">
+              Each step is simple, mobile-friendly, and designed to keep users moving without friction.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.12 }}
+                className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 to-rose-400 text-sm font-bold text-white">
+                    0{index + 1}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold">{step.title}</h3>
+                    <p className="mt-1 text-sm leading-7 text-slate-300">{step.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
+              Popular Now
+            </p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900">
+              Crowd favorites worth featuring on the first visit.
+            </h2>
+          </div>
+          <Link
+            to="/menu"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 transition-colors hover:text-orange-700"
+          >
+            See full menu
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
           {popularMeals.map((meal, index) => (
-            <motion.div key={meal.id}
-              initial={{ opacity: 0, y: 50 }}
+            <motion.div
+              key={meal.id}
+              initial={{ opacity: 0, y: 36 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ delay: index * 0.08 }}
             >
               <ProductCard {...meal} />
@@ -135,59 +305,89 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
       <TestimonialsCarousel />
 
-      {/* FAQ */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white text-center">
-        <h2 className="text-4xl font-bold mb-12">Frequently Asked Questions</h2>
-        <div className="max-w-4xl mx-auto text-left space-y-4">
-          {faqs.map((faq, i) => (
-            <details key={i} className="bg-white/70 backdrop-blur-md p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
-              <summary className="font-semibold cursor-pointer">{faq.q}</summary>
-              <p className="mt-2 text-gray-600">{faq.a}</p>
-            </details>
-          ))}
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-[2rem] border border-orange-100 bg-white/85 p-8 shadow-[0_25px_70px_-45px_rgba(249,115,22,0.9)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
+              Stay in the Loop
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900">
+              Weekly offers and seasonal drops.
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-slate-600">
+              Sign up for warm weekend deals, limited drops, and meal launches worth keeping an eye on.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="min-h-12 flex-1 rounded-2xl border border-orange-100 bg-orange-50/60 px-4 text-sm text-slate-700 outline-none transition focus:border-orange-300 focus:bg-white"
+              />
+              <button className="rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5">
+                Subscribe
+              </button>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.details
+                key={faq.q}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.08 }}
+                className="rounded-[1.5rem] border border-slate-200 bg-white/80 p-5 shadow-[0_24px_60px_-50px_rgba(15,23,42,0.9)] backdrop-blur"
+              >
+                <summary className="cursor-pointer list-none text-base font-semibold text-slate-900">
+                  {faq.q}
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{faq.a}</p>
+              </motion.details>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* NEWSLETTER */}
-      <section className="py-24 bg-white text-center relative overflow-hidden">
-        <h2 className="text-4xl font-bold mb-6">Join Our Newsletter</h2>
-        <p className="text-gray-600 mb-6">Get the latest updates and offers directly in your inbox.</p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
-          <input type="email" placeholder="Enter your email" className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-          <button className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-3 rounded-lg hover:scale-105 transition-transform duration-300">
-            Subscribe
-          </button>
+      <section className="px-6 pb-20 lg:px-10">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-gradient-to-r from-orange-500 via-orange-400 to-rose-500 px-8 py-14 text-center text-white shadow-[0_35px_90px_-45px_rgba(249,115,22,0.95)] lg:px-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl font-semibold tracking-tight md:text-5xl"
+          >
+            Ready for something delicious?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-orange-50 md:text-base"
+          >
+            Explore the menu, discover your next comfort favorite, and get it delivered with speed and style.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8"
+          >
+            <Link
+              to="/menu"
+              className="inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-3.5 text-sm font-semibold text-orange-600 transition-transform hover:-translate-y-0.5"
+            >
+              Order Now
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
         </div>
       </section>
-
-      {/* CALL TO ACTION */}
-      <section className="py-24 text-center bg-gradient-to-r from-orange-500 to-pink-500 text-white relative overflow-hidden">
-        <motion.h2 className="text-4xl md:text-5xl font-bold mb-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          Ready to Taste the Best?
-        </motion.h2>
-        <motion.p className="mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          Join thousands of happy users enjoying delicious food every day.
-        </motion.p>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
-          <Link to="/menu" className="bg-white text-orange-600 px-10 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform duration-300">
-            Get Started
-          </Link>
-        </motion.div>
-      </section>
-
     </div>
   );
 }
