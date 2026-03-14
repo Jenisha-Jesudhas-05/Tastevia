@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom"
 import Home from "@/pages/Home"
-import Cart from "@/pages/Cart"
 import Orders from "@/pages/Orders"
 import AuthLayout from "@/components/layout/AuthLayout"
 import SignupPage from "@/features/auth/pages/Signup"
@@ -8,6 +7,8 @@ import LoginPage from "@/features/auth/pages/Login"
 import MainLayout from "@/components/layout/MainLayout"
 import ProtectedRoutes from "./ProtectedRoutes"
 import ProductPages from "@/features/products/pages/ProductPages"
+import ProductDetailPage from "@/features/products/pages/ProductDetailPage"
+import Cart from "@/features/cart/cart"
 
 export default function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ export default function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<ProductPages />} />
+             <Route path="/menu/:id" element={<ProductDetailPage />} />
       </Route>
 
       {/* PROTECTED ROUTES */}

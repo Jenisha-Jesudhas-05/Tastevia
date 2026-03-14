@@ -1,112 +1,43 @@
 import { Request, Response } from "express";
-import { AuthService } from "./auth.service.js";
-import {
-  setAuthCookies,
-  clearAuthCookies,
-  verifyRefreshToken
-} from "../utils/jwt.js";
+import { AuthService } from "./auth.service";
+import { setAuthCookies, clearAuthCookies } from "../utils/jwt";
+import { successResponse, errorResponse } from "../utils/apiResponse";
 
+export class AuthController {
+  static async register(req: Request, res: Response) {
+    try {
+      const { name, email, password } = req.body;
+      if (!name || !email || !password)
+        return res.status(400).json(errorResponse("All fields are required"));
 
-export const signup = async (req: Request, res: Response) => {
-  try {
-    const user = await AuthService.signup(req.body);
+      const { user, accessToken, refreshToken } = await AuthService.register({ name, email, password });
 
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      data: user
-    });
+      setAuthCookies(res, accessToken, refreshToken);
 
-  } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
-
-
-export const login = async (req: Request, res: Response) => {
-  try {
-
-    const { email, password } = req.body;
-
-    const { user, accessToken, refreshToken } =
-      await AuthService.login(email, password);
-
-    setAuthCookies(res, accessToken, refreshToken);
-
-    res.status(200).json({
-      success: true,
-      message: "Logged in successfully",
-      data: user
-    });
-
-  } catch (error: any) {
-
-    res.status(401).json({
-      success: false,
-      message: error.message
-    });
-
-  }
-};
-
-
-export const refresh = async (req: Request, res: Response) => {
-  try {
-
-    const token = req.cookies.refreshToken;
-
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: "No refresh token"
-      });
+      res.status(201).json(successResponse({ user }, "User registered successfully"));
+    } catch (error: any) {
+      res.status(400).json(errorResponse(error.message));
     }
-
-    const decoded: any = verifyRefreshToken(token);
-
-    const { accessToken, refreshToken } =
-      await AuthService.refresh(decoded.userId);
-
-    setAuthCookies(res, accessToken, refreshToken);
-
-    res.status(200).json({
-      success: true,
-      message: "Token refreshed"
-    });
-
-  } catch (error) {
-
-    res.status(403).json({
-      success: false,
-      message: "Session expired"
-    });
-
   }
-};
 
+  static async login(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password)
+        return res.status(400).json(errorResponse("Email and password required"));
 
-export const logout = async (_req: Request, res: Response) => {
-  try {
+      const { user, accessToken, refreshToken } = await AuthService.login(email, password);
 
-    // Since refreshToken is not stored in DB
-    // we only clear cookies
+      setAuthCookies(res, accessToken, refreshToken);
 
+      res.json(successResponse({ user }, "Login successful"));
+    } catch (error: any) {
+      res.status(400).json(errorResponse(error.message));
+    }
+  }
+
+  static logout(req: Request, res: Response) {
     clearAuthCookies(res);
-
-    res.status(200).json({
-      success: true,
-      message: "Logged out successfully"
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      success: false,
-      message: "Logout failed"
-    });
-
+    res.json(successResponse(null, "Logged out successfully"));
   }
-};
+}

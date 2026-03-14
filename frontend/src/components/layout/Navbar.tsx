@@ -3,26 +3,14 @@ import { ShoppingCart, LogOut, User, Menu, X } from "lucide-react";
 import logo from "../../assets/logo.png";
 import { logout } from "@/features/auth/services/auth.service";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useState, useEffect } from "react";
+import { useCart } from "../../features/cart/CartContext";
+import { useState } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { user, logoutUser } = useAuth();
-  const [cartCount, setCartCount] = useState(0);
+  const { totalItems } = useCart(); // ⭐ Cart count from context
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Load cart count and listen for localStorage changes
-  useEffect(() => {
-    const updateCart = () => {
-      const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartCount(storedCart.length);
-    };
-
-    updateCart();
-    window.addEventListener("storage", updateCart);
-
-    return () => window.removeEventListener("storage", updateCart);
-  }, []);
 
   // Handle logout
   const handleLogout = async () => {
@@ -38,6 +26,7 @@ export default function Navbar() {
   return (
     <nav className="w-full sticky top-0 z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
@@ -52,9 +41,11 @@ export default function Navbar() {
           <Link to="/" className="hover:text-orange-600 transition-colors">
             Home
           </Link>
+
           <Link to="/menu" className="hover:text-orange-600 transition-colors">
             Menu
           </Link>
+
           <Link
             to="/orders"
             className="hover:text-orange-600 transition-colors"
@@ -65,12 +56,14 @@ export default function Navbar() {
 
         {/* Right Section */}
         <div className="flex items-center gap-6">
+
           {/* Cart */}
           <Link to="/cart" className="relative flex items-center">
             <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-orange-600 transition-colors" />
-            {cartCount > 0 && (
+
+            {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-orange-600 text-white text-xs px-1.5 rounded-full">
-                {cartCount}
+                {totalItems}
               </span>
             )}
           </Link>
@@ -84,6 +77,7 @@ export default function Navbar() {
               >
                 Login
               </Link>
+
               <Link
                 to="/signup"
                 className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
@@ -93,10 +87,12 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="hidden md:flex items-center gap-4">
+
               <span className="flex items-center gap-1 text-gray-700">
                 <User className="w-5 h-5 text-orange-500" />
                 {user.name || user.email}
               </span>
+
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-1 text-gray-700 hover:text-red-500 transition-colors"
@@ -104,6 +100,7 @@ export default function Navbar() {
                 <LogOut className="w-5 h-5" />
                 Logout
               </button>
+
             </div>
           )}
 
@@ -112,8 +109,13 @@ export default function Navbar() {
             className="md:hidden text-gray-700"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
+
         </div>
       </div>
 
@@ -121,15 +123,19 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white shadow-md">
           <div className="flex flex-col gap-4 px-6 py-4 text-gray-700 font-medium">
+
             <Link to="/" onClick={() => setMobileMenuOpen(false)}>
               Home
             </Link>
+
             <Link to="/menu" onClick={() => setMobileMenuOpen(false)}>
               Menu
             </Link>
+
             <Link to="/orders" onClick={() => setMobileMenuOpen(false)}>
               Orders
             </Link>
+
             {!user ? (
               <>
                 <Link
@@ -139,6 +145,7 @@ export default function Navbar() {
                 >
                   Login
                 </Link>
+
                 <Link
                   to="/signup"
                   onClick={() => setMobileMenuOpen(false)}
@@ -155,9 +162,11 @@ export default function Navbar() {
                 }}
                 className="flex items-center gap-2 text-gray-700 hover:text-red-500"
               >
-                <LogOut className="w-5 h-5" /> Logout
+                <LogOut className="w-5 h-5" />
+                Logout
               </button>
             )}
+
           </div>
         </div>
       )}

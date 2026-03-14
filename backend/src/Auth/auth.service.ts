@@ -1,82 +1,35 @@
-import { prisma } from "../lib/prisma.js";
-import bcrypt from "bcryptjs";
-import { generateTokens } from "../utils/jwt.js";
+import prisma from "../../src/lib/prisma";
+import bcrypt from "bcrypt";
+import { generateTokens } from "../utils/jwt"; // your JWT util
+
+interface RegisterInput {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export class AuthService {
+  static async register({ name, email, password }: RegisterInput) {
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) throw new Error("Email already registered");
 
-  // SIGNUP
-  static async signup(userData: any) {
-
-    const existingUser = await prisma.user.findUnique({
-      where: { email: userData.email }
-    });
-
-    if (existingUser) {
-      throw new Error("User already exists");
-    }
-
-    const hashedPassword = await bcrypt.hash(userData.password, 12);
-
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
-      data: {
-        name: userData.name,
-        email: userData.email,
-        password: hashedPassword
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true
-      }
+      data: { name, email, password: hashedPassword },
     });
 
-    return user;
+    const tokens = generateTokens(user.id);
+    return { user, ...tokens };
   }
 
-
-  // LOGIN
   static async login(email: string, password: string) {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) throw new Error("Invalid credentials");
 
-    const user = await prisma.user.findUnique({
-      where: { email }
-    });
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) throw new Error("Invalid credentials");
 
-    if (!user) {
-      throw new Error("Invalid email or password");
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
-    }
-
-    const { accessToken, refreshToken } = generateTokens(user.id);
-
-    return {
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email
-      },
-      accessToken,
-      refreshToken
-    };
+    const tokens = generateTokens(user.id);
+    return { user, ...tokens };
   }
-
-
-  // REFRESH TOKEN
-  static async refresh(userId: number) {
-
-    const tokens = generateTokens(userId);
-
-    return tokens;
-  }
-
-
-  // LOGOUT
-  static async logout() {
-    return { message: "Logged out successfully" };
-  }
-
 }
