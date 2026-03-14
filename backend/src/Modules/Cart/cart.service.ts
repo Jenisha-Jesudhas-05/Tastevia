@@ -1,4 +1,4 @@
-import prisma from "../../lib/prisma";
+import prisma from "../../lib/prisma.js";
 
 // Add item to cart
 export const addToCart = async (userId: number, productId: number, quantity: number) => {

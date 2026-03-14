@@ -3,10 +3,10 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 // Routes
-import authRoutes from './Auth/auth.routes';
-import productRoutes from './Modules/Products/product.routes'; // Add Product routes
-import cartRoutes from "./Modules/Cart/cart.routes";
-import orderRoutes from "./Modules/Orders/order.routes";
+import authRoutes from './Auth/auth.routes.js';
+import productRoutes from './Modules/Products/product.routes.js'; // Add Product routes
+import cartRoutes from "./Modules/Cart/cart.routes.js";
+import orderRoutes from "./Modules/Orders/order.routes.js";
 const app = express();
 
 // Middleware
