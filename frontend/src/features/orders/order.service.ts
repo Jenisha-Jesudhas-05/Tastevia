@@ -1,9 +1,7 @@
 import { api } from "@/lib/axios";
 import type {
   CreateOrderPayload,
-  CreatePaymentIntentPayload,
   Order,
-  PaymentIntentResponse,
 } from "./types/order.types";
 
 // Sample fetch equivalent:
@@ -28,15 +26,5 @@ export const getOrderHistoryAPI = async (userId: number) => {
   const response = await api.get<Order[]>("/orders", {
     params: { userId },
   });
-  return response.data;
-};
-
-export const createPaymentIntentAPI = async (
-  payload: CreatePaymentIntentPayload
-) => {
-  const response = await api.post<PaymentIntentResponse>(
-    "/orders/payment-intent",
-    payload
-  );
   return response.data;
 };

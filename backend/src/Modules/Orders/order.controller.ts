@@ -80,19 +80,3 @@ export const getOrdersByUserId = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Failed to fetch order history" });
   }
 };
-
-export const createPaymentIntent = async (req: Request, res: Response) => {
-  try {
-    const { amount, currency } = req.body;
-
-    const paymentIntent = await orderService.createPaymentIntent(
-      Number(amount),
-      currency
-    );
-
-    return res.json(paymentIntent);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to create payment intent" });
-  }
-};

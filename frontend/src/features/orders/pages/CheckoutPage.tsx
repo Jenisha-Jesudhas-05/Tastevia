@@ -73,8 +73,8 @@ export default function CheckoutPage() {
             Shipping and order review
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-gray-500">
-            Review your cart, confirm your delivery details, and continue to a
-            secure payment step.
+            Review your cart, confirm your delivery details, and choose how you
+            want to pay before placing the order.
           </p>
 
           <div className="mt-8 space-y-4">

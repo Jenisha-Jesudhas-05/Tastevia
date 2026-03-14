@@ -1,5 +1,4 @@
 import prisma from "../../lib/prisma.js";
-import { assertStripe } from "../../lib/stripe.js";
 
 type CreateOrderItemInput = {
   productId: number;
@@ -98,28 +97,4 @@ export const getOrdersByUserId = async (userId: number) => {
     include: orderInclude,
     orderBy: { createdAt: "desc" },
   });
-};
-
-export const createPaymentIntent = async (amount: number, currency = "usd") => {
-  const stripe = assertStripe();
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-    throw new Error("Amount must be greater than zero");
-  }
-
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: Math.round(amount * 100),
-    currency,
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
-
-  if (!paymentIntent.client_secret) {
-    throw new Error("Stripe did not return a client secret");
-  }
-
-  return {
-    clientSecret: paymentIntent.client_secret,
-  };
 };
