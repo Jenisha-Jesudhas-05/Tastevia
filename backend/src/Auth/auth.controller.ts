@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { AuthService } from "./auth.service";
-import { setAuthCookies, clearAuthCookies } from "../utils/jwt";
-import { successResponse, errorResponse } from "../utils/apiResponse";
+import { AuthService } from "./auth.service.js";
+import { setAuthCookies, clearAuthCookies } from "../utils/jwt.js";
+import { successResponse, errorResponse } from "../utils/apiResponse.js";
 
 export class AuthController {
   static async register(req: Request, res: Response) {

@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config(); // Load env variables first
 
-import app from './app';
-import prisma from './lib/prisma'; // Use your adapter-based Prisma client
+import app from './app.js';
+import prisma from './lib/prisma.js'; // Use your adapter-based Prisma client
 
 const PORT = process.env.PORT || 5000;
 

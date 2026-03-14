@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ProductService } from "./product.service";
-import { successResponse, errorResponse } from "../../utils/apiResponse";
+import { ProductService } from "./product.service.js";
+import { successResponse, errorResponse } from "../../utils/apiResponse.js";
 
 export class ProductController {
   static async create(req: Request, res: Response) {

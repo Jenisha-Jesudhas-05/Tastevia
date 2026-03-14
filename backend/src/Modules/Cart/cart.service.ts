@@ -1,4 +1,4 @@
-import prisma from "../../lib/prisma";
+import prisma from "../../lib/prisma.js";
 
 // Add item to cart
 export const addToCart = async (userId: number, productId: number, quantity: number) => {
@@ -49,11 +49,9 @@ export const updateCartItem = async (userId: number, productId: number, quantity
     data: { quantity }
   });
 
-  // Return updated cart
   return getCart(userId);
 };
 
-// Remove an item from cart
 export const removeCartItem = async (userId: number, productId: number) => {
   const cart = await prisma.cart.findUnique({ where: { userId } });
   if (!cart) throw new Error("Cart not found");
@@ -62,6 +60,5 @@ export const removeCartItem = async (userId: number, productId: number) => {
     where: { cartId: cart.id, productId }
   });
 
-  // Return updated cart
   return getCart(userId);
 };

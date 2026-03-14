@@ -9,6 +9,9 @@ import ProtectedRoutes from "./ProtectedRoutes"
 import ProductPages from "@/features/products/pages/ProductPages"
 import ProductDetailPage from "@/features/products/pages/ProductDetailPage"
 import Cart from "@/features/cart/cart"
+import CheckoutPage from "@/features/orders/pages/CheckoutPage"
+import PaymentPage from "@/features/orders/pages/PaymentPage"
+import OrderDetailsPage from "@/features/orders/pages/OrderDetailsPage"
 
 export default function AppRoutes() {
   return (
@@ -32,7 +35,10 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoutes />}>
         <Route element={<MainLayout />}>
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderDetailsPage />} />
         </Route>
       </Route>
 

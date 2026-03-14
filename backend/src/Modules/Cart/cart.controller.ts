@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as cartService from "./cart.service";
+import * as cartService from "./cart.service.js";
 
 // Add item to cart
 export const addToCart = async (req: Request, res: Response) => {
