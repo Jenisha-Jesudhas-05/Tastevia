@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API = "http://localhost:5000/api/v1";
+import { api } from "@/lib/axios";
 
 // Add item to cart
 export const addToCartAPI = async (
@@ -8,7 +6,7 @@ export const addToCartAPI = async (
   productId: number,
   quantity: number
 ) => {
-  const res = await axios.post(`${API}/cart/add`, {
+  const res = await api.post(`/cart/add`, {
     userId,
     productId,
     quantity,
@@ -18,7 +16,7 @@ export const addToCartAPI = async (
 
 // Get user's cart
 export const getCartAPI = async (userId: number) => {
-  const res = await axios.get(`${API}/cart/${userId}`);
+  const res = await api.get(`/cart/${userId}`);
   return res.data;
 };
 
@@ -28,7 +26,7 @@ export const updateCartItemAPI = async (
   productId: number,
   quantity: number
 ) => {
-  const res = await axios.patch(`${API}/cart/update`, {
+  const res = await api.patch(`/cart/update`, {
     userId,
     productId,
     quantity,
@@ -38,7 +36,7 @@ export const updateCartItemAPI = async (
 
 // Remove item from cart
 export const removeCartItemAPI = async (userId: number, productId: number) => {
-  const res = await axios.delete(`${API}/cart/remove`, {
+  const res = await api.delete(`/cart/remove`, {
     data: { userId, productId },
   });
   return res.data;

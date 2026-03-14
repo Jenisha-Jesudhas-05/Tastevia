@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "@/lib/axios";
 
 export const useProducts = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -8,7 +8,7 @@ export const useProducts = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/v1/products");
+        const res = await api.get("/products");
         setProducts(Array.isArray(res.data) ? res.data : res.data.data || []);
       } catch (err) {
         console.error(err);

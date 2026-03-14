@@ -155,16 +155,23 @@ export default function Navbar() {
                 </Link>
               </>
             ) : (
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setMobileMenuOpen(false);
-                }}
-                className="flex items-center gap-2 text-gray-700 hover:text-red-500"
-              >
-                <LogOut className="w-5 h-5" />
-                Logout
-              </button>
+              <>
+                <span className="flex items-center gap-2 text-sm text-gray-700">
+                  <User className="w-4 h-4 text-orange-500" />
+                  {user.name || user.email}
+                </span>
+
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-2 text-gray-700 hover:text-red-500"
+                >
+                  <LogOut className="w-5 h-5" />
+                  Logout
+                </button>
+              </>
             )}
 
           </div>

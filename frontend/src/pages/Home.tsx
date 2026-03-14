@@ -3,9 +3,13 @@ import { Pizza, IceCream, Coffee } from "lucide-react";
 import { motion } from "framer-motion";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import HeroCarousel from "../components/HeroCarousel";
+import { useProducts } from "@/features/products/hooks/useProducts";
+import ProductCard from "@/features/products/components/ProductCard";
 
 export default function Home() {
   const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
+  const { products } = useProducts();
+  const popularMeals = products.slice(0, 6);
 
   const features = [
     { title: "Fast Delivery", desc: "Get your favorite meals delivered quickly.", icon: <Pizza size={48} className="text-red-500" /> },
@@ -117,23 +121,15 @@ export default function Home() {
       {/* POPULAR MEALS */}
       <section className="py-24 bg-gradient-to-b from-white via-orange-50 to-white text-center relative">
         <h2 className="text-4xl font-bold mb-12">Popular Meals</h2>
-        <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
-          {/* Replace with dynamic meals fetched from backend later */}
-          {[1, 2, 3, 4, 5, 6].map((meal) => (
-            <motion.div key={meal} className="w-72 bg-white/70 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 relative"
+        <div className="grid grid-cols-1 gap-8 px-4 md:grid-cols-2 xl:grid-cols-3 max-w-6xl mx-auto">
+          {popularMeals.map((meal, index) => (
+            <motion.div key={meal.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: meal * 0.1 }}
+              transition={{ delay: index * 0.08 }}
             >
-              <img src={"/assets/logo.png"} alt={`Meal ${meal}`} className="w-full h-48 object-cover"/>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">Delicious Meal {meal}</h3>
-                <p className="text-gray-600 mb-4">$ {8 + meal}.99</p>
-                <Link to="/menu" className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition-transform duration-300">
-                  Add to Cart
-                </Link>
-              </div>
+              <ProductCard {...meal} />
             </motion.div>
           ))}
         </div>

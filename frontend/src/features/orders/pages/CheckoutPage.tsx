@@ -1,11 +1,11 @@
 import { useMemo, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertCircle, ArrowRight } from "lucide-react";
 import { useCart } from "@/features/cart/CartContext";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import OrderSummaryCard from "../components/OrderSummaryCard";
 import { saveCheckoutDraft } from "../order.storage";
 import type { ShippingInfo } from "../types/order.types";
+import CheckoutForm from "../components/CheckoutForm";
 
 const emptyShippingInfo: ShippingInfo = {
   name: "",
@@ -110,65 +110,12 @@ export default function CheckoutPage() {
             ))}
           </div>
 
-          <form className="mt-10 space-y-5" onSubmit={handleProceedToPayment}>
-            <div className="grid gap-5 md:grid-cols-2">
-              <label className="space-y-2 text-sm font-medium text-gray-700">
-                <span>Full name</span>
-                <input
-                  value={shippingInfo.name}
-                  onChange={handleChange("name")}
-                  className="w-full rounded-2xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-400"
-                  placeholder="Enter your full name"
-                />
-              </label>
-
-              <label className="space-y-2 text-sm font-medium text-gray-700">
-                <span>Email</span>
-                <input
-                  type="email"
-                  value={shippingInfo.email}
-                  onChange={handleChange("email")}
-                  className="w-full rounded-2xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-400"
-                  placeholder="name@example.com"
-                />
-              </label>
-            </div>
-
-            <label className="block space-y-2 text-sm font-medium text-gray-700">
-              <span>Shipping address</span>
-              <textarea
-                value={shippingInfo.address}
-                onChange={handleChange("address")}
-                className="min-h-28 w-full rounded-2xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-400"
-                placeholder="Street, apartment, city, postal code"
-              />
-            </label>
-
-            <label className="block space-y-2 text-sm font-medium text-gray-700">
-              <span>Phone</span>
-              <input
-                value={shippingInfo.phone}
-                onChange={handleChange("phone")}
-                className="w-full rounded-2xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-400"
-                placeholder="+1 555 123 4567"
-              />
-            </label>
-
-            {error ? (
-              <div className="flex items-center gap-2 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
-                <AlertCircle size={16} />
-                <span>{error}</span>
-              </div>
-            ) : null}
-
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 rounded-2xl bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-600"
-            >
-              Proceed to Payment
-              <ArrowRight size={18} />
-            </button>
-          </form>
+          <CheckoutForm
+            shippingInfo={shippingInfo}
+            error={error}
+            onSubmit={handleProceedToPayment}
+            onChange={handleChange}
+          />
         </div>
 
         <OrderSummaryCard items={cartItems} totalAmount={totalPrice} />
