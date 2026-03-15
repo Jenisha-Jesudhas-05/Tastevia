@@ -4,7 +4,7 @@ import Stripe from "stripe";
 const stripeSecret = process.env.STRIPE_SECRET_KEY;
 const stripe =
   stripeSecret && stripeSecret.startsWith("sk_")
-    ? new Stripe(stripeSecret, { apiVersion: "2024-12-18.acacia" })
+    ? new Stripe(stripeSecret, { apiVersion: "2024-06-20" })
     : null;
 
 type CreateOrderItemInput = {

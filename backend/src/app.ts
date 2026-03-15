@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 
 // Routes
 import authRoutes from './Auth/auth.routes.js';
@@ -22,22 +22,21 @@ const allowedOrigins = process.env.CLIENT_URLS
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      const isVercelPreview =
-        typeof origin === "string" && /^https:\/\/.*\.vercel\.app$/.test(origin);
+const corsOptions: CorsOptions = {
+  origin: (origin, callback) => {
+    const isVercelPreview =
+      typeof origin === "string" && /^https:\/\/.*\.vercel\.app$/.test(origin);
 
-      if (!origin || allowedOrigins.includes(origin) || isVercelPreview) {
-        callback(null, true);
-        return;
-      }
+    if (!origin || allowedOrigins.includes(origin) || isVercelPreview) {
+      callback(null, true);
+      return;
+    }
 
-      callback(new Error(`CORS blocked for origin: ${origin}`));
-    },
-    credentials: true,
-  })
-);
+    callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // Routes
 app.use('/api/v1/auth', authRoutes);
