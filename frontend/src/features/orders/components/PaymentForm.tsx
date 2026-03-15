@@ -30,23 +30,23 @@ export default function PaymentForm({
         </span>
       </div>
 
-      <div className="space-y-3 rounded-2xl border border-slate-200 px-4 py-4">
-        <p className="font-medium text-slate-900">Pay with card</p>
-        <p className="text-sm text-slate-500">
+      <div className="space-y-3 rounded-2xl border border-border/70 bg-secondary/70 px-4 py-4">
+        <p className="font-medium text-foreground">Pay with card</p>
+        <p className="text-sm text-foreground/70">
           Secure checkout powered by Stripe. We never store your card details.
         </p>
-        <div className="mt-3 rounded-xl border border-slate-100 bg-white p-3">
+        <div className="mt-3 rounded-xl border border-border/70 bg-card/80 p-3">
           {cardElement}
         </div>
       </div>
 
-      <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-500">
+      <div className="rounded-2xl bg-secondary/70 px-4 py-3 text-sm text-foreground/70">
         Order total:{" "}
-        <span className="font-semibold text-slate-900">${amount.toFixed(2)}</span>
+        <span className="font-semibold text-foreground">₹{amount.toFixed(2)}</span>
       </div>
 
       {error ? (
-        <div className="flex items-center gap-2 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="flex items-center gap-2 rounded-2xl border border-red-200/70 bg-red-50/80 px-4 py-3 text-sm text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200">
           <AlertCircle size={16} />
           <span>{error}</span>
         </div>
@@ -55,7 +55,7 @@ export default function PaymentForm({
       <button
         type="submit"
         disabled={loading}
-        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? (
           <>

@@ -6,7 +6,7 @@ import { WishlistProvider } from "@/features/wishlist/WishlistContext"
 export default function MainLayout() {
   return (
     <WishlistProvider>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col bg-background text-foreground transition-colors">
         <Navbar />
         <main className="flex-1">
           <Outlet />

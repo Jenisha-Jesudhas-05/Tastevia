@@ -15,7 +15,7 @@ export default function FloatingCartBar() {
   if (cart.length === 0) return null;
 
   return (
-    <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-6 py-4 rounded-xl shadow-lg flex items-center justify-between w-[90%] max-w-xl z-50">
+    <div className="fixed bottom-5 left-1/2 z-50 flex w-[90%] max-w-xl -translate-x-1/2 items-center justify-between rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-4 text-white shadow-xl backdrop-blur">
 
       <div className="flex items-center gap-3">
         <ShoppingCart size={22} />
@@ -26,9 +26,9 @@ export default function FloatingCartBar() {
 
       <button
         onClick={() => navigate("/cart")}
-        className="font-semibold"
+        className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold shadow-sm transition hover:bg-white/25"
       >
-        View Cart → ${totalPrice.toFixed(2)}
+        {`View Cart → ₹${totalPrice.toFixed(2)}`}
       </button>
 
     </div>

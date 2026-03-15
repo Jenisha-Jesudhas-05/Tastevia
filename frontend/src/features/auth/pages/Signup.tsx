@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Pizza, IceCream, Coffee } from "lucide-react";
+import { Eye, EyeOff, Sparkles, Star } from "lucide-react";
 import toast from "react-hot-toast";
 import logo from "@/assets/logo.png";
 
 import { signup } from "../services/auth.service";
 import { useAuth } from "../hooks/useAuth";
-import { clearPostLoginRedirect, getPostLoginRedirect } from "../auth.storage";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -36,104 +35,106 @@ export default function SignupPage() {
       });
 
       loginUser(response.data.user);
-      toast.success("Account created successfully");
-
-      const redirectTo = getPostLoginRedirect() || "/";
-      clearPostLoginRedirect();
-      navigate(redirectTo, { replace: true });
+      toast.success("Account created! Welcome to Tastevia.");
+      navigate("/");
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Signup failed");
+      const message =
+        error?.response?.data?.message || error?.message || "Signup failed";
+      toast.error(message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="h-screen grid md:grid-cols-2 overflow-hidden">
-      <div className="hidden md:flex flex-col items-center justify-center bg-gradient-to-br from-orange-100 via-orange-50 to-white relative">
-        <div className="absolute w-72 h-72 bg-orange-300 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-yellow-200 rounded-full blur-3xl opacity-30 animate-pulse top-20 left-20"></div>
-
-        <div className="absolute top-20 left-10 text-orange-400 animate-bounce">
-          <Pizza size={40} />
+    <div className="grid min-h-screen bg-background md:grid-cols-2">
+      <div className="relative hidden items-center justify-center overflow-hidden bg-gradient-to-br from-orange-500/12 via-amber-400/10 to-rose-400/10 p-10 md:flex">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent_35%),radial-gradient(circle_at_70%_0,rgba(255,255,255,0.18),transparent_30%)] blur-3xl" />
+        <div className="relative z-10 space-y-6 text-center">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-white/30 shadow-lg backdrop-blur">
+            <Sparkles className="h-8 w-8 text-orange-500" />
+          </div>
+          <img src={logo} alt="Tastevia" className="mx-auto h-40 object-contain" />
+          <p className="mx-auto max-w-md text-lg font-semibold text-foreground">
+            Create an account to save favorites, speed through checkout, and track every order.
+          </p>
+          <div className="mx-auto flex w-fit items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm font-semibold text-foreground">
+            <Star className="h-4 w-4 text-orange-500" />
+            Members unlock weekend drops first
+          </div>
         </div>
-
-        <div className="absolute bottom-24 right-16 text-orange-300 animate-bounce">
-          <IceCream size={36} />
-        </div>
-
-        <div className="absolute top-40 right-20 text-orange-500 animate-bounce">
-          <Coffee size={34} />
-        </div>
-
-        <img
-          src={logo}
-          alt="Tastevia"
-          className="h-60 object-contain z-10"
-        />
-
-        <p className="text-gray-600 mt-6 text-center max-w-sm text-lg z-10">
-          Join Tastevia and explore amazing meals delivered straight to your
-          home.
-        </p>
       </div>
 
-      <div className="flex items-center justify-center bg-gray-50">
-        <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
-          <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
+      <div className="flex items-center justify-center bg-background px-4 py-10">
+        <div className="w-full max-w-md space-y-6 rounded-2xl border border-border/70 bg-card/80 p-8 shadow-[0_20px_60px_-35px_rgba(0,0,0,0.35)]">
+          <div>
+            <p className="pill text-orange-600 dark:text-orange-200">Join Tastevia</p>
+            <h2 className="mt-3 text-3xl font-bold text-foreground">Create account</h2>
+            <p className="text-sm text-foreground/70">
+              Quick signup, secure payments, and personalized picks.
+            </p>
+          </div>
 
-          <p className="text-gray-500 mt-2 mb-6">
-            Start your food journey today
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500"
-            />
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500"
-            />
-
-            <div className="relative">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <label className="space-y-1 text-sm font-semibold text-foreground">
+              <span>Name</span>
               <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500"
+                type="text"
+                placeholder="Your full name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                className="w-full rounded-xl border border-border/70 bg-card/80 px-4 py-3 text-foreground outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 dark:bg-card/60"
+                required
               />
+            </label>
 
-              <button
-                type="button"
-                className="absolute right-3 top-3 text-gray-500"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
+            <label className="space-y-1 text-sm font-semibold text-foreground">
+              <span>Email</span>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full rounded-xl border border-border/70 bg-card/80 px-4 py-3 text-foreground outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 dark:bg-card/60"
+                required
+              />
+            </label>
+
+            <label className="space-y-1 text-sm font-semibold text-foreground">
+              <span>Password</span>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Create a password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  className="w-full rounded-xl border border-border/70 bg-card/80 px-4 py-3 text-foreground outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 dark:bg-card/60"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-3 text-foreground/60 transition hover:text-orange-500"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </label>
 
             <button
+              type="submit"
               disabled={loading}
-              className="w-full bg-orange-600 text-white py-2.5 rounded-lg hover:bg-orange-700 hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-md disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-rose-500 px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {loading ? "Creating account..." : "Create Account"}
+              {loading ? "Creating account..." : "Signup"}
             </button>
           </form>
 
-          <p className="text-sm text-gray-500 mt-6 text-center">
+          <p className="text-sm text-foreground/70">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-orange-600 font-medium hover:underline"
+              className="font-semibold text-orange-600 transition hover:text-orange-700 dark:text-orange-300"
             >
               Login
             </Link>

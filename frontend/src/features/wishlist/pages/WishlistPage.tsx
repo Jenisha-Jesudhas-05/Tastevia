@@ -52,7 +52,7 @@ export default function WishlistPage() {
               <h2 className="text-lg font-semibold text-slate-900">
                 {item.name}
               </h2>
-              <p className="text-sm text-slate-500">${item.price.toFixed(2)}</p>
+              <p className="text-sm text-slate-500">₹{item.price.toFixed(2)}</p>
             </div>
 
             <div className="mt-4 flex items-center gap-3">

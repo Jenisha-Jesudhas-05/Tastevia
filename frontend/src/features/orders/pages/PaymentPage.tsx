@@ -26,10 +26,10 @@ const stripePromise = STRIPE_PUBLISHABLE_KEY
 export default function PaymentPage() {
   if (!stripePromise) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="text-xl font-semibold text-slate-900">Stripe not configured</h1>
-          <p className="mt-2 text-sm text-slate-600">
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <div className="surface-card w-full max-w-md p-6">
+          <h1 className="text-xl font-semibold text-foreground">Stripe not configured</h1>
+          <p className="mt-2 text-sm text-foreground/70">
             Set VITE_STRIPE_PUBLISHABLE_KEY in your environment and reload.
           </p>
         </div>
@@ -152,13 +152,13 @@ function PaymentContent() {
   };
 
   return (
-    <section className="min-h-screen bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_40%,#f8fafc_100%)] px-4 py-10">
+    <section className="min-h-screen bg-background px-4 py-10">
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_0.85fr]">
-        <div className="rounded-[2rem] border border-slate-100 bg-white p-8 shadow-sm">
-          <h1 className="mt-4 text-4xl font-semibold text-slate-900">
+        <div className="surface-card rounded-[2rem] p-8">
+          <h1 className="mt-4 text-4xl font-semibold text-foreground">
             Pay with Card
           </h1>
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-foreground/70">
             Fast, secure checkout powered by Stripe. We never store your card
             details.
           </p>
@@ -185,7 +185,7 @@ function PaymentContent() {
 const cardStyleOptions = {
   style: {
     base: {
-      color: "#0f172a",
+      color: "var(--color-foreground, #0f172a)",
       fontSize: "16px",
       "::placeholder": { color: "#94a3b8" },
     },
