@@ -59,6 +59,7 @@ export default function WishlistPage() {
               <button
                 onClick={() => {
                   addToCart({ ...item, quantity: 1 });
+                  removeFromWishlist(item.id);
                   toast.success("Moved to cart");
                 }}
                 className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"

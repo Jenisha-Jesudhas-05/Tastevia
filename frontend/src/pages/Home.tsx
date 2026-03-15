@@ -14,7 +14,6 @@ import {
 import { motion } from "framer-motion";
 
 import HeroCarousel from "../components/HeroCarousel";
-import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import { useProducts } from "@/features/products/hooks/useProducts";
 import ProductCard from "@/features/products/components/ProductCard";
 import { subscribeNewsletter } from "@/features/newsletter/newsletter.service";
@@ -104,7 +103,7 @@ export default function Home() {
   };
 
   return (
-    <div className="overflow-x-hidden bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] text-slate-900 dark:bg-gradient-to-b dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-50">
+    <div className="overflow-x-hidden bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] text-slate-900 dark:bg-[radial-gradient(circle_at_15%_20%,rgba(255,124,64,0.12),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(244,114,182,0.12),transparent_26%),linear-gradient(180deg,#0f172a_0%,#0b1225_45%,#0a1020_100%)] dark:text-slate-50">
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(251,146,60,0.24),_transparent_30%),radial-gradient(circle_at_85%_20%,_rgba(244,114,182,0.18),_transparent_24%),radial-gradient(circle_at_bottom_center,_rgba(253,224,71,0.18),_transparent_28%)]" />
         <div className="absolute left-[-6rem] top-24 h-64 w-64 rounded-full bg-orange-300/20 blur-3xl" />
@@ -118,16 +117,16 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/75 px-4 py-2 text-sm text-orange-700 shadow-sm backdrop-blur">
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/75 px-4 py-2 text-sm text-orange-700 shadow-sm backdrop-blur dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-orange-200">
               <Sparkles className="h-4 w-4" />
               Flavor-forward meals, delivered beautifully
             </div>
 
             <div className="space-y-5">
-              <h1 className="max-w-2xl text-5xl font-semibold leading-tight tracking-tight text-slate-900 md:text-6xl">
+              <h1 className="max-w-2xl text-5xl font-semibold leading-tight tracking-tight text-slate-900 dark:text-white md:text-6xl">
                 Tastevia turns everyday delivery into your favorite part of the day.
               </h1>
-              <p className="max-w-xl text-base leading-8 text-slate-600 md:text-lg">
+              <p className="max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300 md:text-lg">
                 Warm comfort food, playful desserts, and quick drinks brought together in a landing experience that feels as fresh as the menu.
               </p>
             </div>
@@ -156,10 +155,10 @@ export default function Home() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-[0_20px_50px_-35px_rgba(249,115,22,0.7)] backdrop-blur"
+                  className="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-[0_20px_50px_-35px_rgba(249,115,22,0.7)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-[0_24px_60px_-40px_rgba(0,0,0,0.65)]"
                 >
-                  <p className="text-2xl font-semibold text-slate-900">{stat.value}</p>
-                  <p className="mt-1 text-sm text-slate-500">{stat.label}</p>
+                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-50">{stat.value}</p>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -171,19 +170,19 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.15 }}
             className="relative"
           >
-            <div className="absolute -left-6 top-8 hidden rounded-3xl border border-white/60 bg-white/80 p-4 shadow-xl backdrop-blur md:block">
+            <div className="absolute -left-6 top-8 hidden rounded-3xl border border-white/60 bg-white/80 p-4 shadow-xl backdrop-blur dark:border-slate-800 dark:bg-slate-900/70 md:block">
               <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-orange-100 p-3 text-orange-600">
+                <div className="rounded-2xl bg-orange-100 p-3 text-orange-600 dark:bg-orange-500/15 dark:text-orange-200">
                   <Star className="h-5 w-5 fill-current" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">Customer favorite</p>
-                  <p className="text-xs text-slate-500">Fresh combos trending this week</p>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Customer favorite</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Fresh combos trending this week</p>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/60 bg-white/55 p-3 shadow-[0_30px_80px_-35px_rgba(249,115,22,0.65)] backdrop-blur-xl">
+            <div className="rounded-[2rem] border border-white/60 bg-white/55 p-3 shadow-[0_30px_80px_-35px_rgba(249,115,22,0.65)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-[0_30px_70px_-40px_rgba(0,0,0,0.7)]">
               <HeroCarousel />
             </div>
 
@@ -207,13 +206,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.12 }}
-                className="rounded-[2rem] border border-orange-100 bg-white/80 p-7 shadow-[0_25px_60px_-40px_rgba(15,23,42,0.45)] backdrop-blur"
+                className="rounded-[2rem] border border-orange-100 bg-white/80 p-7 shadow-[0_25px_60px_-40px_rgba(15,23,42,0.45)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/65 dark:shadow-[0_25px_60px_-40px_rgba(0,0,0,0.7)]"
               >
-                <div className="mb-5 inline-flex rounded-2xl bg-orange-100 p-4 text-orange-600">
+                <div className="mb-5 inline-flex rounded-2xl bg-orange-100 p-4 text-orange-600 dark:bg-orange-500/15 dark:text-orange-200">
                   <Icon className="h-7 w-7" />
                 </div>
-                <h2 className="text-xl font-semibold text-slate-900">{category.label}</h2>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{category.caption}</p>
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-50">{category.label}</h2>
+                <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-300">{category.caption}</p>
               </motion.div>
             );
           })}
@@ -227,11 +226,11 @@ export default function Home() {
               <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
                 Why Tastevia
               </p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900">
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
                 Built for modern food cravings, not generic delivery screens.
               </h2>
             </div>
-            <p className="max-w-xl text-sm leading-7 text-slate-600">
+            <p className="max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-300">
               Tastevia blends warm visuals, confident motion, and clear messaging to make ordering feel inviting from the very first scroll.
             </p>
           </div>
@@ -247,13 +246,13 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.12 }}
-                  className="group rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_30px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur"
+                  className="group rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_30px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/65 dark:shadow-[0_30px_70px_-40px_rgba(0,0,0,0.75)]"
                 >
-                  <div className={`mb-6 inline-flex rounded-2xl bg-gradient-to-br ${feature.accent} p-4 text-slate-900`}>
+                  <div className={`mb-6 inline-flex rounded-2xl bg-gradient-to-br ${feature.accent} p-4 text-slate-900 dark:text-slate-100`}>
                     <Icon className="h-7 w-7" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">{feature.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">{feature.desc}</p>
+                  <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{feature.desc}</p>
                   <div className="mt-6 h-1.5 w-20 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 transition-all duration-300 group-hover:w-28" />
                 </motion.div>
               );
@@ -284,8 +283,8 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.12 }}
-                className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur"
-              >
+            className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur dark:border-slate-800/80 dark:bg-slate-900/60"
+          >
                 <div className="flex items-start gap-4">
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 to-rose-400 text-sm font-bold text-white">
                     0{index + 1}
@@ -303,14 +302,14 @@ export default function Home() {
 
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
         <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
-              Popular Now
-            </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900">
-              Crowd favorites worth featuring on the first visit.
-            </h2>
-          </div>
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
+                Popular Now
+              </p>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
+                Crowd favorites worth featuring on the first visit.
+              </h2>
+            </div>
           <Link
             to="/menu"
             className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 transition-colors hover:text-orange-700"
@@ -335,25 +334,23 @@ export default function Home() {
         </div>
       </section>
 
-      <TestimonialsCarousel />
-
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[2rem] border border-orange-100 bg-white/85 p-8 shadow-[0_25px_70px_-45px_rgba(249,115,22,0.9)]">
+          <div className="rounded-[2rem] border border-orange-100 bg-white/85 p-8 shadow-[0_25px_70px_-45px_rgba(249,115,22,0.9)] dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-[0_25px_70px_-40px_rgba(0,0,0,0.75)]">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
               Stay in the Loop
             </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900">
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
               Weekly offers and seasonal drops.
             </h2>
-            <p className="mt-4 text-sm leading-7 text-slate-600">
+            <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300">
               Sign up for warm weekend deals, limited drops, and meal launches worth keeping an eye on.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="min-h-12 flex-1 rounded-2xl border border-orange-100 bg-orange-50/60 px-4 text-sm text-slate-700 outline-none transition focus:border-orange-300 focus:bg-white"
+                className="min-h-12 flex-1 rounded-2xl border border-orange-100 bg-orange-50/60 px-4 text-sm text-slate-700 outline-none transition focus:border-orange-300 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-orange-400"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -375,12 +372,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.08 }}
-                className="rounded-[1.5rem] border border-slate-200 bg-white/80 p-5 shadow-[0_24px_60px_-50px_rgba(15,23,42,0.9)] backdrop-blur"
+                className="rounded-[1.5rem] border border-slate-200 bg-white/80 p-5 shadow-[0_24px_60px_-50px_rgba(15,23,42,0.9)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-[0_24px_60px_-45px_rgba(0,0,0,0.75)]"
               >
-                <summary className="cursor-pointer list-none text-base font-semibold text-slate-900">
+                <summary className="cursor-pointer list-none text-base font-semibold text-slate-900 dark:text-slate-100">
                   {faq.q}
                 </summary>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{faq.a}</p>
+                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{faq.a}</p>
               </motion.details>
             ))}
           </div>
