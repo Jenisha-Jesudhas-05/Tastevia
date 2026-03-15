@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../cart/CartContext";
 import toast from "react-hot-toast";
 import { useWishlist } from "@/features/wishlist/WishlistContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface ProductCardProps {
   id: string;
@@ -26,6 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { isAuthenticated } = useAuth();
   const [index, setIndex] = useState(0);
 
   const navigate = useNavigate();
@@ -57,6 +59,30 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const imageSrc = images.length > 0
     ? images[index]
     : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c";
+
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast.error("Please log in to save items");
+      navigate("/login");
+      return;
+    }
+
+    if (liked) {
+      removeFromWishlist(id);
+      toast("Removed from wishlist");
+    } else {
+      addToWishlist({
+        id,
+        name,
+        price,
+        image: imageSrc,
+        quantity: 1,
+      });
+      toast.success("Saved to wishlist");
+    }
+  };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -106,22 +132,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Like Button */}
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            if (liked) {
-              removeFromWishlist(id);
-              toast("Removed from wishlist");
-            } else {
-              addToWishlist({
-                id,
-                name,
-                price,
-                image: imageSrc,
-                quantity: 1,
-              });
-              toast.success("Saved to wishlist");
-            }
-          }}
+          onClick={handleToggleWishlist}
           className="absolute right-3 top-3 rounded-full bg-card/90 p-2 text-foreground shadow-md transition hover:scale-105"
         >
           <Heart

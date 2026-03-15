@@ -8,7 +8,7 @@ import {
   User,
   X,
 } from "lucide-react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 import { logout } from "@/features/auth/services/auth.service";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useCart } from "@/features/cart/CartContext";
@@ -48,22 +48,27 @@ export default function Navbar() {
   ];
 
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
-    `relative inline-flex items-center gap-2 text-sm font-semibold transition-colors ${
+    `relative inline-flex items-center gap-2 text-sm font-semibold tracking-tight transition-all ${
       isActive
         ? "text-orange-600 after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-orange-500"
-        : "text-foreground/70 hover:text-orange-500"
+        : "text-foreground/70 hover:text-orange-500 hover:translate-y-[-1px]"
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur supports-[backdrop-filter]:backdrop-blur-lg shadow-sm transition-colors">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Tastevia Logo" className="h-11 w-auto" />
+    <nav className="sticky top-0 z-50 w-full bg-transparent">
+      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-3xl border border-border/60 bg-background/80 px-4 py-2.5 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-colors supports-[backdrop-filter]:backdrop-blur-lg md:mt-3 md:px-6">
+        <Link to="/" className="group flex items-center gap-3 rounded-full px-2 py-1 transition hover:brightness-110">
+          <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-rose-500 shadow-md ring-1 ring-white/10">
+            <img
+              src={logo}
+              alt="Tastevia logo"
+              className="h-6 w-6 object-contain drop-shadow-sm transition duration-200 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-white/5 opacity-0 transition group-hover:opacity-100" />
+          </div>
           <div className="hidden leading-tight sm:block">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-orange-500">
-              Tastevia
-            </p>
-            <p className="text-sm font-semibold text-foreground/90">Dine better</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-500">Tastevia</p>
+            <p className="text-sm font-semibold text-foreground/90">Fresh &amp; Fast</p>
           </div>
         </Link>
 
@@ -83,7 +88,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             to="/cart"
-            className="relative hidden items-center gap-2 rounded-full border border-border/70 bg-secondary/70 px-3 py-1.5 text-sm font-semibold text-foreground transition hover:border-orange-300 hover:text-orange-500 md:inline-flex"
+            className="relative hidden items-center gap-2 rounded-full border border-border/70 bg-secondary/80 px-3.5 py-2 text-sm font-semibold text-foreground transition hover:border-orange-300 hover:text-orange-500 hover:shadow-sm md:inline-flex"
           >
             <ShoppingCart className="h-4 w-4" />
             Cart
@@ -158,7 +163,7 @@ export default function Navbar() {
           )}
 
           <button
-            className="inline-flex items-center justify-center rounded-full border border-border/70 p-2 text-foreground md:hidden"
+            className="inline-flex items-center justify-center rounded-full border border-border/70 bg-card/80 p-2 text-foreground shadow-sm transition hover:border-orange-300 hover:text-orange-500 md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation"
           >
@@ -168,7 +173,7 @@ export default function Navbar() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-border/70 bg-background shadow-md md:hidden">
+        <div className="border-t border-border/70 bg-card/95 shadow-xl backdrop-blur md:hidden">
           <div className="flex flex-col gap-4 px-6 py-4 text-foreground/90">
             {navLinks.map((link) => (
               <NavLink key={link.to} to={link.to} className={linkClasses}>
