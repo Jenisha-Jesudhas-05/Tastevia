@@ -80,25 +80,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       onClick={handleNavigate}
-      className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
+      className="surface-card group cursor-pointer overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
     >
       {/* Image Section */}
-      <div className="relative w-full h-52 overflow-hidden">
+      <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-orange-50/60 via-white to-rose-50/70 dark:from-orange-500/10 dark:via-slate-900 dark:to-rose-500/5">
         {loading && (
-          <div className="flex items-center justify-center absolute w-full h-full bg-gray-100">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-orange-500"></div>
+          <div className="absolute flex h-full w-full items-center justify-center bg-muted/60">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-orange-500" />
           </div>
         )}
 
         <img
           src={imageSrc}
           alt={name}
-          className={`w-full h-52 object-cover transition-transform duration-300 group-hover:scale-110 ${loading ? "hidden" : "block"}`}
+          className={`h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+            loading ? "hidden" : "block"
+          }`}
           onLoad={() => setLoading(false)}
         />
 
         {/* Category Badge */}
-        <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-md capitalize">
+        <span className="absolute left-3 top-3 rounded-full bg-orange-500/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow">
           {category}
         </span>
 
@@ -120,9 +122,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
               toast.success("Saved to wishlist");
             }
           }}
-          className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md"
+          className="absolute right-3 top-3 rounded-full bg-card/90 p-2 text-foreground shadow-md transition hover:scale-105"
         >
-          <Heart size={18} className={liked ? "text-red-500 fill-red-500" : "text-gray-500"} />
+          <Heart
+            size={18}
+            className={liked ? "text-red-500 fill-red-500" : "text-foreground/70"}
+          />
         </button>
 
         {/* Image Controls */}
@@ -130,14 +135,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <>
             <button
               onClick={prevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white p-1 rounded-full shadow"
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-card/90 p-1 text-foreground shadow"
             >
               <ChevronLeft size={18} />
             </button>
 
             <button
               onClick={nextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white p-1 rounded-full shadow"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-card/90 p-1 text-foreground shadow"
             >
               <ChevronRight size={18} />
             </button>
@@ -146,22 +151,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Content */}
-      <div className="p-4">
-        <h3 className="font-semibold text-lg">{name}</h3>
-
-        <div className="flex items-center gap-1 text-yellow-500 mt-1">
-          <Star size={16} fill="currentColor" />
-          <span className="text-sm text-gray-700">{rating}</span>
+      <div className="space-y-3 p-4">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-lg font-semibold text-foreground">{name}</h3>
+          <span className="rounded-full bg-orange-500/10 px-2 py-1 text-xs font-semibold text-orange-600 dark:bg-orange-500/15 dark:text-orange-200">
+            {category}
+          </span>
         </div>
 
-        <p className="text-gray-600 text-sm mt-2 line-clamp-2">{description}</p>
+        <div className="flex items-center gap-1 text-yellow-500">
+          <Star size={16} fill="currentColor" />
+          <span className="text-sm text-foreground/80">{rating}</span>
+        </div>
 
-        <div className="flex items-center justify-between mt-4">
-          <p className="font-bold text-lg text-gray-900">${price.toFixed(2)}</p>
+        <p className="line-clamp-2 text-sm text-foreground/70">{description}</p>
+
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-bold text-foreground">₹{price.toFixed(2)}</p>
 
           <button
             onClick={handleAddToCart}
-            className="flex items-center gap-1 bg-orange-500 text-white px-3 py-1.5 rounded-lg hover:bg-orange-600 transition"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:shadow-md"
           >
             <ShoppingCart size={16} />
             Add

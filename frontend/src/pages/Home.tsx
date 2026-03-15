@@ -104,7 +104,7 @@ export default function Home() {
   };
 
   return (
-    <div className="overflow-x-hidden bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] text-slate-900">
+    <div className="overflow-x-hidden bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] text-slate-900 dark:bg-gradient-to-b dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-50">
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(251,146,60,0.24),_transparent_30%),radial-gradient(circle_at_85%_20%,_rgba(244,114,182,0.18),_transparent_24%),radial-gradient(circle_at_bottom_center,_rgba(253,224,71,0.18),_transparent_28%)]" />
         <div className="absolute left-[-6rem] top-24 h-64 w-64 rounded-full bg-orange-300/20 blur-3xl" />

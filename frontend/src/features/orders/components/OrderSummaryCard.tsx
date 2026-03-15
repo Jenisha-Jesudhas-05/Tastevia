@@ -12,14 +12,14 @@ export default function OrderSummaryCard({
   title = "Order summary",
 }: OrderSummaryCardProps) {
   return (
-    <aside className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+    <aside className="surface-card p-6">
+      <h2 className="text-xl font-semibold text-foreground">{title}</h2>
 
       <div className="mt-6 space-y-4">
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex items-center gap-4 rounded-2xl bg-orange-50/60 p-3"
+            className="flex items-center gap-4 rounded-2xl border border-border/60 bg-secondary/70 p-3"
           >
             <img
               src={item.image}
@@ -28,26 +28,26 @@ export default function OrderSummaryCard({
             />
 
             <div className="min-w-0 flex-1">
-              <p className="truncate font-medium text-gray-900">{item.name}</p>
-              <p className="text-sm text-gray-500">Qty {item.quantity}</p>
+              <p className="truncate font-medium text-foreground">{item.name}</p>
+              <p className="text-sm text-foreground/70">Qty {item.quantity}</p>
             </div>
 
-            <p className="text-sm font-semibold text-gray-900">
-              ${(item.price * item.quantity).toFixed(2)}
+            <p className="text-sm font-semibold text-foreground">
+              ₹{(item.price * item.quantity).toFixed(2)}
             </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 border-t border-dashed border-orange-200 pt-4">
-        <div className="flex items-center justify-between text-sm text-gray-500">
+      <div className="mt-6 border-t border-dashed border-border/70 pt-4">
+        <div className="flex items-center justify-between text-sm text-foreground/70">
           <span>Subtotal</span>
-          <span>${totalAmount.toFixed(2)}</span>
+          <span>₹{totalAmount.toFixed(2)}</span>
         </div>
 
-        <div className="mt-3 flex items-center justify-between text-lg font-semibold text-gray-900">
+        <div className="mt-3 flex items-center justify-between text-lg font-semibold text-foreground">
           <span>Total</span>
-          <span>${totalAmount.toFixed(2)}</span>
+          <span>₹{totalAmount.toFixed(2)}</span>
         </div>
       </div>
     </aside>
