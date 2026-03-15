@@ -3,6 +3,8 @@ import { useProducts } from "../hooks/useProducts";
 import ProductCard from "../components/ProductCard";
 import { Search } from "lucide-react";
 import FloatingCartBar from "../../cart/FloatingCart";
+import { Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProductPages: React.FC = () => {
   const { products, loading } = useProducts();
@@ -38,9 +40,14 @@ const ProductPages: React.FC = () => {
 
       {/* Heading */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Our Menu
-        </h1>
+        <div className="space-y-1">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500">
+            Tastevia Picks
+          </p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Our Menu
+          </h1>
+        </div>
 
         {/* Search */}
         <div className="relative w-full md:w-72">
@@ -71,6 +78,13 @@ const ProductPages: React.FC = () => {
             {cat.toUpperCase()}
           </button>
         ))}
+
+        <Link
+          to="/wishlist"
+          className="ml-auto inline-flex items-center gap-2 rounded-full border border-orange-200 px-4 py-2 text-sm font-semibold text-orange-600 transition hover:bg-orange-50"
+        >
+          <Heart size={16} /> View wishlist
+        </Link>
       </div>
 
       {/* Products Grid */}

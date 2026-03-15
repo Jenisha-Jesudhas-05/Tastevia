@@ -3,6 +3,7 @@ import { Heart, ShoppingCart, Star, ChevronLeft, ChevronRight } from "lucide-rea
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../cart/CartContext";
 import toast from "react-hot-toast";
+import { useWishlist } from "@/features/wishlist/WishlistContext";
 
 interface ProductCardProps {
   id: string;
@@ -24,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   category,
 }) => {
   const [loading, setLoading] = useState(true);
-  const [liked, setLiked] = useState(false);
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const [index, setIndex] = useState(0);
 
   const navigate = useNavigate();
@@ -45,6 +46,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
     setLoading(true);
     setIndex((prev) => (prev - 1 + images.length) % images.length);
   };
+
+  const liked = wishlist.some((item) => item.id === id);
 
   const handleNavigate = () => {
     if (!id) return;
@@ -103,7 +106,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <button
           onClick={(e) => {
             e.stopPropagation();
-            setLiked(!liked);
+            if (liked) {
+              removeFromWishlist(id);
+              toast("Removed from wishlist");
+            } else {
+              addToWishlist({
+                id,
+                name,
+                price,
+                image: imageSrc,
+                quantity: 1,
+              });
+              toast.success("Saved to wishlist");
+            }
           }}
           className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md"
         >

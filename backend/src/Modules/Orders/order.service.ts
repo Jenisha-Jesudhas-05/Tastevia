@@ -1,4 +1,11 @@
 import prisma from "../../lib/prisma.js";
+import Stripe from "stripe";
+
+const stripeSecret = process.env.STRIPE_SECRET_KEY;
+const stripe =
+  stripeSecret && stripeSecret.startsWith("sk_")
+    ? new Stripe(stripeSecret, { apiVersion: "2024-12-18.acacia" })
+    : null;
 
 type CreateOrderItemInput = {
   productId: number;
@@ -97,4 +104,24 @@ export const getOrdersByUserId = async (userId: number) => {
     include: orderInclude,
     orderBy: { createdAt: "desc" },
   });
+};
+
+export const createStripePaymentIntent = async (
+  amount: number,
+  currency = "usd"
+) => {
+  if (!Number.isFinite(amount) || amount <= 0) {
+    throw new Error("Amount must be greater than zero");
+  }
+  if (!stripe) {
+    throw new Error("Stripe is not configured");
+  }
+
+  const intent = await stripe.paymentIntents.create({
+    amount: Math.round(amount * 100),
+    currency,
+    automatic_payment_methods: { enabled: true },
+  });
+
+  return { clientSecret: intent.client_secret, intentId: intent.id };
 };
