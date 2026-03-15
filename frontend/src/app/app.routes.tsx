@@ -12,9 +12,13 @@ import Cart from "@/features/cart/cart"
 import CheckoutPage from "@/features/orders/pages/CheckoutPage"
 import PaymentPage from "@/features/orders/pages/PaymentPage"
 import OrderDetailsPage from "@/features/orders/pages/OrderDetailsPage"
+import WishlistPage from "@/features/wishlist/pages/WishlistPage"
+import ScrollToTop from "@/components/ScrollToTop"
 
 export default function AppRoutes() {
   return (
+    <>
+    <ScrollToTop />
     <Routes>
 
       {/* AUTH PAGES (NO NAVBAR) */}
@@ -29,6 +33,7 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<ProductPages />} />
              <Route path="/menu/:id" element={<ProductDetailPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
       </Route>
 
       {/* PROTECTED ROUTES */}
@@ -43,5 +48,6 @@ export default function AppRoutes() {
       </Route>
 
     </Routes>
+    </>
   )
 }

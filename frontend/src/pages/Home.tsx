@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import {
   ArrowRight,
   Bike,
@@ -15,6 +17,7 @@ import HeroCarousel from "../components/HeroCarousel";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import { useProducts } from "@/features/products/hooks/useProducts";
 import ProductCard from "@/features/products/components/ProductCard";
+import { subscribeNewsletter } from "@/features/newsletter/newsletter.service";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -70,8 +73,35 @@ const faqs = [
 ];
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [subscribeLoading, setSubscribeLoading] = useState(false);
   const { products } = useProducts();
   const popularMeals = products.slice(0, 6);
+
+  const handleSubscribe = async () => {
+    const trimmed = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(trimmed)) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    setSubscribeLoading(true);
+    try {
+      const response = await subscribeNewsletter(trimmed);
+      toast.success(response.message || "Subscribed successfully!");
+      setEmail("");
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error ||
+          error?.message ||
+          "Unable to subscribe right now."
+      );
+    } finally {
+      setSubscribeLoading(false);
+    }
+  };
 
   return (
     <div className="overflow-x-hidden bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] text-slate-900">
@@ -324,9 +354,15 @@ export default function Home() {
                 type="email"
                 placeholder="Enter your email"
                 className="min-h-12 flex-1 rounded-2xl border border-orange-100 bg-orange-50/60 px-4 text-sm text-slate-700 outline-none transition focus:border-orange-300 focus:bg-white"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <button className="rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5">
-                Subscribe
+              <button
+                onClick={handleSubscribe}
+                disabled={subscribeLoading}
+                className="rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {subscribeLoading ? "Subscribing..." : "Subscribe"}
               </button>
             </div>
           </div>

@@ -80,3 +80,24 @@ export const getOrdersByUserId = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Failed to fetch order history" });
   }
 };
+
+export const createStripePaymentIntent = async (req: Request, res: Response) => {
+  try {
+    const { amount, currency } = req.body;
+    const intent = await orderService.createStripePaymentIntent(
+      Number(amount),
+      currency
+    );
+    return res.json(intent);
+  } catch (error) {
+    console.error(error);
+    const message =
+      error instanceof Error ? error.message : "Failed to start Stripe payment";
+    const statusCode =
+      message === "Amount must be greater than zero" ||
+      message === "Stripe is not configured"
+        ? 400
+        : 500;
+    return res.status(statusCode).json({ error: message });
+  }
+};

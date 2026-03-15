@@ -67,3 +67,7 @@ export interface CreateOrderPayload {
   paymentReference?: string;
   status?: string;
 }
+export interface StripeIntentResponse {
+  clientSecret: string;
+  intentId: string;
+}
