@@ -85,7 +85,7 @@ export default function Home() {
 
   return (
     <div className="overflow-x-hidden bg-white text-slate-900 md:bg-[linear-gradient(180deg,#fff7ed_0%,#fffaf5_14%,#ffffff_34%,#fff7ed_64%,#fff1f2_100%)] dark:bg-[radial-gradient(circle_at_15%_20%,rgba(255,124,64,0.12),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(244,114,182,0.12),transparent_26%),linear-gradient(180deg,#0f172a_0%,#0b1225_45%,#0a1020_100%)] dark:text-slate-50">
-      <section className="relative isolate overflow-hidden">
+      <section className="relative isolate overflow-hidden [content-visibility:auto] [contain-intrinsic-size:1px_900px]">
         <div className="absolute inset-0 hidden md:block bg-[radial-gradient(circle_at_top_left,_rgba(251,146,60,0.24),_transparent_30%),radial-gradient(circle_at_85%_20%,_rgba(244,114,182,0.18),_transparent_24%),radial-gradient(circle_at_bottom_center,_rgba(253,224,71,0.18),_transparent_28%)]" />
         <div className="absolute left-[-6rem] top-24 hidden h-64 w-64 rounded-full bg-orange-300/20 blur-3xl md:block" />
         <div className="absolute bottom-0 right-[-5rem] hidden h-72 w-72 rounded-full bg-rose-300/20 blur-3xl md:block" />
@@ -172,7 +172,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 [content-visibility:auto] [contain-intrinsic-size:1px_700px]">
         <div className="grid gap-6 md:grid-cols-3">
           {categories.map((category, index) => {
             const Icon = category.icon;
@@ -197,7 +197,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-20">
+      <section className="relative overflow-hidden py-20 [content-visibility:auto] [contain-intrinsic-size:1px_700px]">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
@@ -239,7 +239,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 [content-visibility:auto] [contain-intrinsic-size:1px_700px]">
         <div className="grid gap-8 rounded-[2rem] bg-slate-950 px-8 py-10 text-white shadow-[0_35px_90px_-45px_rgba(15,23,42,0.9)] lg:grid-cols-[0.95fr_1.05fr] lg:px-12 lg:py-14">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-200">
@@ -312,7 +312,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-10">
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-10 [content-visibility:auto] [contain-intrinsic-size:1px_650px]">
         <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
           <div className="surface-card relative overflow-hidden p-8">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-orange-400/5 to-rose-500/10" />
@@ -359,7 +359,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-6 pb-20 lg:px-10">
+      <section className="px-6 pb-20 lg:px-10 [content-visibility:auto] [contain-intrinsic-size:1px_600px]">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-gradient-to-r from-orange-500 via-orange-400 to-rose-500 px-8 py-14 text-center text-white shadow-[0_35px_90px_-45px_rgba(249,115,22,0.95)] lg:px-12">
           <motion.h2
             initial={prefersReducedMotion ? undefined : { opacity: 0, y: 24 }}

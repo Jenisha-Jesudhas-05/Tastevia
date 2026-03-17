@@ -132,7 +132,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
           loading={index === 0 ? "eager" : "lazy"}
           fetchPriority={index === 0 ? "high" : "low"}
           decoding="async"
-          sizes="(min-width: 1280px) 320px, (min-width: 768px) 50vw, 100vw"
+          width={640}
+          height={416}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
           className={`h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
             loading ? "hidden" : "block"
           }`}
