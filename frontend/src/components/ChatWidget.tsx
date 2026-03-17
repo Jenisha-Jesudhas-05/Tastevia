@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState } from "react";
-import { MessageCircle, Send, X, Bot, Sparkles } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { MessageCircle, Send, X, Bot } from "lucide-react";
 
 type ChatMessage = { id: number; from: "user" | "bot"; text: string };
 
