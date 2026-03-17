@@ -1,21 +1,21 @@
 import jwt from 'jsonwebtoken';
 import { Response } from 'express';
  
-const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'access_secret';
-const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access_secret';
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh_secret';
 
 
 export const generateTokens = (userId: number) => {
 
   const accessToken = jwt.sign(
     { userId },
-    process.env.ACCESS_TOKEN_SECRET!,
+    ACCESS_TOKEN_SECRET,
     { expiresIn: "15m" }
   );
 
   const refreshToken = jwt.sign(
     { userId },
-    process.env.REFRESH_TOKEN_SECRET!,
+    REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" }
   );
 
@@ -49,7 +49,7 @@ export const clearAuthCookies = (res: Response) => {
  
 export const verifyRefreshToken = (token: string) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET || 'refresh_secret') as { userId: string };
+    const decoded = jwt.verify(token, REFRESH_TOKEN_SECRET) as { userId: string };
     return decoded;
   } catch (error) {
     return null;

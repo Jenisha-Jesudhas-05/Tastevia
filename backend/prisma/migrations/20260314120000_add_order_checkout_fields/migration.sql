@@ -1,0 +1,8 @@
+ALTER TABLE "Order"
+ADD COLUMN "customerName" TEXT NOT NULL DEFAULT '',
+ADD COLUMN "customerEmail" TEXT NOT NULL DEFAULT '',
+ADD COLUMN "shippingAddress" TEXT NOT NULL DEFAULT '',
+ADD COLUMN "phone" TEXT NOT NULL DEFAULT '',
+ADD COLUMN "paymentStatus" TEXT NOT NULL DEFAULT 'pending',
+ADD COLUMN "paymentMethod" TEXT,
+ADD COLUMN "paymentReference" TEXT;

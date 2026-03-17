@@ -1,0 +1,18 @@
+'Log files:
+C:\Users\JenishaJ\Desktop\Tastevia-FullStack\frontend\.npm-cache\_logs\2026-03-15T05_31_28_412Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: frontend@0.0.0
+Found: @stripe/stripe-js@undefined
+node_modules/@stripe/stripe-js
+  @stripe/stripe-js@"^3.5.1" from the root project
+
+Could not resolve dependency:
+peer @stripe/stripe-js@">=1.44.1 <8.0.0" from @stripe/react-stripe-js@3.10.0
+node_modules/@stripe/react-stripe-js
+  @stripe/react-stripe-js@"^3.1.1" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.
