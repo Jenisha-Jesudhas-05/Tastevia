@@ -54,9 +54,18 @@ export const createOrder = async (input: CreateOrderInput) => {
     throw new Error("Order must include at least one item");
   }
 
+  // Generate next order number for this user
+  const lastOrder = await prisma.order.findFirst({
+    where: { userId },
+    orderBy: { orderNumber: "desc" },
+    select: { orderNumber: true },
+  });
+  const orderNumber = (lastOrder?.orderNumber ?? 0) + 1;
+
   const order = await prisma.order.create({
     data: {
       userId,
+      orderNumber,
       customerName,
       customerEmail,
       shippingAddress,

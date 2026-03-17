@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff4e6"/>
+      <stop offset="100%" stop-color="#ffe0c8"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" rx="28" fill="url(#bg1)"/>
+  <ellipse cx="200" cy="165" rx="110" ry="50" fill="#fef3c7" stroke="#f59e0b" stroke-width="6"/>
+  <path d="M110 150 C160 120 240 120 290 150" fill="#fcd34d" stroke="#d97706" stroke-width="5"/>
+  <circle cx="170" cy="150" r="10" fill="#ef4444"/>
+  <circle cx="210" cy="145" r="9" fill="#16a34a"/>
+  <circle cx="245" cy="152" r="8" fill="#f97316"/>
+  <text x="200" y="235" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#b45309">Alfredo Pasta</text>
+</svg>

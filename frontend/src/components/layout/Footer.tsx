@@ -6,16 +6,23 @@ const footerLinks = [
   { label: "Menu", to: "/menu" },
   { label: "Orders", to: "/orders" },
   { label: "Cart", to: "/cart" },
+  { label: "Wishlist", to: "/wishlist" },
 ];
 
 const highlights = ["Chef-curated meals", "Quick doorstep delivery", "Fresh ingredients daily"];
+
+const helpLinks = [
+  { label: "Support chat", to: "/menu" },
+  { label: "Refund policy", to: "/orders" },
+  { label: "Allergens & diet", to: "/menu" },
+];
 
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.22),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(244,114,182,0.18),_transparent_28%)]" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-[1.4fr_0.8fr_1fr] lg:px-10">
+      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-[1.4fr_0.8fr_0.9fr_0.9fr] lg:px-10">
         <div className="space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-orange-100 backdrop-blur">
             <Sparkles className="h-4 w-4 text-orange-300" />
@@ -57,6 +64,26 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
+          </div>
+        </div>
+
+        <div className="space-y-5">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-200">
+            Get Help
+          </h3>
+          <div className="grid gap-3 text-sm text-slate-300">
+            {helpLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-slate-200">
+              Tap the chat bubble anytime for live assistance.
+            </p>
           </div>
         </div>
 

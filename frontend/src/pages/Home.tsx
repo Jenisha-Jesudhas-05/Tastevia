@@ -57,15 +57,23 @@ const steps = [
 const faqs = [
   {
     q: "How fast is delivery?",
-    a: "Most orders arrive in around 30 minutes, depending on your address and kitchen rush.",
+    a: "Most orders land in ~30 minutes. If it’s running late, ping us in chat and we’ll update you live.",
   },
   {
     q: "Can I customize my meal?",
-    a: "Yes. You can update ingredients, quantities, and add-ons during checkout.",
+    a: "Yes—add notes for spice level, remove ingredients, or choose add-ons at checkout.",
   },
   {
-    q: "Do you have lighter options?",
-    a: "Tastevia includes balanced picks alongside indulgent meals, so both cravings and goals are covered.",
+    q: "Which dishes are veg/vegan-friendly?",
+    a: "Look for rice, salads, veg biryani, paneer tikka, and veg burgers; we can make several items vegan on request.",
+  },
+  {
+    q: "What if there’s an issue with my order?",
+    a: "Use the chat bubble for instant help or call the number in the footer. We’ll replace or refund fast.",
+  },
+  {
+    q: "Do you support scheduled orders?",
+    a: "Yes, add a delivery note with your preferred time—we’ll confirm in chat if a slot is available.",
   },
 ];
 
@@ -301,39 +309,52 @@ export default function Home() {
           {popularMeals.map((meal, index) => (
             <motion.div
               key={meal.id}
-              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 36 }}
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 24 }}
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={prefersReducedMotion ? { duration: 0 } : { delay: index * 0.08 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { delay: index * 0.06 }}
+              className="rounded-3xl border border-orange-100/80 bg-white/85 shadow-[0_20px_55px_-30px_rgba(15,23,42,0.5)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/70"
             >
-              <ProductCard {...meal} />
+              <div className="flex items-center justify-between px-5 pt-4 text-xs font-semibold uppercase tracking-[0.2em] text-orange-500">
+                <span>Popular #{index + 1}</span>
+                <span className="rounded-full bg-orange-100 px-3 py-1 text-orange-700 dark:bg-orange-500/15 dark:text-orange-200">
+                  {meal.category}
+                </span>
+              </div>
+              <div className="p-5">
+                <ProductCard {...meal} />
+              </div>
             </motion.div>
           ))}
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-10 [content-visibility:auto] [contain-intrinsic-size:1px_650px]">
-        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="surface-card relative overflow-hidden p-8">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-orange-400/5 to-rose-500/10" />
-            <div className="relative space-y-4">
+            <div className="relative space-y-5">
               <p className="text-sm font-semibold uppercase tracking-[0.28em] text-orange-500">
                 Fast Support
               </p>
               <h2 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
-                Questions? We reply in minutes.
+                Questions? Get help in under 2 minutes.
               </h2>
               <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">
-                Check the quick answers or tap the chat bubble in the corner for a real human\u2014no forms or waiting rooms.
+                Tap the chat bubble or pick a quick lane below. A human teammate is always one message away.
               </p>
-              <div className="grid gap-3 text-sm text-slate-700 dark:text-slate-200 sm:grid-cols-2">
+              <div className="grid gap-3 text-sm text-slate-700 dark:text-slate-200 sm:grid-cols-3">
                 <div className="rounded-xl border border-orange-100/70 bg-white/80 p-4 dark:border-orange-500/20 dark:bg-white/5">
                   <p className="font-semibold text-orange-600 dark:text-orange-200">Live order help</p>
-                  <p className="mt-1 text-slate-600 dark:text-slate-300">Resolve delivery or payment issues without leaving the page.</p>
+                  <p className="mt-1 text-slate-600 dark:text-slate-300">Track ETA, adjust address, or fix payment issues.</p>
                 </div>
                 <div className="rounded-xl border border-orange-100/70 bg-white/80 p-4 dark:border-orange-500/20 dark:bg-white/5">
-                  <p className="font-semibold text-orange-600 dark:text-orange-200">Menu guidance</p>
-                  <p className="mt-1 text-slate-600 dark:text-slate-300">Get dietary notes, spice levels, and portion tips instantly.</p>
+                  <p className="font-semibold text-orange-600 dark:text-orange-200">Diet & spice notes</p>
+                  <p className="mt-1 text-slate-600 dark:text-slate-300">Ask for mild/extra spice, nut-free, or veg/vegan swaps.</p>
+                </div>
+                <div className="rounded-xl border border-orange-100/70 bg-white/80 p-4 dark:border-orange-500/20 dark:bg-white/5">
+                  <p className="font-semibold text-orange-600 dark:text-orange-200">Refunds & issues</p>
+                  <p className="mt-1 text-slate-600 dark:text-slate-300">Wrong item or quality concern? We resolve and refund quickly.</p>
                 </div>
               </div>
             </div>
@@ -343,14 +364,15 @@ export default function Home() {
             {faqs.map((faq, index) => (
               <motion.details
                 key={faq.q}
-                initial={prefersReducedMotion ? undefined : { opacity: 0, y: 24 }}
+                initial={prefersReducedMotion ? undefined : { opacity: 0, y: 18 }}
                 whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { delay: index * 0.08 }}
-                className="rounded-[1.5rem] border border-slate-200 bg-white/80 p-5 shadow-[0_24px_60px_-50px_rgba(15,23,42,0.9)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-[0_24px_60px_-45px_rgba(0,0,0,0.75)]"
+                transition={prefersReducedMotion ? { duration: 0 } : { delay: index * 0.05 }}
+                className="group rounded-[1.5rem] border border-slate-200 bg-white/85 p-5 shadow-[0_24px_60px_-50px_rgba(15,23,42,0.9)] backdrop-blur hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/70"
               >
-                <summary className="cursor-pointer list-none text-base font-semibold text-slate-900 dark:text-slate-100">
-                  {faq.q}
+                <summary className="flex cursor-pointer list-none items-center justify-between text-base font-semibold text-slate-900 dark:text-slate-100">
+                  <span>{faq.q}</span>
+                  <span className="text-orange-500 transition group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{faq.a}</p>
               </motion.details>
@@ -396,6 +418,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
     </div>
   );
 }

@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e0f2fe"/><stop offset="100%" stop-color="#c7e0ff"/></linearGradient></defs>
+  <rect width="400" height="280" rx="28" fill="url(#bg)"/>
+  <ellipse cx="200" cy="180" rx="110" ry="50" fill="#fef9c3" stroke="#0ea5e9" stroke-width="6"/>
+  <path d="M130 160 q70 -70 140 0" fill="#e0f2fe" stroke="#0284c7" stroke-width="5"/>
+  <text x="200" y="240" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#075985">Tofu Bao</text>
+</svg>

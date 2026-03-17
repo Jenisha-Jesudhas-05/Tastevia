@@ -1,0 +1,8 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff7e6"/><stop offset="100%" stop-color="#ffe0b5"/></linearGradient></defs>
+  <rect width="400" height="280" rx="28" fill="url(#bg)"/>
+  <path d="M120 190 l80 -120 l80 120 z" fill="#fcd34d" stroke="#f59e0b" stroke-width="6"/>
+  <circle cx="200" cy="170" r="10" fill="#84cc16"/>
+  <circle cx="220" cy="150" r="8" fill="#ef4444"/>
+  <text x="200" y="240" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#c2410c">Loaded Nachos</text>
+</svg>

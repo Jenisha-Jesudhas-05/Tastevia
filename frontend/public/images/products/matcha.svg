@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eaf7e7"/><stop offset="100%" stop-color="#d2f2cf"/></linearGradient></defs>
+  <rect width="400" height="280" rx="28" fill="url(#bg)"/>
+  <rect x="140" y="120" width="120" height="90" rx="18" fill="#bbf7d0" stroke="#22c55e" stroke-width="6"/>
+  <circle cx="200" cy="160" r="22" fill="#16a34a"/>
+  <text x="200" y="240" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#15803d">Matcha Latte</text>
+</svg>

@@ -1,0 +1,9 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#ffedd5"/></linearGradient></defs>
+  <rect width="400" height="280" rx="28" fill="url(#bg)"/>
+  <path d="M110 150 q90 -80 180 0" fill="#f59e0b" stroke="#d97706" stroke-width="6"/>
+  <rect x="90" y="150" width="220" height="25" rx="12" fill="#16a34a"/>
+  <rect x="100" y="175" width="200" height="28" rx="10" fill="#b91c1c"/>
+  <rect x="90" y="203" width="220" height="22" rx="10" fill="#fbbf24"/>
+  <text x="200" y="240" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#b45309">BBQ Burger</text>
+</svg>
