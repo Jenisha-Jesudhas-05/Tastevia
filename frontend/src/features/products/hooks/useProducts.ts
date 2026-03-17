@@ -6,18 +6,28 @@ export const useProducts = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+    let isMounted = true;
+
     const getProducts = async () => {
       try {
-        const res = await api.get("/products");
+        const res = await api.get("/products", { signal: controller.signal });
+        if (!isMounted) return;
         setProducts(Array.isArray(res.data) ? res.data : res.data.data || []);
       } catch (err) {
+        if (!isMounted || controller.signal.aborted) return;
         console.error(err);
         setProducts([]);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
     getProducts();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   return { products, loading };

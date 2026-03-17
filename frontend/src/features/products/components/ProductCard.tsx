@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Heart, ShoppingCart, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../cart/CartContext";
 import toast from "react-hot-toast";
 import { useWishlist } from "@/features/wishlist/WishlistContext";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+
+const FALLBACK_IMG =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' x2='100%25' y1='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffe9d6'/%3E%3Cstop offset='100%25' stop-color='%23ffe5ef'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='800' height='600' rx='24'/%3E%3Cpath fill='%23f97316' d='M360 260c0-30 25-55 56-55 31 0 56 25 56 55s-25 55-56 55c-31 0-56-25-56-55Z'/%3E%3C/svg%3E";
 
 interface ProductCardProps {
   id: string;
@@ -26,6 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   category,
 }) => {
   const [loading, setLoading] = useState(true);
+  const [src, setSrc] = useState(() => (imageUrls && imageUrls[0]) || FALLBACK_IMG);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { isAuthenticated } = useAuth();
   const [index, setIndex] = useState(0);
@@ -33,20 +37,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const navigate = useNavigate();
   const { cart, addToCart, increaseQty } = useCart();
 
-  const images = imageUrls || [];
+  const images = imageUrls && imageUrls.length ? imageUrls : [FALLBACK_IMG];
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!images.length) return;
     setLoading(true);
-    setIndex((prev) => (prev + 1) % images.length);
+    setIndex((prev) => {
+      const next = (prev + 1) % images.length;
+      setSrc(images[next] || FALLBACK_IMG);
+      return next;
+    });
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!images.length) return;
     setLoading(true);
-    setIndex((prev) => (prev - 1 + images.length) % images.length);
+    setIndex((prev) => {
+      const next = (prev - 1 + images.length) % images.length;
+      setSrc(images[next] || FALLBACK_IMG);
+      return next;
+    });
   };
 
   const liked = wishlist.some((item) => item.id === id);
@@ -56,9 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     navigate(`/menu/${id}`);
   };
 
-  const imageSrc = images.length > 0
-    ? images[index]
-    : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c";
+  const imageSrc = images[index] || FALLBACK_IMG;
 
   const handleToggleWishlist = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -96,7 +106,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         id,
         name,
         price,
-        image: imageSrc,
+        image: src,
         quantity: 1,
       });
       toast.success(`${name} added to cart`);
@@ -117,12 +127,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
         )}
 
         <img
-          src={imageSrc}
+          src={src}
           alt={name}
+          loading={index === 0 ? "eager" : "lazy"}
+          fetchPriority={index === 0 ? "high" : "low"}
+          decoding="async"
+          sizes="(min-width: 1280px) 320px, (min-width: 768px) 50vw, 100vw"
           className={`h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
             loading ? "hidden" : "block"
           }`}
           onLoad={() => setLoading(false)}
+          onError={() => {
+            if (src !== FALLBACK_IMG) {
+              setSrc(FALLBACK_IMG);
+              setLoading(false);
+            }
+          }}
         />
 
         {/* Category Badge */}
@@ -178,7 +198,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <p className="line-clamp-2 text-sm text-foreground/70">{description}</p>
 
         <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-foreground">₹{price.toFixed(2)}</p>
+          <p className="text-lg font-bold text-foreground">Rs. {price.toFixed(2)}</p>
 
           <button
             onClick={handleAddToCart}
@@ -193,4 +213,4 @@ const ProductCard: React.FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);
