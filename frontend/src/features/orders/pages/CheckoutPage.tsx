@@ -63,23 +63,23 @@ export default function CheckoutPage() {
   };
 
   return (
-    <section className="min-h-screen bg-background px-4 py-10">
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="surface-card rounded-[2rem] p-8">
-          <p className="pill text-orange-600 dark:text-orange-200">Checkout</p>
+    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 px-4 py-10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
+      <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="rounded-[2rem] border border-border/60 bg-card/85 p-8 shadow-xl backdrop-blur">
+
           <h1 className="mt-3 text-4xl font-semibold text-foreground">
             Shipping and order review
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
-            Review your cart, confirm your delivery details, and choose how you
-            want to pay before placing the order.
+            Review your cart, confirm your delivery details, and choose how you want to pay before placing the order.
           </p>
 
           <div className="mt-8 space-y-4">
             {cartItems.map((item) => (
               <div
                 key={item.id}
-                className="surface-muted flex flex-col gap-4 p-4 sm:flex-row sm:items-center"
+                className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-secondary/70 p-4 sm:flex-row sm:items-center"
               >
                 <img
                   src={item.image}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useProducts } from "../hooks/useProducts";
 import ProductCard from "../components/ProductCard";
 import { Search } from "lucide-react";
@@ -28,44 +28,46 @@ const ProductPages: React.FC = () => {
   });
 
   const SkeletonCard = () => (
-    <div className="skeleton-card">
-      <div className="h-40 w-full rounded-xl bg-muted" />
-      <div className="mt-4 space-y-2">
-        <div className="skeleton-bar w-3/4" />
-        <div className="skeleton-bar w-1/2" />
-        <div className="skeleton-bar w-1/3" />
+    <div className="animate-pulse overflow-hidden rounded-2xl border border-border/60 bg-card/80 p-4 shadow-sm backdrop-blur">
+      <div className="h-52 w-full rounded-xl bg-gradient-to-br from-orange-100/80 via-white to-rose-100/70 dark:from-orange-500/10 dark:via-slate-900 dark:to-rose-500/10" />
+      <div className="mt-4 space-y-3">
+        <div className="h-4 w-3/4 rounded-full bg-foreground/5" />
+        <div className="h-3 w-1/2 rounded-full bg-foreground/5" />
+        <div className="h-3 w-1/3 rounded-full bg-foreground/5" />
       </div>
     </div>
   );
 
   return (
-    <div className="bg-background/90 pb-16 pt-10">
-      <div className="mx-auto max-w-6xl px-4">
-
-      {/* Heading */}
+    <div className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 pb-20 pt-10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
+      <div className="relative mx-auto max-w-6xl px-4">
+        {/* Heading */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1">
-            <p className="pill text-orange-600 dark:text-orange-200">Tastevia Picks</p>
-            <h1 className="text-3xl font-bold text-foreground">Our Menu</h1>
-            <p className="text-sm text-foreground/70">
-              Search, filter, and save your favorites. Everything responds to light and dark mode.
-            </p>
+          <div className="space-y-2">
+            
+            <nav className="flex items-center gap-2 text-sm font-semibold text-foreground/60">
+              <Link to="/" className="hover:text-orange-600">Home</Link>
+              <span className="text-foreground/40">/</span>
+              <span className="text-foreground/80">Menu</span>
+            </nav>
+            
           </div>
 
           {/* Search */}
           <div className="relative w-full md:w-80">
-            <Search className="absolute left-3 top-3 text-foreground/50" size={18}/>
+            <Search className="absolute left-3 top-3 text-foreground/50" size={18} />
             <input
               type="text"
-              placeholder="Search food..."
+              placeholder="Search dishes..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-border/70 bg-card/80 pl-10 pr-4 py-2.5 text-sm text-foreground shadow-inner transition focus:border-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-200 dark:bg-card/50"
+              className="w-full rounded-2xl border border-border/70 bg-card/80 pl-10 pr-4 py-2.5 text-sm text-foreground shadow-lg shadow-black/5 transition focus:border-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-200 dark:bg-card/60"
             />
           </div>
         </div>
 
-      {/* Category Filters */}
+        {/* Category Filters */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
           {categories.map((cat: any) => (
             <button
@@ -85,20 +87,20 @@ const ProductPages: React.FC = () => {
             to="/wishlist"
             className="ml-auto inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50/60 px-4 py-2 text-sm font-semibold text-orange-600 transition hover:bg-orange-100 dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-orange-200"
           >
-            <Heart size={16} /> View wishlist
+            <Heart size={16} /> Wishlist
           </Link>
         </div>
 
-      {/* Products Grid */}
+        {/* Products Grid */}
         <div className="mt-8">
           {loading ? (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, index) => (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, index) => (
                 <SkeletonCard key={index} />
               ))}
             </div>
           ) : filteredProducts.length === 0 ? (
-            <p className="mt-10 text-center text-foreground/60">No products found.</p>
+            <p className="mt-10 text-center text-foreground/60">No dishes found.</p>
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {filteredProducts.map((product: any) => (
@@ -116,9 +118,8 @@ const ProductPages: React.FC = () => {
           )}
         </div>
 
-      {/* Floating Cart Bar */}
+        {/* Floating Cart Bar */}
         <FloatingCartBar />
-
       </div>
     </div>
   );

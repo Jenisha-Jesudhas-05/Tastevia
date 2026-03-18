@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Pizza, IceCream, Coffee, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck, Star, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.svg";
 
 import { login } from "../services/auth.service";
 import { useAuth } from "../hooks/useAuth";
@@ -57,23 +57,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="grid min-h-screen bg-background md:grid-cols-2">
-      <div className="relative hidden items-center justify-center overflow-hidden bg-gradient-to-br from-orange-500/15 via-rose-400/10 to-amber-300/10 p-10 md:flex">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.2),transparent_35%),radial-gradient(circle_at_80%_0,rgba(255,255,255,0.18),transparent_30%)] blur-3xl" />
-        <div className="absolute left-16 top-20 text-orange-400 animate-bounce">
-          <Pizza size={36} />
-        </div>
-        <div className="absolute right-16 top-28 text-rose-400 animate-bounce delay-150">
-          <IceCream size={34} />
-        </div>
-        <div className="absolute bottom-16 right-24 text-amber-500 animate-bounce delay-300">
-          <Coffee size={32} />
-        </div>
-
+    <div className="relative grid min-h-screen overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 md:grid-cols-2 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
+      <div className="relative hidden items-center justify-center overflow-hidden p-10 md:flex">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.16),transparent_35%),radial-gradient(circle_at_80%_0,rgba(255,255,255,0.14),transparent_30%)] blur-3xl" />
         <div className="relative z-10 flex flex-col items-center text-center">
-          <img src={logo} alt="Tastevia" className="h-44 object-contain" />
+          <img src={logo} alt="Tastevia" className="h-40 object-contain" />
           <p className="mt-6 max-w-md text-lg font-semibold text-foreground">
-            Fresh meals delivered to your doorstep. Fast, delicious, and reliable.
+            Fresh meals, delivered with care. Save favorites, speed through checkout, dine in style.
           </p>
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm font-semibold text-foreground">
             <ShieldCheck className="h-4 w-4 text-orange-500" />
@@ -82,10 +73,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center bg-background px-4 py-10">
-        <div className="w-full max-w-md space-y-6 rounded-2xl border border-border/70 bg-card/80 p-8 shadow-[0_20px_60px_-35px_rgba(0,0,0,0.35)]">
+      <div className="relative flex items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md space-y-6 rounded-2xl border border-border/60 bg-card/85 p-8 shadow-xl backdrop-blur">
           <div>
-            <p className="pill text-orange-600 dark:text-orange-200">Welcome back</p>
             <h2 className="mt-3 text-3xl font-bold text-foreground">Login</h2>
             <p className="text-sm text-foreground/70">
               Login to continue ordering your favorite meals.
@@ -127,7 +117,7 @@ export default function LoginPage() {
                 </button>
               </div>
             </label>
-
+            <br/>
             <button
               type="submit"
               disabled={loading}

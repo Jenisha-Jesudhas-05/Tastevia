@@ -48,17 +48,17 @@ export default function Navbar() {
   ];
 
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
-    `relative inline-flex items-center gap-2 text-sm font-semibold tracking-tight transition-all ${
+    `relative inline-flex items-center gap-2 text-sm font-semibold tracking-[0.02em] transition ${
       isActive
-        ? "text-orange-600 after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-orange-500"
+        ? "text-orange-600 after:absolute after:-bottom-2 after:left-0 after:h-[3px] after:w-full after:rounded-full after:bg-orange-500/90"
         : "text-foreground/70 hover:text-orange-500 hover:translate-y-[-1px]"
     }`;
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-transparent">
-      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-3xl border border-border/60 bg-background/80 px-4 py-2.5 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-colors supports-[backdrop-filter]:backdrop-blur-lg md:mt-3 md:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-3xl border border-border/60 bg-background/85 px-4 py-3 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.55)] backdrop-blur-xl transition-colors supports-[backdrop-filter]:backdrop-blur-lg md:mt-3 md:px-6">
         <Link to="/" className="group flex items-center gap-3 rounded-full px-2 py-1 transition hover:brightness-110">
-          <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-rose-500 shadow-md ring-1 ring-white/10">
+          <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-linear-to-br from-orange-500 to-rose-500 shadow-md ring-1 ring-white/10">
             <img
               src={logo}
               alt="Tastevia logo"
@@ -72,7 +72,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-7 md:flex">
           {navLinks.map((link) => (
             <NavLink key={link.to} to={link.to} className={linkClasses}>
               {link.label}
@@ -99,10 +99,7 @@ export default function Navbar() {
             )}
           </Link>
 
-          <div className="hidden md:block">
-            <ThemeToggle />
-          </div>
-
+        
           {!user ? (
             <div className="hidden items-center gap-3 md:flex">
               <Link
@@ -132,27 +129,41 @@ export default function Navbar() {
               </button>
 
               {accountOpen && (
-                <div className="absolute right-0 top-11 w-56 rounded-2xl border border-border/70 bg-card/90 shadow-xl backdrop-blur">
-                  <Link
-                    to="/orders"
-                    className="block px-4 py-3 text-sm text-foreground/80 transition hover:bg-orange-50/70 hover:text-orange-600 dark:hover:bg-white/5"
-                    onClick={() => setAccountOpen(false)}
-                  >
-                    Orders
-                  </Link>
-                  <Link
-                    to="/wishlist"
-                    className="block px-4 py-3 text-sm text-foreground/80 transition hover:bg-orange-50/70 hover:text-orange-600 dark:hover:bg-white/5"
-                    onClick={() => setAccountOpen(false)}
-                  >
-                    Wishlist
-                  </Link>
+                <div className="absolute right-0 top-11 w-64 overflow-hidden rounded-2xl border border-border/70 bg-card/95 shadow-2xl backdrop-blur">
+                  <div className="px-4 py-3">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60">
+                      Signed in
+                    </p>
+                    <p className="truncate text-sm font-semibold text-foreground">{user.name || user.email}</p>
+                  </div>
+                  <div className="border-t border-border/70">
+                    <Link
+                      to="/orders"
+                      className="block px-4 py-3 text-sm text-foreground/80 transition hover:bg-orange-50/70 hover:text-orange-600 dark:hover:bg-white/5"
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      Orders
+                    </Link>
+                    <Link
+                      to="/wishlist"
+                      className="block px-4 py-3 text-sm text-foreground/80 transition hover:bg-orange-50/70 hover:text-orange-600 dark:hover:bg-white/5"
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      Wishlist
+                    </Link>
+                  </div>
+                  <div className="border-t border-border/70 px-4 py-3">
+                    <div className="flex items-center justify-between text-sm font-semibold text-foreground/80">
+                      <span>Theme</span>
+                      <ThemeToggle />
+                    </div>
+                  </div>
                   <button
                     onClick={() => {
                       handleLogout();
                       setAccountOpen(false);
                     }}
-                    className="flex w-full items-center gap-2 px-4 py-3 text-sm text-red-600 transition hover:bg-red-50 dark:hover:bg-red-500/10"
+                    className="flex w-full items-center gap-2 border-t border-border/70 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50 dark:hover:bg-red-500/10"
                   >
                     <LogOut className="h-4 w-4" />
                     Logout

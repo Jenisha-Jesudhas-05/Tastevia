@@ -157,15 +157,15 @@ function PaymentContent() {
   };
 
   return (
-    <section className="min-h-screen bg-background px-4 py-10">
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_0.85fr]">
-        <div className="surface-card rounded-[2rem] p-8">
+    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 px-4 py-10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
+      <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_0.85fr]">
+        <div className="rounded-[2rem] border border-border/60 bg-card/85 p-8 shadow-xl backdrop-blur">
           <h1 className="mt-4 text-4xl font-semibold text-foreground">
             Pay with Card
           </h1>
           <p className="mt-3 text-sm text-foreground/70">
-            Fast, secure checkout powered by Stripe. We never store your card
-            details.
+            Fast, secure checkout powered by Stripe. We never store your card details.
           </p>
 
           <PaymentForm

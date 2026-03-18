@@ -12,10 +12,13 @@ export default function OrderSummaryCard({
   title = "Order summary",
 }: OrderSummaryCardProps) {
   return (
-    <aside className="surface-card p-6">
-      <h2 className="text-xl font-semibold text-foreground">{title}</h2>
+    <aside className="surface-card rounded-2xl border border-border/60 bg-card/80 p-6 shadow-sm">
+      <div className="mb-2 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-foreground">{title}</h2>
+        <p className="pill text-orange-600 dark:text-orange-200">Review</p>
+      </div>
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-4 space-y-4">
         {items.map((item) => (
           <div
             key={item.id}
