@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect,type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useMemo, type ReactNode } from "react";
 import {
   addToCartAPI,
   updateCartItemAPI,
@@ -6,6 +6,7 @@ import {
   getCartAPI,
 } from "./cart.service";
 import type { CartProductItem } from "@/features/orders/types/order.types";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 type CartItem = CartProductItem;
 
@@ -35,21 +36,15 @@ interface CartProviderProps {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
+  const { user } = useAuth();
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  // Safe parser for user from localStorage
-  const getUserFromLocalStorage = () => {
-    try {
-      const stored = localStorage.getItem("user");
-      if (!stored || stored === "undefined") return null;
-      return JSON.parse(stored);
-    } catch (err) {
-      console.error("Failed to parse user from localStorage:", err);
-      return null;
-    }
-  };
-
-  const user = getUserFromLocalStorage();
+  const storageKey = useMemo(
+    () => `tastevia_cart_${user?.id ?? "guest"}`,
+    [user?.id]
+  );
+  const guestKey = "tastevia_cart_guest";
+  const legacyKey = "cart"; // backward compatibility
 
   // Fetch cart from backend on mount
   const refreshCart = async () => {
@@ -70,14 +65,45 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
+  // load cart from localStorage (per user)
   useEffect(() => {
-    refreshCart();
-  }, []);
+    try {
+      // migrate guest cart to user key on first load after login
+      if (user?.id) {
+        const guestRaw = localStorage.getItem(guestKey);
+        const userRaw = localStorage.getItem(storageKey);
+        if (!userRaw && guestRaw) {
+          localStorage.setItem(storageKey, guestRaw);
+          localStorage.removeItem(guestKey);
+        }
+      }
+
+      // migrate legacy key (pre-user-scoped) once
+      const legacyRaw = localStorage.getItem(legacyKey);
+      if (legacyRaw && !localStorage.getItem(storageKey)) {
+        localStorage.setItem(storageKey, legacyRaw);
+        localStorage.removeItem(legacyKey);
+      }
+
+      const raw = localStorage.getItem(storageKey);
+      setCart(raw ? JSON.parse(raw) : []);
+    } catch (err) {
+      console.error("Failed to load cart from localStorage:", err);
+    }
+  }, [storageKey, user?.id]);
+
+  // fetch backend cart when user is known
+  useEffect(() => {
+    if (user?.id) {
+      refreshCart();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   // Save cart in localStorage too
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    localStorage.setItem(storageKey, JSON.stringify(cart));
+  }, [cart, storageKey]);
 
   // Add item to cart
   const addToCart = async (item: CartItem) => {

@@ -98,10 +98,10 @@ export default function CheckoutPage() {
 
                 <div className="text-right">
                   <p className="text-sm text-foreground/70">
-                    ₹{item.price.toFixed(2)} each
+                    ${item.price.toFixed(2)} each
                   </p>
                   <p className="text-lg font-semibold text-foreground">
-                    ₹{(item.price * item.quantity).toFixed(2)}
+                    ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
               </div>

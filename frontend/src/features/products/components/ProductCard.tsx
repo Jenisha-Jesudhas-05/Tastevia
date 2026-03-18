@@ -200,7 +200,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <p className="line-clamp-2 text-sm text-foreground/70">{description}</p>
 
         <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-foreground">Rs. {price.toFixed(2)}</p>
+          <p className="text-lg font-bold text-foreground">${price.toFixed(2)}</p>
 
           <button
             onClick={handleAddToCart}

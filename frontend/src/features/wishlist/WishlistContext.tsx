@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import type { CartProductItem } from "@/features/orders/types/order.types";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 type WishlistItem = CartProductItem;
 
@@ -19,25 +20,57 @@ type WishlistContextValue = {
 
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 
-const STORAGE_KEY = "tastevia_wishlist";
+const STORAGE_KEY_PREFIX = "tastevia_wishlist";
+const GUEST_KEY = `${STORAGE_KEY_PREFIX}_guest`;
+const LEGACY_KEY = STORAGE_KEY_PREFIX; // backward compatibility
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const { user } = useAuth();
+  const [wishlist, setWishlist] = useState<WishlistItem[]>(() => {
+    const key = `${STORAGE_KEY_PREFIX}_${user?.id ?? "guest"}`;
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : [];
+    } catch (error) {
+      console.error("Failed to parse wishlist from localStorage on init", error);
+      return [];
+    }
+  });
+
+  const storageKey = useMemo(
+    () => `${STORAGE_KEY_PREFIX}_${user?.id ?? "guest"}`,
+    [user?.id]
+  );
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        setWishlist(JSON.parse(raw));
+      // migrate any guest wishlist to the logged-in user on first load
+      if (user?.id) {
+        const guestRaw = localStorage.getItem(GUEST_KEY);
+        const userRaw = localStorage.getItem(storageKey);
+        if (!userRaw && guestRaw) {
+          localStorage.setItem(storageKey, guestRaw);
+          localStorage.removeItem(GUEST_KEY);
+        }
       }
+
+      // migrate legacy key (pre-user-scoped) once
+      const legacyRaw = localStorage.getItem(LEGACY_KEY);
+      if (legacyRaw && !localStorage.getItem(storageKey)) {
+        localStorage.setItem(storageKey, legacyRaw);
+        localStorage.removeItem(LEGACY_KEY);
+      }
+
+      const raw = localStorage.getItem(storageKey);
+      setWishlist(raw ? JSON.parse(raw) : []);
     } catch (error) {
       console.error("Failed to load wishlist", error);
     }
-  }, []);
+  }, [storageKey]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlist));
-  }, [wishlist]);
+    localStorage.setItem(storageKey, JSON.stringify(wishlist));
+  }, [wishlist, storageKey]);
 
   const addToWishlist = (item: WishlistItem) => {
     setWishlist((current) => {

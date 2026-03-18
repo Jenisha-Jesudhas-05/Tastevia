@@ -91,13 +91,13 @@ export default function OrderDetailsPage() {
                   <span className="text-sm font-semibold uppercase tracking-[0.22em]">
                     Order confirmed
                   </span>
-                </div>
-                <h1 className="mt-4 text-4xl font-semibold text-foreground">
-                  Order #{order.id}
-                </h1>
-                <p className="mt-2 text-sm text-foreground/70">
-                  Placed on {new Date(order.createdAt).toLocaleString()}
-                </p>
+          </div>
+          <h1 className="mt-4 text-4xl font-semibold text-foreground">
+            Order #{order.orderNumber}
+          </h1>
+          <p className="mt-2 text-sm text-foreground/70">
+            Placed on {new Date(order.createdAt).toLocaleString()}
+          </p>
               </div>
 
               <div className="rounded-2xl bg-emerald-50 px-4 py-3 text-right">
@@ -161,16 +161,16 @@ export default function OrderDetailsPage() {
                       : "border-border/70 bg-card/70 hover:border-orange-200 hover:bg-orange-50/40 dark:hover:bg-white/5"
                   }`}
                 >
-                  <div>
-                    <p className="font-semibold text-foreground">Order #{historyOrder.id}</p>
-                    <p className="text-sm text-foreground/70">
-                      {new Date(historyOrder.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
+                <div>
+                  <p className="font-semibold text-foreground">Order #{historyOrder.orderNumber}</p>
+                  <p className="text-sm text-foreground/70">
+                    {new Date(historyOrder.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
 
                   <div className="text-right">
                     <p className="font-semibold text-foreground">
-                      ₹{historyOrder.totalAmount.toFixed(2)}
+                      ${historyOrder.totalAmount.toFixed(2)}
                     </p>
                     <p className="text-sm capitalize text-foreground/70">
                       {historyOrder.paymentStatus}

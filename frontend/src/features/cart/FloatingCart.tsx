@@ -28,7 +28,7 @@ export default function FloatingCartBar() {
         onClick={() => navigate("/cart")}
         className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold shadow-sm transition hover:bg-white/25"
       >
-        {`View Cart → ₹${totalPrice.toFixed(2)}`}
+        {`View Cart → $${totalPrice.toFixed(2)}`}
       </button>
 
     </div>
