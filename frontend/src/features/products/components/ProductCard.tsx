@@ -116,10 +116,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       onClick={handleNavigate}
-      className="surface-card group cursor-pointer overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border/60 bg-card/90 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
     >
       {/* Image Section */}
-      <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-orange-50/60 via-white to-rose-50/70 dark:from-orange-500/10 dark:via-slate-900 dark:to-rose-500/5">
+      <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-orange-50/60 via-white to-rose-50/70 dark:from-orange-500/10 dark:via-slate-900 dark:to-rose-500/5">
         {loading && (
           <div className="absolute flex h-full w-full items-center justify-center bg-muted/60">
             <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-orange-500" />
@@ -147,6 +147,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           }}
         />
 
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/0 to-black/40 opacity-0 transition group-hover:opacity-100" />
+
         {/* Category Badge */}
         <span className="absolute left-3 top-3 rounded-full bg-orange-500/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow">
           {category}
@@ -155,7 +157,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Like Button */}
         <button
           onClick={handleToggleWishlist}
-          className="absolute right-3 top-3 rounded-full bg-card/90 p-2 text-foreground shadow-md transition hover:scale-105"
+          className="absolute right-3 bottom-3 rounded-full bg-card/90 p-2 text-foreground shadow-md transition hover:scale-105"
         >
           <Heart
             size={18}
@@ -185,26 +187,35 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Content */}
       <div className="space-y-3 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="text-lg font-semibold text-foreground">{name}</h3>
-          <span className="rounded-full bg-orange-500/10 px-2 py-1 text-xs font-semibold text-orange-600 dark:bg-orange-500/15 dark:text-orange-200">
-            {category}
-          </span>
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 rounded-full bg-secondary/70 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-orange-700 dark:text-orange-200">
+              Chef's pick
+            </div>
+            <h3 className="text-lg font-semibold leading-tight text-foreground">{name}</h3>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1 text-yellow-500">
-          <Star size={16} fill="currentColor" />
-          <span className="text-sm text-foreground/80">{rating}</span>
+        <div className="flex items-center gap-3 text-sm text-foreground/80">
+          <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-500/15 dark:text-amber-200">
+            <Star size={14} fill="currentColor" className="text-amber-500" />
+            {rating}
+          </span>
+          <span className="text-foreground/60">{"\u2022"}</span>
+          <span className="text-foreground/70">Freshly prepped daily</span>
         </div>
 
         <p className="line-clamp-2 text-sm text-foreground/70">{description}</p>
 
-        <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-foreground">${price.toFixed(2)}</p>
+        <div className="flex items-center justify-between pt-1">
+          <div className="flex items-baseline gap-1">
+            <p className="text-lg font-bold text-foreground">${price.toFixed(2)}</p>
+            <span className="text-xs text-foreground/60">per plate</span>
+          </div>
 
           <button
             onClick={handleAddToCart}
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:shadow-md"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:shadow-md"
           >
             <ShoppingCart size={16} />
             Add

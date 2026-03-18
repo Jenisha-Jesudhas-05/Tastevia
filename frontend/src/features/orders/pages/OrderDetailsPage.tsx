@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CheckCircle2, LoaderCircle, Package, ReceiptText } from "lucide-react";
+import { CheckCircle2, Package, ReceiptText } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { getOrderDetailsAPI, getOrderHistoryAPI } from "../order.service";
 import type { CartProductItem, Order } from "../types/order.types";
 import OrderSummaryCard from "../components/OrderSummaryCard";
+import logo from "@/assets/logo.svg";
 
 const mapOrderItems = (order: Order): CartProductItem[] =>
   order.items.map((item) => ({
@@ -59,8 +60,11 @@ export default function OrderDetailsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center bg-background">
-        <LoaderCircle className="h-10 w-10 animate-spin text-orange-500" />
+      <div className="flex min-h-[60vh] items-center justify-center bg-gradient-to-b from-amber-50 via-white to-rose-50 text-foreground dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-orange-500 to-rose-500 shadow-lg ring-1 ring-white/20">
+          <img src={logo} alt="Tastevia logo" className="h-8 w-8 drop-shadow-sm" />
+          <div className="absolute inset-0 bg-white/10 animate-pulse" />
+        </div>
       </div>
     );
   }
@@ -80,10 +84,18 @@ export default function OrderDetailsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-background px-4 py-10">
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 px-4 py-10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
+      <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-6">
-          <div className="surface-card rounded-[2rem] border border-emerald-100/60 p-8">
+          <nav className="flex items-center gap-2 text-sm font-semibold text-foreground/60">
+            <Link to="/" className="hover:text-orange-600">Home</Link>
+            <span className="text-foreground/40">/</span>
+            <Link to="/orders" className="hover:text-orange-600">Orders</Link>
+            <span className="text-foreground/40">/</span>
+            <span className="text-foreground/80">#{order.orderNumber}</span>
+          </nav>
+          <div className="rounded-[2rem] border border-emerald-100/60 bg-card/85 p-8 shadow-xl backdrop-blur">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-emerald-600">
