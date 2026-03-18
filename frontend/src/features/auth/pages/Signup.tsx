@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Sparkles, Star, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, Star} from "lucide-react";
 import toast from "react-hot-toast";
 import logo from "@/assets/logo.svg";
 
