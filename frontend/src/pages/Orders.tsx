@@ -81,7 +81,7 @@ const Orders = () => {
                 >
                   <div>
                     <p className="text-lg font-semibold text-foreground">
-                      Order #{order.id}
+                      Order #{order.orderNumber}
                     </p>
                     <p className="mt-1 text-sm text-foreground/70">
                       {new Date(order.createdAt).toLocaleString()}
@@ -90,7 +90,7 @@ const Orders = () => {
 
                   <div className="flex flex-col gap-1 text-sm text-foreground/70 sm:items-end">
                     <p className="font-semibold text-foreground">
-                      ₹{order.totalAmount.toFixed(2)}
+                    ${order.totalAmount.toFixed(2)}
                     </p>
                     <p className="capitalize">Status: {order.status}</p>
                     <p className="capitalize">Payment: {order.paymentStatus}</p>

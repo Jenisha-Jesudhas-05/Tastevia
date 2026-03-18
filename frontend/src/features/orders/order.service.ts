@@ -49,7 +49,7 @@ export const createStripePaymentIntentAPI = async (amount: number) => {
   try {
     const response = await api.post<StripeIntentResponse>(
       "/orders/stripe/create-intent",
-      { amount, currency: "inr" }
+      { amount, currency: "usd" }
     );
     return response.data;
   } catch (error) {

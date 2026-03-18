@@ -24,7 +24,7 @@ export default function Cart() {
 
         <Link
           to="/menu"
-          className="rounded-full bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl"
+          className="rounded-full bg-linear-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl"
         >
           Browse Menu
         </Link>
@@ -74,11 +74,11 @@ export default function Cart() {
                 <h3 className="text-lg font-semibold text-foreground">{item.name}</h3>
 
                 <p className="text-orange-500 font-bold mt-1">
-                  ₹{item.price.toFixed(2)}
+                  ${item.price.toFixed(2)}
                 </p>
 
                 <p className="text-sm text-foreground/60 mt-1">
-                  Subtotal: ₹{(item.price * item.quantity).toFixed(2)}
+                  Subtotal: ${(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
 
@@ -87,7 +87,9 @@ export default function Cart() {
 
                 <button
                   onClick={() => decreaseQty(item.id)}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/70 bg-secondary/70 text-foreground transition hover:border-orange-300 hover:text-orange-600"
+                  disabled={item.quantity <= 1}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/70 bg-secondary/70 text-foreground transition hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-border/70 disabled:hover:text-foreground"
+                  aria-label="Decrease quantity"
                 >
                   -
                 </button>
@@ -122,7 +124,7 @@ export default function Cart() {
           <div>
             <p className="text-sm text-foreground/70">Total Amount</p>
             <p className="text-2xl font-bold text-foreground">
-              ₹{total.toFixed(2)}
+              ${total.toFixed(2)}
             </p>
           </div>
 
@@ -136,7 +138,7 @@ export default function Cart() {
 
             <Link
               to="/checkout"
-              className="rounded-xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl"
+              className="rounded-xl bg-linear-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl"
             >
               Checkout
             </Link>

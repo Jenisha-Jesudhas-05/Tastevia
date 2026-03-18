@@ -5,6 +5,8 @@ interface PaymentFormProps {
   amount: number;
   loading: boolean;
   error: string;
+  isReady: boolean;
+  preparing: boolean;
   cardElement: React.ReactNode;
   onSubmit: () => Promise<void>;
 }
@@ -13,6 +15,8 @@ export default function PaymentForm({
   amount,
   loading,
   error,
+  isReady,
+  preparing,
   cardElement,
   onSubmit,
 }: PaymentFormProps) {
@@ -42,8 +46,15 @@ export default function PaymentForm({
 
       <div className="rounded-2xl bg-secondary/70 px-4 py-3 text-sm text-foreground/70">
         Order total:{" "}
-        <span className="font-semibold text-foreground">₹{amount.toFixed(2)}</span>
+        <span className="font-semibold text-foreground">${amount.toFixed(2)}</span>
       </div>
+
+      {preparing ? (
+        <div className="flex items-center gap-2 rounded-2xl border border-border/70 bg-secondary/70 px-4 py-3 text-sm text-foreground/70">
+          <LoaderCircle size={16} className="animate-spin" />
+          <span>Preparing secure payment session...</span>
+        </div>
+      ) : null}
 
       {error ? (
         <div className="flex items-center gap-2 rounded-2xl border border-red-200/70 bg-red-50/80 px-4 py-3 text-sm text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200">
@@ -54,13 +65,18 @@ export default function PaymentForm({
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || !isReady}
         className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? (
           <>
             <LoaderCircle size={18} className="animate-spin" />
             Placing order
+          </>
+        ) : !isReady ? (
+          <>
+            <LoaderCircle size={18} className="animate-spin" />
+            Getting ready...
           </>
         ) : (
           <>Continue</>

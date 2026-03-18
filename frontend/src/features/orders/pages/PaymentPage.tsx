@@ -53,20 +53,25 @@ function PaymentContent() {
   const checkoutDraft = useMemo(() => getCheckoutDraft(), []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [intentLoading, setIntentLoading] = useState(true);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   useEffect(() => {
     const initIntent = async () => {
       if (!checkoutDraft) return;
+      setIntentLoading(true);
       try {
         const intent = await createStripePaymentIntentAPI(
           checkoutDraft.totalAmount
         );
         setClientSecret(intent.clientSecret);
+        setError("");
       } catch (err: any) {
         setError(
           err?.message || "Unable to start payment. Please refresh and retry."
         );
+      } finally {
+        setIntentLoading(false);
       }
     };
     initIntent();
@@ -90,7 +95,7 @@ function PaymentContent() {
     setError("");
 
     if (!stripe || !elements || !clientSecret) {
-      setError("Payment not ready yet. Please wait a moment.");
+      setError("Payment is still preparing. Please wait a moment.");
       return;
     }
 
@@ -167,6 +172,8 @@ function PaymentContent() {
             amount={checkoutDraft.totalAmount}
             loading={loading}
             error={error}
+            isReady={Boolean(stripe && elements && clientSecret) && !intentLoading}
+            preparing={intentLoading || !clientSecret}
             cardElement={<CardElement options={cardStyleOptions} />}
             onSubmit={handlePayment}
           />

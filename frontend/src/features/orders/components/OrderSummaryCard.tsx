@@ -33,7 +33,7 @@ export default function OrderSummaryCard({
             </div>
 
             <p className="text-sm font-semibold text-foreground">
-              ₹{(item.price * item.quantity).toFixed(2)}
+              ${(item.price * item.quantity).toFixed(2)}
             </p>
           </div>
         ))}
@@ -42,12 +42,12 @@ export default function OrderSummaryCard({
       <div className="mt-6 border-t border-dashed border-border/70 pt-4">
         <div className="flex items-center justify-between text-sm text-foreground/70">
           <span>Subtotal</span>
-          <span>₹{totalAmount.toFixed(2)}</span>
+          <span>${totalAmount.toFixed(2)}</span>
         </div>
 
         <div className="mt-3 flex items-center justify-between text-lg font-semibold text-foreground">
           <span>Total</span>
-          <span>₹{totalAmount.toFixed(2)}</span>
+          <span>${totalAmount.toFixed(2)}</span>
         </div>
       </div>
     </aside>

@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            <p className="text-4xl font-bold text-foreground">₹{product.price}</p>
+            <p className="text-4xl font-bold text-foreground">${product.price}</p>
 
             <p className="text-base leading-relaxed text-foreground/70">{product.description}</p>
 
@@ -175,7 +175,7 @@ export default function ProductDetailPage() {
               className="mt-3 inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl"
             >
               <ShoppingCart size={18} />
-              Add to cart • ₹{(product.price * qty).toFixed(2)}
+              Add to cart • ${(product.price * qty).toFixed(2)}
             </button>
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function ProductDetailPage() {
                     className="h-40 w-full rounded-lg object-cover"
                   />
                   <h3 className="mt-2 font-semibold text-foreground">{item.name}</h3>
-                  <p className="font-bold text-orange-500">₹{item.price}</p>
+                  <p className="font-bold text-orange-500">${item.price}</p>
                 </div>
               ))}
             </div>
