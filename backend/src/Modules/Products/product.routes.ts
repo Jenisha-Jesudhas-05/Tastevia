@@ -3,10 +3,10 @@ import { ProductController } from "./product.controller.js";
 
 const router = Router();
 
-router.post("/", ProductController.create);       // Create product
-router.get("/", ProductController.getAll);        // Get all products
-router.get("/:id", ProductController.getById);    // Get product by id
-router.put("/:id", ProductController.update);     // Update product
-router.delete("/:id", ProductController.delete);  // Delete product
+router.post("/", ProductController.create);   
+router.get("/", ProductController.getAll);      
+router.get("/:id", ProductController.getById);   
+router.put("/:id", ProductController.update);     
+router.delete("/:id", ProductController.delete);  
 
 export default router;
