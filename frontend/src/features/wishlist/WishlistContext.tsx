@@ -22,8 +22,6 @@ type WishlistContextValue = {
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 
 const STORAGE_KEY_PREFIX = "tastevia_wishlist";
-const GUEST_KEY = `${STORAGE_KEY_PREFIX}_guest`; // unused now, kept for potential migration
-const LEGACY_KEY = STORAGE_KEY_PREFIX; // unused now, kept for potential migration
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
