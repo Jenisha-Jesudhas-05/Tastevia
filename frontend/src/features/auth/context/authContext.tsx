@@ -1,9 +1,7 @@
 import { createContext, useState, useEffect, type ReactNode } from "react";
 import type { User, AuthContextType } from "../types/auth.types";
 import {
-  clearStoredToken,
   clearStoredUser,
-  getStoredToken,
   getStoredUser,
   setStoredUser,
 } from "../auth.storage";
@@ -17,9 +15,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Load user from localStorage
   useEffect(() => {
     const storedUser = getStoredUser();
-    const token = getStoredToken();
 
-    if (storedUser && token) {
+    if (storedUser) {
       setUser(storedUser);
     }
 
@@ -34,7 +31,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Logout
   const logoutUser = () => {
-    clearStoredToken();
     clearStoredUser();
     setUser(null);
   };

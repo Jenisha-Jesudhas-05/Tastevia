@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { CartProductItem } from "@/features/orders/types/order.types";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { setPostLoginRedirect } from "@/features/auth/auth.storage";
 
 type WishlistItem = CartProductItem;
 
@@ -21,46 +22,24 @@ type WishlistContextValue = {
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 
 const STORAGE_KEY_PREFIX = "tastevia_wishlist";
-const GUEST_KEY = `${STORAGE_KEY_PREFIX}_guest`;
-const LEGACY_KEY = STORAGE_KEY_PREFIX; // backward compatibility
+const GUEST_KEY = `${STORAGE_KEY_PREFIX}_guest`; // unused now, kept for potential migration
+const LEGACY_KEY = STORAGE_KEY_PREFIX; // unused now, kept for potential migration
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  const [wishlist, setWishlist] = useState<WishlistItem[]>(() => {
-    const key = `${STORAGE_KEY_PREFIX}_${user?.id ?? "guest"}`;
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : [];
-    } catch (error) {
-      console.error("Failed to parse wishlist from localStorage on init", error);
-      return [];
-    }
-  });
+  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
 
   const storageKey = useMemo(
-    () => `${STORAGE_KEY_PREFIX}_${user?.id ?? "guest"}`,
+    () => (user?.id ? `${STORAGE_KEY_PREFIX}_${user.id}` : null),
     [user?.id]
   );
 
   useEffect(() => {
     try {
-      // migrate any guest wishlist to the logged-in user on first load
-      if (user?.id) {
-        const guestRaw = localStorage.getItem(GUEST_KEY);
-        const userRaw = localStorage.getItem(storageKey);
-        if (!userRaw && guestRaw) {
-          localStorage.setItem(storageKey, guestRaw);
-          localStorage.removeItem(GUEST_KEY);
-        }
+      if (!storageKey) {
+        setWishlist([]);
+        return;
       }
-
-      // migrate legacy key (pre-user-scoped) once
-      const legacyRaw = localStorage.getItem(LEGACY_KEY);
-      if (legacyRaw && !localStorage.getItem(storageKey)) {
-        localStorage.setItem(storageKey, legacyRaw);
-        localStorage.removeItem(LEGACY_KEY);
-      }
-
       const raw = localStorage.getItem(storageKey);
       setWishlist(raw ? JSON.parse(raw) : []);
     } catch (error) {
@@ -69,10 +48,19 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   }, [storageKey]);
 
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(wishlist));
+    if (storageKey) {
+      localStorage.setItem(storageKey, JSON.stringify(wishlist));
+    }
   }, [wishlist, storageKey]);
 
   const addToWishlist = (item: WishlistItem) => {
+    if (!user?.id) {
+      setPostLoginRedirect(window.location.pathname + window.location.search);
+      window.alert("Please log in to save items to wishlist.");
+      window.location.href = "/login";
+      return;
+    }
+
     setWishlist((current) => {
       if (current.some((i) => i.id === item.id)) return current;
       return [...current, item];
@@ -80,6 +68,8 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromWishlist = (id: string) => {
+    if (!user?.id) return;
+
     setWishlist((current) => current.filter((item) => item.id !== id));
   };
 
