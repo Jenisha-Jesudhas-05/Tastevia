@@ -9,12 +9,10 @@ const footerLinks = [
   { label: "Wishlist", to: "/wishlist" },
 ];
 
-const highlights = ["Chef-curated meals", "Quick doorstep delivery", "Fresh ingredients daily"];
-
 const helpLinks = [
-  { label: "Support chat", to: "/menu" },
-  { label: "Refund policy", to: "/orders" },
-  { label: "Allergens & diet", to: "/menu" },
+  { label: "Support chat", to: "/support" },
+  { label: "Refund policy", to: "/refund-policy" },
+  { label: "Allergens & diet", to: "/allergens" },
 ];
 
 export default function Footer() {
@@ -38,16 +36,6 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            {highlights.map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
         </div>
 
         <div className="space-y-5">
@@ -81,9 +69,6 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
-            <p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-slate-200">
-              Tap the chat bubble anytime for live assistance.
-            </p>
           </div>
         </div>
 
