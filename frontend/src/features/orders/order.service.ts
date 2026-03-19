@@ -16,12 +16,7 @@ const getApiErrorMessage = (error: unknown, fallbackMessage: string) => {
   return fallbackMessage;
 };
 
-// Sample fetch equivalent:
-// await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
-//   method: "POST",
-//   headers: { "Content-Type": "application/json" },
-//   body: JSON.stringify(payload),
-// });
+
 export const createOrderAPI = async (payload: CreateOrderPayload) => {
   try {
     const response = await api.post<Order>("/orders", payload);
@@ -31,8 +26,6 @@ export const createOrderAPI = async (payload: CreateOrderPayload) => {
   }
 };
 
-// Sample fetch equivalent:
-// await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders/${id}`);
 export const getOrderDetailsAPI = async (id: number) => {
   const response = await api.get<Order>(`/orders/${id}`);
   return response.data;

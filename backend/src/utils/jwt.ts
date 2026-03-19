@@ -26,9 +26,9 @@ export const setAuthCookies = (res: Response, accessToken: string, refreshToken:
   const isProduction = process.env.NODE_ENV === 'production';
  
   const cookieOptions = {
-    httpOnly: true, // Prevents XSS
-    secure: isProduction, // Only sent over HTTPS in production
-    sameSite: 'lax' as const, // Prevents CSRF
+    httpOnly: true, 
+    secure: isProduction, 
+    sameSite: 'lax' as const, 
   };
  
   res.cookie('accessToken', accessToken, {

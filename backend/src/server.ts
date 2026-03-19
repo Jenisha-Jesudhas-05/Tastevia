@@ -1,23 +1,20 @@
 import dotenv from 'dotenv';
-dotenv.config(); // Load env variables first
+dotenv.config(); 
 
 import app from './app.js';
-import prisma from './lib/prisma.js'; // Use your adapter-based Prisma client
+import prisma from './lib/prisma.js'; 
 
 const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
-    // 1️⃣ Test Database Connection
     await prisma.$connect();
     console.log('✅ Database connected successfully');
 
-    // 2️⃣ Start Express Server
     app.listen(PORT, () => {
       console.log(`🚀 Backend running at http://localhost:${PORT}`);
     });
 
-    // Optional: Graceful shutdown on SIGINT / SIGTERM
     process.on('SIGINT', async () => {
       console.log('\n🛑 SIGINT received. Closing server...');
       await prisma.$disconnect();
@@ -33,7 +30,7 @@ async function startServer() {
   } catch (error) {
     console.error('❌ Failed to start server:', error);
     await prisma.$disconnect();
-    process.exit(1); // Exit if DB connection fails
+    process.exit(1); 
   }
 }
 

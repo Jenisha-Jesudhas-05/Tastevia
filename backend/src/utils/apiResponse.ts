@@ -5,7 +5,6 @@ export interface ApiResponse<T = any> {
   statusCode?: number;
 }
 
-// Success response helper
 export const successResponse = <T = any>(data: T | null = null, message = "Success"): ApiResponse<T> => {
   return {
     status: "success",
@@ -14,7 +13,6 @@ export const successResponse = <T = any>(data: T | null = null, message = "Succe
   };
 };
 
-// Error response helper
 export const errorResponse = (message: string, statusCode = 400): ApiResponse<null> => {
   return {
     status: "error",

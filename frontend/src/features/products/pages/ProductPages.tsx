@@ -12,10 +12,8 @@ const ProductPages: React.FC = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
-  // Get unique categories
   const categories = ["all", ...new Set(products.map((p: any) => p.category))];
 
-  // Filter products
   const filteredProducts = products.filter((product: any) => {
     const matchSearch = product.name
       .toLowerCase()
@@ -42,7 +40,7 @@ const ProductPages: React.FC = () => {
     <div className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 pb-20 pt-10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
       <div className="relative mx-auto max-w-6xl px-4">
-        {/* Heading */}
+   
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
             
@@ -54,7 +52,6 @@ const ProductPages: React.FC = () => {
             
           </div>
 
-          {/* Search */}
           <div className="relative w-full md:w-80">
             <Search className="absolute left-3 top-3 text-foreground/50" size={18} />
             <input
@@ -67,7 +64,6 @@ const ProductPages: React.FC = () => {
           </div>
         </div>
 
-        {/* Category Filters */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
           {categories.map((cat: any) => (
             <button
@@ -91,7 +87,6 @@ const ProductPages: React.FC = () => {
           </Link>
         </div>
 
-        {/* Products Grid */}
         <div className="mt-8">
           {loading ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -118,7 +113,6 @@ const ProductPages: React.FC = () => {
           )}
         </div>
 
-        {/* Floating Cart Bar */}
         <FloatingCartBar />
       </div>
     </div>

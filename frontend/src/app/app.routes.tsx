@@ -38,20 +38,17 @@ export default function AppRoutes() {
       <ScrollToTop />
       <Routes>
 
-      {/* AUTH PAGES (NO NAVBAR) */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
 
-      {/* MAIN APP (WITH NAVBAR) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<ProductPages />} />
              <Route path="/menu/:id" element={<ProductDetailPage />} />
       </Route>
-
-      {/* PROTECTED ROUTES */}
+      
       <Route element={<ProtectedRoutes />}>
         <Route element={<MainLayout />}>
           <Route path="/wishlist" element={<WishlistPage />} />

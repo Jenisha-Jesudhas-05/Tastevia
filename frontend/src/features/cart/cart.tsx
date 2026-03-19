@@ -10,7 +10,6 @@ export default function Cart() {
     0
   );
 
-  /* EMPTY CART */
   if (cart.length === 0) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-background px-4 text-center">
@@ -36,7 +35,7 @@ export default function Cart() {
     <div className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-rose-50 pb-18 pt-10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(251,146,60,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.12),transparent_40%)]" />
       <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4">
-        {/* PAGE TITLE */}
+        
         <div className="flex items-start justify-between gap-4">
           <div>
           
@@ -52,22 +51,18 @@ export default function Cart() {
             + Add more
           </Link>
         </div>
-
-        {/* CART ITEMS */}
         <div className="space-y-4">
           {cart.map((item) => (
             <div
               key={item.id}
               className="surface-card flex flex-col gap-4 rounded-2xl border border-border/60 bg-card/80 p-4 shadow-sm sm:flex-row sm:items-center"
             >
-              {/* IMAGE */}
               <img
                 src={item.image}
                 alt={item.name}
                 className="h-24 w-24 rounded-xl object-cover"
               />
 
-              {/* PRODUCT INFO */}
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-foreground">{item.name}</h3>
                 <p className="mt-1 font-bold text-orange-500">${item.price.toFixed(2)}</p>
@@ -76,7 +71,7 @@ export default function Cart() {
                 </p>
               </div>
 
-              {/* QUANTITY CONTROLS */}
+           
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => decreaseQty(item.id)}
@@ -97,7 +92,7 @@ export default function Cart() {
                 </button>
               </div>
 
-              {/* REMOVE */}
+       
               <button
                 onClick={() => removeFromCart(item.id)}
                 className="text-red-500 transition hover:text-red-600"
@@ -109,7 +104,7 @@ export default function Cart() {
           ))}
         </div>
 
-        {/* TOTAL SECTION */}
+    
         <div className="surface-card flex flex-col gap-4 rounded-2xl border border-border/60 bg-card/80 p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm text-foreground/70">Total Amount</p>

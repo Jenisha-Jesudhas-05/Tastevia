@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as cartService from "./cart.service.js";
 
-// Add item to cart
+
 export const addToCart = async (req: Request, res: Response) => {
   try {
     const { userId, productId, quantity } = req.body;
@@ -13,7 +13,7 @@ export const addToCart = async (req: Request, res: Response) => {
   }
 };
 
-// Get cart for a user
+
 export const getCart = async (req: Request, res: Response) => {
   try {
     const userId = Number(req.params.userId);
@@ -25,7 +25,7 @@ export const getCart = async (req: Request, res: Response) => {
   }
 };
 
-// Update quantity of an item in cart
+
 export const updateCartItem = async (req: Request, res: Response) => {
   try {
     const { userId, productId, quantity } = req.body;
@@ -37,7 +37,7 @@ export const updateCartItem = async (req: Request, res: Response) => {
   }
 };
 
-// Remove an item from cart
+
 export const removeCartItem = async (req: Request, res: Response) => {
   try {
     const { userId, productId } = req.body;
