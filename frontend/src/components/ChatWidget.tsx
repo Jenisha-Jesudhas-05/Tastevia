@@ -4,18 +4,60 @@ import { MessageCircle, Send, X, Bot } from "lucide-react";
 type ChatMessage = { id: number; from: "user" | "bot"; text: string };
 
 const cannedReplies: { test: RegExp; reply: string }[] = [
-  { test: /delivery|time|arrive/i, reply: "Most orders arrive in ~30 minutes, depending on rush and your address." },
-  { test: /vegan|veg/i, reply: "We have multiple vegetarian options (paneer tikka, veg biryani, veg burger, salads)." },
-  { test: /spicy|hot/i, reply: "Tell us in checkout notes if you want milder spice; we’ll tone it down." },
-  { test: /refund|payment/i, reply: "Payments are secured. If something goes wrong, reply here and we’ll sort it out." },
-  { test: /recommend|suggest/i, reply: "Customer faves: Butter Chicken, Chicken Biryani, Pepperoni Pizza, Chocolate Cake." },
+  {
+    test: /delivery|time|arrive|delay|late/i,
+    reply: "Most orders reach you in about 30 minutes. If it feels late, share your order ID and we'll live-track it.",
+  },
+  {
+    test: /track|status|where/i,
+    reply: "Drop your order ID and we'll send a live status update. Riders call if there are gate or door issues.",
+  },
+  {
+    test: /vegan|veg|vegetarian/i,
+    reply: "Veg picks: Paneer Tikka Bowl, Veg Biryani, Margherita Pizza, Greek Salad, Veg Momos. Jain-friendly prep on request.",
+  },
+  {
+    test: /spicy|hot/i,
+    reply: "We can tone spice down—add a note at checkout. Mild options: Butter Chicken, Dal Makhani Bowl, Margherita Pizza.",
+  },
+  {
+    test: /allergen|nut|gluten|dairy|lactose|egg/i,
+    reply: "Tell us your allergens. We can mark no-nut, no-dairy, and no-egg prep on most dishes. Cross-contact risk is low but not zero.",
+  },
+  {
+    test: /refund|payment|failed|double/i,
+    reply: "Payments are secured. If a charge failed or doubled, share the last 4 digits and time—we'll verify and refund if needed.",
+  },
+  {
+    test: /recommend|suggest|best|popular|bestseller/i,
+    reply: "Top picks now: Butter Chicken Bowl, Chicken Biryani, Tandoori Paneer Wrap, Margherita Pizza, Chocolate Lava Cake.",
+  },
+  {
+    test: /offer|discount|coupon|promo/i,
+    reply: "We rotate offers daily. If you don't see one at checkout, send your cart value and we'll share the best available code.",
+  },
+  {
+    test: /hours|open|close|timing/i,
+    reply: "We're open daily from 9:00 AM to 11:00 PM. Late-night menu is slimmer after 10 PM.",
+  },
+  {
+    test: /location|where are you|store/i,
+    reply: "We're a delivery-first kitchen in your neighborhood. Pickups are welcome—add a note and we'll have it ready.",
+  },
 ];
 
 function getBotReply(text: string): string {
+  if (!text.trim()) {
+    return "How can I help? Ask about delivery time, order status, allergens, offers, or menu picks.";
+  }
+
   const match = cannedReplies.find(({ test }) => test.test(text));
-  return match
-    ? match.reply
-    : "Got it! A teammate will follow up soon. Meanwhile, try our Butter Chicken or Margherita Pizza—they’re best-sellers today.";
+  if (match) return match.reply;
+
+  return [
+    "Got it! Quick facts: average delivery 30 mins, open 9 AM–11 PM, veg/mild options available, refunds handled fast if anything goes wrong.",
+    "Share any specifics (order ID, dish, allergy, location) and I'll tailor the answer while a teammate double-checks.",
+  ].join(" ");
 }
 
 export default function ChatWidget() {
