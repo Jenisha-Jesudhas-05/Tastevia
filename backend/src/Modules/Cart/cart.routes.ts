@@ -3,7 +3,6 @@ import { addToCart, getCart, updateCartItem, removeCartItem } from "./cart.contr
 
 const router = express.Router();
 
-
 router.post("/add", addToCart);
 router.get("/:userId", getCart);
 router.patch("/update", updateCartItem);

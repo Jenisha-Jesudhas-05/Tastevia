@@ -2,9 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors, { CorsOptions } from 'cors';
 
-// Routes
 import authRoutes from './Auth/auth.routes.js';
-import productRoutes from './Modules/Products/product.routes.js'; // Add Product routes
+import productRoutes from './Modules/Products/product.routes.js'; 
 import cartRoutes from "./Modules/Cart/cart.routes.js";
 import orderRoutes from "./Modules/Orders/order.routes.js";
 import newsletterRoutes from "./Modules/Newsletter/newsletter.routes.js";
@@ -19,7 +18,6 @@ const allowedOrigins = process.env.CLIENT_URLS
   ? process.env.CLIENT_URLS.split(",").map((origin) => origin.trim())
   : defaultAllowedOrigins;
 
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions: CorsOptions = {
@@ -38,9 +36,8 @@ const corsOptions: CorsOptions = {
 };
 app.use(cors(corsOptions));
 
-// Routes
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/products', productRoutes); // Product API
+app.use('/api/v1/products', productRoutes); 
 app.use("/api/v1/cart", cartRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/newsletter", newsletterRoutes);

@@ -1,6 +1,6 @@
 import prisma from "../lib/prisma.js";
 import bcrypt from "bcrypt";
-import { generateTokens } from "../utils/jwt.js"; // your JWT util
+import { generateTokens } from "../utils/jwt.js";
 
 interface RegisterInput {
   name: string;

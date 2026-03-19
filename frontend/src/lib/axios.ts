@@ -7,7 +7,6 @@ export const api = axios.create({
   withCredentials: true
 });
 
-// With httpOnly cookies, no need to attach Authorization header here.
 
 api.interceptors.response.use(
   (response) => response,

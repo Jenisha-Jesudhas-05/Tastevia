@@ -1,6 +1,5 @@
 import prisma from "../../lib/prisma.js";
 
-// Add item to cart
 export const addToCart = async (userId: number, productId: number, quantity: number) => {
   let cart = await prisma.cart.findUnique({ where: { userId } });
 

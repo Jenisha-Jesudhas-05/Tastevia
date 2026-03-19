@@ -45,7 +45,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     [user?.id]
   );
 
-  // Fetch cart from backend on mount
   const refreshCart = async () => {
     if (!user?.id) return;
     try {
@@ -64,7 +63,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
-  // load cart from localStorage (per user)
   useEffect(() => {
     try {
       if (!storageKey) {
@@ -78,22 +76,19 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   }, [storageKey, user?.id]);
 
-  // fetch backend cart when user is known
   useEffect(() => {
     if (user?.id) {
       refreshCart();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, [user?.id]);
 
-  // Save cart in localStorage too
   useEffect(() => {
     if (storageKey) {
       localStorage.setItem(storageKey, JSON.stringify(cart));
     }
   }, [cart, storageKey]);
 
-  // Add item to cart
   const addToCart = async (item: CartItem) => {
     if (!user?.id) {
       setPostLoginRedirect(window.location.pathname + window.location.search);
@@ -121,7 +116,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     });
   };
 
-  // Update cart item quantity
+
   const updateCartItem = async (id: string, quantity: number) => {
     if (!user?.id) return;
 
@@ -140,7 +135,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     );
   };
 
-  // Remove item from cart
+
   const removeFromCart = async (id: string) => {
     if (!user?.id) return;
 
@@ -155,14 +150,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // Increase quantity by 1
   const increaseQty = async (id: string) => {
     const item = cart.find((c) => c.id === id);
     if (!item) return;
     await updateCartItem(id, item.quantity + 1);
   };
 
-  // Decrease quantity by 1
+
   const decreaseQty = async (id: string) => {
     const item = cart.find((c) => c.id === id);
     if (!item) return;
@@ -173,13 +167,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
-  // Clear the cart
+
   const clearCart = () => {
     setCart([]);
-    // Optionally clear backend cart here if needed
   };
 
-  // Cart totals
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 

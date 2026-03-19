@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user from localStorage
   useEffect(() => {
     const storedUser = getStoredUser();
 
@@ -23,13 +22,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  // Login
   const loginUser = (user: User) => {
     setStoredUser(user);
     setUser(user);
   };
 
-  // Logout
   const logoutUser = () => {
     clearStoredUser();
     setUser(null);
@@ -39,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{ user, isAuthenticated: Boolean(user), loginUser, logoutUser }}
     >
-      {!loading && children} {/* Avoid flash */}
+      {!loading && children} 
     </AuthContext.Provider>
   );
 };

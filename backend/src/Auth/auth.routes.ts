@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "./auth.controller.js";
 
-//create an isolated router instance.
 const router = Router();
 
 router.post("/signup", AuthController.register); //creates user, setTokens
