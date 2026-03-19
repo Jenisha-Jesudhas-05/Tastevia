@@ -17,6 +17,9 @@ const CheckoutPage = lazy(() => import("@/features/orders/pages/CheckoutPage"))
 const PaymentPage = lazy(() => import("@/features/orders/pages/PaymentPage"))
 const OrderDetailsPage = lazy(() => import("@/features/orders/pages/OrderDetailsPage"))
 const WishlistPage = lazy(() => import("@/features/wishlist/pages/WishlistPage"))
+const SupportPage = lazy(() => import("@/pages/Support"))
+const RefundPolicyPage = lazy(() => import("@/pages/RefundPolicy"))
+const AllergensPage = lazy(() => import("@/pages/Allergens"))
 
 export default function AppRoutes() {
   return (
@@ -47,6 +50,9 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<ProductPages />} />
              <Route path="/menu/:id" element={<ProductDetailPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/allergens" element={<AllergensPage />} />
       </Route>
       
       <Route element={<ProtectedRoutes />}>
