@@ -41,7 +41,6 @@ export default function AppRoutes() {
       {/* AUTH PAGES (NO NAVBAR) */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
-
         <Route path="/signup" element={<SignupPage />} />
       </Route>
 
@@ -50,12 +49,12 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<ProductPages />} />
              <Route path="/menu/:id" element={<ProductDetailPage />} />
-        <Route path="/wishlist" element={<WishlistPage />} />
       </Route>
 
       {/* PROTECTED ROUTES */}
       <Route element={<ProtectedRoutes />}>
         <Route element={<MainLayout />}>
+          <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/payment" element={<PaymentPage />} />

@@ -1,16 +1,5 @@
-const TOKEN_KEY = "token";
 const USER_KEY = "user";
 const REDIRECT_KEY = "tastevia_redirect_after_login";
-
-export const getStoredToken = () => localStorage.getItem(TOKEN_KEY);
-
-export const setStoredToken = (token: string) => {
-  localStorage.setItem(TOKEN_KEY, token);
-};
-
-export const clearStoredToken = () => {
-  localStorage.removeItem(TOKEN_KEY);
-};
 
 export const getStoredUser = () => {
   const stored = localStorage.getItem(USER_KEY);

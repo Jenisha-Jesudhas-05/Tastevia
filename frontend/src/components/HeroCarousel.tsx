@@ -17,7 +17,7 @@ export default function HeroCarousel() {
 
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    }, 3000);
 
     const stopOnHide = () => {
       if (document.hidden) clearInterval(interval);

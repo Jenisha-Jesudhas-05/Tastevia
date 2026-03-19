@@ -7,6 +7,7 @@ import {
 } from "./cart.service";
 import type { CartProductItem } from "@/features/orders/types/order.types";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { setPostLoginRedirect } from "@/features/auth/auth.storage";
 
 type CartItem = CartProductItem;
 
@@ -40,11 +41,9 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const storageKey = useMemo(
-    () => `tastevia_cart_${user?.id ?? "guest"}`,
+    () => (user?.id ? `tastevia_cart_${user.id}` : null),
     [user?.id]
   );
-  const guestKey = "tastevia_cart_guest";
-  const legacyKey = "cart"; // backward compatibility
 
   // Fetch cart from backend on mount
   const refreshCart = async () => {
@@ -68,23 +67,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   // load cart from localStorage (per user)
   useEffect(() => {
     try {
-      // migrate guest cart to user key on first load after login
-      if (user?.id) {
-        const guestRaw = localStorage.getItem(guestKey);
-        const userRaw = localStorage.getItem(storageKey);
-        if (!userRaw && guestRaw) {
-          localStorage.setItem(storageKey, guestRaw);
-          localStorage.removeItem(guestKey);
-        }
+      if (!storageKey) {
+        setCart([]);
+        return;
       }
-
-      // migrate legacy key (pre-user-scoped) once
-      const legacyRaw = localStorage.getItem(legacyKey);
-      if (legacyRaw && !localStorage.getItem(storageKey)) {
-        localStorage.setItem(storageKey, legacyRaw);
-        localStorage.removeItem(legacyKey);
-      }
-
       const raw = localStorage.getItem(storageKey);
       setCart(raw ? JSON.parse(raw) : []);
     } catch (err) {
@@ -102,11 +88,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   // Save cart in localStorage too
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(cart));
+    if (storageKey) {
+      localStorage.setItem(storageKey, JSON.stringify(cart));
+    }
   }, [cart, storageKey]);
 
   // Add item to cart
   const addToCart = async (item: CartItem) => {
+    if (!user?.id) {
+      setPostLoginRedirect(window.location.pathname + window.location.search);
+      window.alert("Please log in to add items to your cart.");
+      window.location.href = "/login";
+      return;
+    }
+
     if (user?.id) {
       try {
         await addToCartAPI(user.id, Number(item.id), item.quantity);
@@ -128,6 +123,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   // Update cart item quantity
   const updateCartItem = async (id: string, quantity: number) => {
+    if (!user?.id) return;
+
     if (user?.id) {
       try {
         await updateCartItemAPI(user.id, Number(id), quantity);
@@ -145,6 +142,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   // Remove item from cart
   const removeFromCart = async (id: string) => {
+    if (!user?.id) return;
+
     if (user?.id) {
       try {
         await removeCartItemAPI(user.id, Number(id));
