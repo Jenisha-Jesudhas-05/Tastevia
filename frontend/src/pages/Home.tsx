@@ -15,6 +15,7 @@ import HeroCarousel from "../components/HeroCarousel";
 import { useProducts } from "@/features/products/hooks/useProducts";
 import ProductCard from "@/features/products/components/ProductCard";
 import { useMemo } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -81,6 +82,7 @@ export default function Home() {
   const { products } = useProducts();
   const popularMeals = useMemo(() => products.slice(0, 6), [products]);
   const prefersReducedMotion = useReducedMotion();
+  const { isAuthenticated } = useAuth();
 
   const motionReveal = prefersReducedMotion
     ? {}
@@ -125,12 +127,14 @@ export default function Home() {
                 Explore Menu
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link
-                to="/signup"
-                className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-white/70 px-7 py-3.5 text-sm font-semibold text-orange-700 backdrop-blur transition-colors hover:bg-orange-50 w-full sm:w-auto"
-              >
-                Create Account
-              </Link>
+              {!isAuthenticated && (
+                <Link
+                  to="/signup"
+                  className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-white/70 px-7 py-3.5 text-sm font-semibold text-orange-700 backdrop-blur transition-colors hover:bg-orange-50 w-full sm:w-auto"
+                >
+                  Create Account
+                </Link>
+              )}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
