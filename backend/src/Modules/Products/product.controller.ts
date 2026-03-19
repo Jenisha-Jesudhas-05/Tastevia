@@ -21,8 +21,13 @@ export class ProductController {
 
   static async getAll(req: Request, res: Response) {
     try {
-      const products = await ProductService.getAllProducts();
-      res.json(successResponse(products, "Products fetched successfully"));
+      const search = typeof req.query.search === "string" ? req.query.search : undefined;
+      const category = typeof req.query.category === "string" ? req.query.category : undefined;
+      const skip = Math.max(0, Number(req.query.skip) || 0);
+      const take = Math.min(50, Math.max(1, Number(req.query.take) || 8));
+
+      const { items, total } = await ProductService.getAllProducts({ search, category, skip, take });
+      res.json(successResponse({ items, total }, "Products fetched successfully"));
     } catch (error) {
       console.error(error);
       res.status(500).json(errorResponse("Internal server error"));
@@ -59,6 +64,16 @@ export class ProductController {
       const id = Number(req.params.id);
       await ProductService.deleteProduct(id);
       res.json(successResponse(null, "Product deleted successfully"));
+    } catch (error) {
+      console.error(error);
+      res.status(500).json(errorResponse("Internal server error"));
+    }
+  }
+
+  static async getCategories(_req: Request, res: Response) {
+    try {
+      const categories = await ProductService.getCategories();
+      res.json(successResponse(categories, "Categories fetched successfully"));
     } catch (error) {
       console.error(error);
       res.status(500).json(errorResponse("Internal server error"));

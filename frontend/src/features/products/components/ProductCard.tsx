@@ -10,7 +10,7 @@ const FALLBACK_IMG =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' x2='100%25' y1='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffe9d6'/%3E%3Cstop offset='100%25' stop-color='%23ffe5ef'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='800' height='600' rx='24'/%3E%3Cpath fill='%23f97316' d='M360 260c0-30 25-55 56-55 31 0 56 25 56 55s-25 55-56 55c-31 0-56-25-56-55Z'/%3E%3C/svg%3E";
 
 interface ProductCardProps {
-  id: string;
+  id: number;
   name: string;
   description: string;
   price: number;
@@ -61,11 +61,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     });
   };
 
-  const liked = wishlist.some((item) => item.id === id);
+  const idStr = String(id);
+
+  const liked = wishlist.some((item) => String(item.id) === idStr);
 
   const handleNavigate = () => {
-    if (!id) return;
-    navigate(`/menu/${id}`);
+    if (!idStr) return;
+    navigate(`/menu/${idStr}`);
   };
 
   const imageSrc = images[index] || FALLBACK_IMG;
@@ -80,11 +82,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }
 
     if (liked) {
-      removeFromWishlist(id);
+      removeFromWishlist(idStr);
       toast("Removed from wishlist");
     } else {
       addToWishlist({
-        id,
+        id: idStr,
         name,
         price,
         image: imageSrc,
@@ -96,14 +98,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const exists = cart.find((item) => item.id === id);
+    const exists = cart.find((item) => String(item.id) === idStr);
 
     if (exists) {
-      increaseQty(id); // If already in cart, increase quantity
+      increaseQty(idStr); // If already in cart, increase quantity
       toast.success(`Increased quantity of ${name}`);
     } else {
       addToCart({
-        id,
+        id: idStr,
         name,
         price,
         image: src,

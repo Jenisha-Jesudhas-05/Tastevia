@@ -13,7 +13,13 @@ export const useProducts = () => {
       try {
         const res = await api.get("/products", { signal: controller.signal });
         if (!isMounted) return;
-        setProducts(Array.isArray(res.data) ? res.data : res.data.data || []);
+        const payload = res.data?.data ?? res.data ?? [];
+        const items = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload.items)
+            ? payload.items
+            : [];
+        setProducts(items);
       } catch (err) {
         if (!isMounted || controller.signal.aborted) return;
         console.error(err);
