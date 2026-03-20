@@ -16,7 +16,7 @@ export class AuthController {
       setAuthCookies(req, res, accessToken, refreshToken);
 
       res.status(201).json(
-        successResponse({ user, accessToken }, "User registered successfully")
+        successResponse({ user }, "User registered successfully")
       );
     } catch (error: any) {
       res.status(400).json(errorResponse(error.message));
@@ -33,7 +33,8 @@ export class AuthController {
 
       setAuthCookies(req, res, accessToken, refreshToken);
 
-      res.json(successResponse({ user, accessToken }, "Login successful"));
+      // Tokens are stored in secure cookies; avoid returning them in the payload
+      res.json(successResponse({ user }, "Login successful"));
     } catch (error: any) {
       res.status(400).json(errorResponse(error.message));
     }
