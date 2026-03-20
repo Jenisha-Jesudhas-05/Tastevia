@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { Request, Response } from 'express';
+import { Request, Response, CookieOptions } from 'express';
  
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access_secret';
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh_secret';
@@ -32,10 +32,10 @@ export const setAuthCookies = (
   // Keep secure flag only in production to avoid dev HTTP/localhost drops.
   const secure = isProduction;
 
-  const cookieOptions = {
+  const cookieOptions: CookieOptions = {
     httpOnly: true,
     secure,
-    sameSite: (secure ? "none" : "lax") as const,
+    sameSite: secure ? "none" : "lax",
   };
  
   res.cookie('accessToken', accessToken, {
