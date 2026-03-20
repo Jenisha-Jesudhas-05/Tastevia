@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useMemo, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import {
   addToCartAPI,
   updateCartItemAPI,
@@ -40,17 +40,15 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const { user } = useAuth();
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const storageKey = useMemo(
-    () => (user?.id ? `tastevia_cart_${user.id}` : null),
-    [user?.id]
-  );
-
   const refreshCart = async () => {
-    if (!user?.id) return;
+    if (!user?.id) {
+      setCart([]);
+      return;
+    }
     try {
-      const data = await getCartAPI(user.id);
+      const data = await getCartAPI();
       const normalizedItems =
-        data.items?.map((item: any) => ({
+        data?.items?.map((item: any) => ({
           id: String(item.productId),
           name: item.product.name,
           price: item.product.price,
@@ -64,30 +62,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   useEffect(() => {
-    try {
-      if (!storageKey) {
-        setCart([]);
-        return;
-      }
-      const raw = localStorage.getItem(storageKey);
-      setCart(raw ? JSON.parse(raw) : []);
-    } catch (err) {
-      console.error("Failed to load cart from localStorage:", err);
-    }
-  }, [storageKey, user?.id]);
-
-  useEffect(() => {
-    if (user?.id) {
-      refreshCart();
-    }
- 
+    void refreshCart();
   }, [user?.id]);
-
-  useEffect(() => {
-    if (storageKey) {
-      localStorage.setItem(storageKey, JSON.stringify(cart));
-    }
-  }, [cart, storageKey]);
 
   const addToCart = async (item: CartItem) => {
     if (!user?.id) {
@@ -99,21 +75,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
     if (user?.id) {
       try {
-        await addToCartAPI(user.id, Number(item.id), item.quantity);
+        const result = await addToCartAPI(Number(item.id), item.quantity);
+        const normalizedItems =
+          result.cart?.items?.map((cartItem: any) => ({
+            id: String(cartItem.productId),
+            name: cartItem.product.name,
+            price: cartItem.product.price,
+            image: cartItem.product.imageUrls?.[0] ?? "",
+            quantity: cartItem.quantity,
+          })) || [];
+        setCart(normalizedItems);
       } catch (err) {
         console.error("Failed to add to backend cart", err);
       }
     }
-
-    setCart((prev) => {
-      const exist = prev.find((p) => p.id === item.id);
-      if (exist) {
-        return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + item.quantity } : p
-        );
-      }
-      return [...prev, item];
-    });
   };
 
 
@@ -122,17 +97,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
     if (user?.id) {
       try {
-        await updateCartItemAPI(user.id, Number(id), quantity);
+        const updated = await updateCartItemAPI(Number(id), quantity);
+        const normalizedItems =
+          updated.cart?.items?.map((cartItem: any) => ({
+            id: String(cartItem.productId),
+            name: cartItem.product.name,
+            price: cartItem.product.price,
+            image: cartItem.product.imageUrls?.[0] ?? "",
+            quantity: cartItem.quantity,
+          })) || [];
+        setCart(normalizedItems);
       } catch (err) {
         console.error("Failed to update backend cart", err);
       }
     }
-
-    setCart((prev) =>
-      prev
-        .map((item) => (item.id === id ? { ...item, quantity } : item))
-        .filter((item) => item.quantity > 0)
-    );
   };
 
 
@@ -141,13 +119,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
     if (user?.id) {
       try {
-        await removeCartItemAPI(user.id, Number(id));
+        const updated = await removeCartItemAPI(Number(id));
+        const normalizedItems =
+          updated.cart?.items?.map((cartItem: any) => ({
+            id: String(cartItem.productId),
+            name: cartItem.product.name,
+            price: cartItem.product.price,
+            image: cartItem.product.imageUrls?.[0] ?? "",
+            quantity: cartItem.quantity,
+          })) || [];
+        setCart(normalizedItems);
       } catch (err) {
         console.error("Failed to remove item from backend cart", err);
       }
     }
-
-    setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
   const increaseQty = async (id: string) => {

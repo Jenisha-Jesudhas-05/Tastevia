@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { Response } from 'express';
+import { Request, Response } from 'express';
  
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access_secret';
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh_secret';
@@ -22,13 +22,22 @@ export const generateTokens = (userId: number) => {
   return { accessToken, refreshToken };
 };
  
-export const setAuthCookies = (res: Response, accessToken: string, refreshToken: string) => {
-  const isProduction = process.env.NODE_ENV === 'production';
- 
+export const setAuthCookies = (
+  req: Request,
+  res: Response,
+  accessToken: string,
+  refreshToken: string
+) => {
+  const isProduction = process.env.NODE_ENV === "production";
+  const isLocalhost =
+    req.hostname === "localhost" || req.hostname === "127.0.0.1";
+    
+  const secure = isProduction || isLocalhost;
+
   const cookieOptions = {
-    httpOnly: true, 
-    secure: isProduction, 
-    sameSite: 'lax' as const, 
+    httpOnly: true,
+    secure,
+    sameSite: "none" as const,
   };
  
   res.cookie('accessToken', accessToken, {
@@ -43,8 +52,8 @@ export const setAuthCookies = (res: Response, accessToken: string, refreshToken:
 };
  
 export const clearAuthCookies = (res: Response) => {
-  res.clearCookie('accessToken');
-  res.clearCookie('refreshToken');
+  res.clearCookie("accessToken", { httpOnly: true, sameSite: "none", secure: true });
+  res.clearCookie("refreshToken", { httpOnly: true, sameSite: "none", secure: true });
 };
  
 export const verifyRefreshToken = (token: string) => {

@@ -17,6 +17,7 @@ const CheckoutPage = lazy(() => import("@/features/orders/pages/CheckoutPage"))
 const PaymentPage = lazy(() => import("@/features/orders/pages/PaymentPage"))
 const OrderDetailsPage = lazy(() => import("@/features/orders/pages/OrderDetailsPage"))
 const WishlistPage = lazy(() => import("@/features/wishlist/pages/WishlistPage"))
+const AccountPage = lazy(() => import("@/pages/Account"))
 const SupportPage = lazy(() => import("@/pages/Support"))
 const RefundPolicyPage = lazy(() => import("@/pages/RefundPolicy"))
 const AllergensPage = lazy(() => import("@/pages/Allergens"))
@@ -63,6 +64,7 @@ export default function AppRoutes() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetailsPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>
 

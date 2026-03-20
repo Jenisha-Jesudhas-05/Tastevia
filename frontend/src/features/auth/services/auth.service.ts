@@ -4,6 +4,7 @@ import {
   clearStoredUser,
   setStoredUser,
 } from "../auth.storage"
+import type { User } from "../types/auth.types"
 
 export const signup = async (data: SignupPayload): Promise<AuthResponse> => {
 
@@ -28,4 +29,16 @@ export const logout = async () => {
   await api.post("/auth/logout")
 
   clearStoredUser()
+}
+
+export const fetchCurrentUser = async (): Promise<User | null> => {
+  try {
+    const res = await api.get<AuthResponse>("/auth/me")
+    const user = res.data.data.user
+    setStoredUser(user)
+    return user
+  } catch (error) {
+    clearStoredUser()
+    return null
+  }
 }

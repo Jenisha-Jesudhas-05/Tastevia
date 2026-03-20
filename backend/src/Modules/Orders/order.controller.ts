@@ -4,7 +4,6 @@ import * as orderService from "./order.service.js";
 export const createOrder = async (req: Request, res: Response) => {
   try {
     const {
-      userId,
       items,
       totalAmount,
       customerName,
@@ -18,7 +17,6 @@ export const createOrder = async (req: Request, res: Response) => {
     } = req.body;
 
     if (
-      !userId ||
       !Array.isArray(items) ||
       !items.length ||
       !customerName ||
@@ -29,8 +27,14 @@ export const createOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Missing required order fields" });
     }
 
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
     const order = await orderService.createOrder({
-      userId: Number(userId),
+      userId,
       items,
       totalAmount: Number(totalAmount),
       customerName,
@@ -52,9 +56,10 @@ export const createOrder = async (req: Request, res: Response) => {
 
 export const getOrderById = async (req: Request, res: Response) => {
   try {
+    const userId = req.userId;
     const order = await orderService.getOrderById(Number(req.params.id));
 
-    if (!order) {
+    if (!order || order.userId !== userId) {
       return res.status(404).json({ error: "Order not found" });
     }
 
@@ -67,10 +72,10 @@ export const getOrderById = async (req: Request, res: Response) => {
 
 export const getOrdersByUserId = async (req: Request, res: Response) => {
   try {
-    const userId = Number(req.query.userId);
+    const userId = req.userId;
 
     if (!userId) {
-      return res.status(400).json({ error: "userId is required" });
+      return res.status(401).json({ error: "Authentication required" });
     }
 
     const orders = await orderService.getOrdersByUserId(userId);

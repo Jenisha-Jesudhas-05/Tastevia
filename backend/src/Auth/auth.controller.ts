@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AuthService } from "./auth.service.js";
 import { setAuthCookies, clearAuthCookies } from "../utils/jwt.js";
 import { successResponse, errorResponse } from "../utils/apiResponse.js";
+import prisma from "../lib/prisma.js";
 
 export class AuthController {
   static async register(req: Request, res: Response) {
@@ -12,7 +13,7 @@ export class AuthController {
 
       const { user, accessToken, refreshToken } = await AuthService.register({ name, email, password });
 
-      setAuthCookies(res, accessToken, refreshToken);
+      setAuthCookies(req, res, accessToken, refreshToken);
 
       res.status(201).json(
         successResponse({ user, accessToken }, "User registered successfully")
@@ -30,7 +31,7 @@ export class AuthController {
 
       const { user, accessToken, refreshToken } = await AuthService.login(email, password);
 
-      setAuthCookies(res, accessToken, refreshToken);
+      setAuthCookies(req, res, accessToken, refreshToken);
 
       res.json(successResponse({ user, accessToken }, "Login successful"));
     } catch (error: any) {
@@ -41,5 +42,26 @@ export class AuthController {
   static logout(req: Request, res: Response) {
     clearAuthCookies(res);
     res.json(successResponse(null, "Logged out successfully"));
+  }
+
+  static async me(req: Request, res: Response) {
+    try {
+      if (!req.userId) {
+        return res.status(401).json(errorResponse("Not authenticated"));
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: req.userId },
+        select: { id: true, name: true, email: true },
+      });
+
+      if (!user) {
+        return res.status(404).json(errorResponse("User not found"));
+      }
+
+      res.json(successResponse({ user }, "Authenticated user fetched"));
+    } catch (error: any) {
+      res.status(500).json(errorResponse(error.message));
+    }
   }
 }
