@@ -75,7 +75,7 @@ export default function Cart() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => decreaseQty(item.id)}
-                  disabled={item.quantity <= 1}
+                  // disabled={item.quantity <= 1}
                   className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/70 bg-secondary/70 text-foreground transition hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-border/70 disabled:hover:text-foreground"
                   aria-label="Decrease quantity"
                 >

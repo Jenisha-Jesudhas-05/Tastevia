@@ -124,7 +124,6 @@ function PaymentContent() {
       }
 
       const order = await createOrderAPI({
-        userId: user.id,
         items: checkoutDraft.items.map((item) => ({
           productId: Number(item.id),
           quantity: item.quantity,

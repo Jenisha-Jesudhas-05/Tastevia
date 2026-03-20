@@ -33,13 +33,11 @@ const ProductPages: React.FC = () => {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const loadingRef = useRef(false);
 
-  // debounce search input
   useEffect(() => {
     const handler = setTimeout(() => setSearch(searchInput), 300);
     return () => clearTimeout(handler);
   }, [searchInput]);
 
-  // load categories from API (all categories, not paged)
   const fetchCategories = useCallback(async () => {
     try {
       const res = await api.get("/products/meta/categories");
@@ -47,7 +45,6 @@ const ProductPages: React.FC = () => {
       const normalized = data.map((c: any) => String(c));
       setCategories(["all", ...normalized]);
     } catch {
-      // ignore
     }
   }, []);
 
@@ -97,7 +94,7 @@ const ProductPages: React.FC = () => {
     [search, category]
   );
 
-  // reset and load when search/category change
+  
   useEffect(() => {
     setProducts([]);
     productsRef.current = [];

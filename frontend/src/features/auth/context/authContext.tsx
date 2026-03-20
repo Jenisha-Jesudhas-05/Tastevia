@@ -2,9 +2,9 @@ import { createContext, useState, useEffect, type ReactNode } from "react";
 import type { User, AuthContextType } from "../types/auth.types";
 import {
   clearStoredUser,
-  getStoredUser,
   setStoredUser,
 } from "../auth.storage";
+import { fetchCurrentUser } from "../services/auth.service";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -13,13 +13,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = getStoredUser();
+    const init = async () => {
+      const currentUser = await fetchCurrentUser();
+      setUser(currentUser);
+      setLoading(false);
+    };
 
-    if (storedUser) {
-      setUser(storedUser);
-    }
-
-    setLoading(false);
+    void init();
   }, []);
 
   const loginUser = (user: User) => {

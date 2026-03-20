@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -23,6 +23,7 @@ export default function Navbar() {
   const { wishlist } = useWishlist();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement | null>(null);
 
   const handleLogout = async () => {
     try {
@@ -39,6 +40,27 @@ export default function Navbar() {
     setMobileMenuOpen(false);
     setAccountOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        accountOpen &&
+        accountRef.current &&
+        !accountRef.current.contains(event.target as Node)
+      ) {
+        setAccountOpen(false);
+      }
+    };
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setAccountOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [accountOpen]);
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -116,7 +138,7 @@ export default function Navbar() {
               </Link>
             </div>
           ) : (
-            <div className="relative hidden items-center gap-2 md:flex">
+            <div className="relative hidden items-center gap-2 md:flex" ref={accountRef}>
               <button
                 onClick={() => setAccountOpen((o) => !o)}
                 className="flex items-center gap-2 rounded-full border border-border/70 bg-secondary/70 px-3 py-1.5 text-sm font-semibold text-foreground transition hover:border-orange-300 hover:text-orange-500"
@@ -138,26 +160,14 @@ export default function Navbar() {
                   </div>
                   <div className="border-t border-border/70">
                     <Link
-                      to="/orders"
+                      to="/account"
                       className="block px-4 py-3 text-sm text-foreground/80 transition hover:bg-orange-50/70 hover:text-orange-600 dark:hover:bg-white/5"
                       onClick={() => setAccountOpen(false)}
                     >
-                      Orders
-                    </Link>
-                    <Link
-                      to="/wishlist"
-                      className="block px-4 py-3 text-sm text-foreground/80 transition hover:bg-orange-50/70 hover:text-orange-600 dark:hover:bg-white/5"
-                      onClick={() => setAccountOpen(false)}
-                    >
-                      Wishlist
+                      Manage account
                     </Link>
                   </div>
-                  <div className="border-t border-border/70 px-4 py-3">
-                    <div className="flex items-center justify-between text-sm font-semibold text-foreground/80">
-                      <span>Theme</span>
-                      <ThemeToggle />
-                    </div>
-                  </div>
+
                   <button
                     onClick={() => {
                       handleLogout();
@@ -180,6 +190,10 @@ export default function Navbar() {
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
+
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
 

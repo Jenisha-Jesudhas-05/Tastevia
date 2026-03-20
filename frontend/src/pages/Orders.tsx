@@ -21,7 +21,7 @@ const Orders = () => {
       try {
         setLoading(true);
         setError("");
-        const response = await getOrderHistoryAPI(user.id);
+        const response = await getOrderHistoryAPI();
         setOrders(response);
       } catch (requestError) {
         console.error(requestError);

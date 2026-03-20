@@ -20,7 +20,7 @@ export interface AuthResponse {
   message: string
   data: {
     user: User
-    accessToken: string
+    accessToken?: string
   }
 }
 

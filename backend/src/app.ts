@@ -6,7 +6,7 @@ import authRoutes from './Auth/auth.routes.js';
 import productRoutes from './Modules/Products/product.routes.js'; 
 import cartRoutes from "./Modules/Cart/cart.routes.js";
 import orderRoutes from "./Modules/Orders/order.routes.js";
-import newsletterRoutes from "./Modules/Newsletter/newsletter.routes.js";
+import { requireAuth } from "./middleware/auth.middleware.js";
 const app = express();
 const defaultAllowedOrigins = [
   "http://localhost:5173",
@@ -38,7 +38,6 @@ app.use(cors(corsOptions));
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/products', productRoutes); 
-app.use("/api/v1/cart", cartRoutes);
-app.use("/api/v1/orders", orderRoutes);
-app.use("/api/v1/newsletter", newsletterRoutes);
+app.use("/api/v1/cart", requireAuth, cartRoutes);
+app.use("/api/v1/orders", requireAuth, orderRoutes);
 export default app;

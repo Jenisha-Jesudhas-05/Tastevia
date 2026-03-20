@@ -31,10 +31,8 @@ export const getOrderDetailsAPI = async (id: number) => {
   return response.data;
 };
 
-export const getOrderHistoryAPI = async (userId: number) => {
-  const response = await api.get<Order[]>("/orders", {
-    params: { userId },
-  });
+export const getOrderHistoryAPI = async () => {
+  const response = await api.get<Order[]>("/orders");
   return response.data;
 };
 

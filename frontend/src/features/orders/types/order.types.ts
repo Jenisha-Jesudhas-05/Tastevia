@@ -52,7 +52,6 @@ export interface Order {
 }
 
 export interface CreateOrderPayload {
-  userId: number;
   items: Array<{
     productId: number;
     quantity: number;

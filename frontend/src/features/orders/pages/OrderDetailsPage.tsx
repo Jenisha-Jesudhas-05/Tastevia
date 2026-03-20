@@ -40,7 +40,7 @@ export default function OrderDetailsPage() {
       try {
         const [orderDetails, history] = await Promise.all([
           getOrderDetailsAPI(orderId),
-          getOrderHistoryAPI(user.id),
+          getOrderHistoryAPI(),
         ]);
 
         setOrder(orderDetails);
