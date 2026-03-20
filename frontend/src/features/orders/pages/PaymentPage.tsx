@@ -19,12 +19,19 @@ import {
 import PaymentForm from "../components/PaymentForm";
 import { STRIPE_PUBLISHABLE_KEY } from "@/lib/env";
 
-const stripePromise = STRIPE_PUBLISHABLE_KEY
-  ? loadStripe(STRIPE_PUBLISHABLE_KEY)
-  : null;
-
 export default function PaymentPage() {
-  if (!stripePromise) {
+  const [stripePromise, setStripePromise] = useState<
+    Promise<import("@stripe/stripe-js").Stripe | null> | null
+  >(null);
+
+  useEffect(() => {
+    // Load Stripe.js only when the payment page is actually mounted.
+    if (STRIPE_PUBLISHABLE_KEY) {
+      setStripePromise(loadStripe(STRIPE_PUBLISHABLE_KEY));
+    }
+  }, []);
+
+  if (!STRIPE_PUBLISHABLE_KEY) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="surface-card w-full max-w-md p-6">
@@ -35,6 +42,10 @@ export default function PaymentPage() {
         </div>
       </div>
     );
+  }
+
+  if (!stripePromise) {
+    return null;
   }
 
   return (

@@ -29,15 +29,13 @@ export const setAuthCookies = (
   refreshToken: string
 ) => {
   const isProduction = process.env.NODE_ENV === "production";
-  const isLocalhost =
-    req.hostname === "localhost" || req.hostname === "127.0.0.1";
-    
-  const secure = isProduction || isLocalhost;
+  // Keep secure flag only in production to avoid dev HTTP/localhost drops.
+  const secure = isProduction;
 
   const cookieOptions = {
     httpOnly: true,
     secure,
-    sameSite: "none" as const,
+    sameSite: (secure ? "none" : "lax") as const,
   };
  
   res.cookie('accessToken', accessToken, {
